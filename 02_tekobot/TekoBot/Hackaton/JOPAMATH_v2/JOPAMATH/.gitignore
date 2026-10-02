@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Configuration and secrets
+.env
+*.local.env
+
+# SQLite Databases & logs
+*.db
+*.sqlite3
+*.log
+
+# Output & temp
+output/*.json
+output/*.csv
+output/*.txt
+output/*.html
+!output/.gitkeep
+input/*
+!input/.gitkeep
+backups/*
+!backups/.gitkeep
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test coverage
+.pytest_cache/
+.coverage
+htmlcov/

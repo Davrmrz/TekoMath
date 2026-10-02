@@ -1,0 +1,19 @@
+Estadística||Recolección, organización, representación e interpretación de datos.|Una tabla resume las edades de un grupo.
+Población estadística||Total de individuos u objetos de interés.|Todos los estudiantes de una escuela.
+Muestra estadística|muestra|Parte de la población seleccionada para estudiarla; puede no ser representativa.|Un grupo de alumnos encuestados.
+Dato estadístico|datos estadisticos|Observación registrada de una característica.|La edad de una persona.
+Variable cualitativa||Característica cuyos valores son categorías.|Color preferido.
+Variable cuantitativa||Característica expresada mediante cantidades numéricas.|Altura en centímetros.
+Frecuencia absoluta||Número de apariciones de un valor o categoría.|Cinco alumnos eligieron azul: frecuencia 5.
+Frecuencia relativa||Frecuencia absoluta dividida por el total de observaciones.|5/20=25 %.
+Tabla de frecuencias||Valores o categorías organizados con sus frecuencias.|Muestra cuántas veces aparece cada respuesta.
+Media aritmética|promedio;media estadistica|Suma de datos dividida por su cantidad positiva.|La media de 2,4,6 es 4.
+Mediana estadística|mediana|Valor central de datos ordenados; con cantidad par se promedian los dos centrales.|La mediana de 1,3,9 es 3.
+Moda estadística|moda|Valor o categoría de mayor frecuencia; puede haber varias modas.|En 2,2,3,5 la moda es 2.
+Rango estadístico||Diferencia entre el mayor y el menor dato; no es el recorrido funcional.|En 2,4,9 es 7.
+Gráfico de barras||Representación de cantidades con barras y escala comparable.|Cada barra puede representar alumnos por curso.
+Gráfico circular|grafico de sectores|Representación de partes de un total mediante sectores circulares.|25 % ocupa 90°.
+Probabilidad básica|probabilidad|Medida entre cero y uno. En casos finitos equiprobables, favorables dividido por posibles.|En un dado equilibrado P(6)=1/6.
+Experimento aleatorio||Proceso cuyo resultado individual no se conoce de antemano con certeza.|Lanzar un dado.
+Espacio muestral||Conjunto de resultados posibles.|Para una moneda: {cara,cruz}.
+Suceso aleatorio|evento aleatorio|Subconjunto del espacio muestral.|Pares en un dado: {2,4,6}.

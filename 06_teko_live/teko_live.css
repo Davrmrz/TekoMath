@@ -1,0 +1,849 @@
+/* ============================================
+   TEKO MATH — TEKO LIVE (Arena de Clase en Vivo / Kahoot)
+   Estilo Neo-brutalista Dinámico × 4 Formas Kahoot
+   ============================================ */
+
+/* Banner de Acceso / Lanzamiento en Dashboard */
+.teko-live-hero-card {
+  background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 50%, #f3e8ff 100%);
+  border: 3px solid #1a1a1a;
+  border-radius: var(--radius-xl, 18px);
+  padding: 24px;
+  box-shadow: 6px 6px 0 #1a1a1a;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.teko-live-hero-card:hover {
+  transform: translateY(-2px);
+}
+
+.teko-live-hero-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ec4899;
+  color: #ffffff;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 2px solid #1a1a1a;
+  box-shadow: 2px 2px 0 #1a1a1a;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.teko-live-hero-card__title {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin: 0 0 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.teko-live-hero-card__desc {
+  font-size: 0.95rem;
+  color: #4b5563;
+  max-width: 620px;
+  margin: 0 0 18px 0;
+  line-height: 1.45;
+}
+
+.teko-live-join-form {
+  display: flex;
+  gap: 10px;
+  max-width: 480px;
+  flex-wrap: wrap;
+}
+
+.teko-live-pin-input {
+  font-family: var(--font-mono, monospace);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-align: center;
+  background: #ffffff;
+  border: 2.5px solid #1a1a1a;
+  border-radius: var(--radius-md, 10px);
+  padding: 10px 16px;
+  color: #1a1a1a;
+  box-shadow: 3px 3px 0 #1a1a1a;
+  flex: 1;
+  min-width: 160px;
+  text-transform: uppercase;
+}
+
+.teko-live-pin-input:focus {
+  outline: none;
+  border-color: #9333ea;
+  box-shadow: 3px 3px 0 #9333ea;
+}
+
+/* ============================================
+   MODAL / OVERLAY PANTALLA COMPLETA TEKO LIVE
+   ============================================ */
+.teko-live-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.teko-live-overlay--active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.teko-live-container {
+  background: #ffffff;
+  border: 3.5px solid #1a1a1a;
+  border-radius: 24px;
+  box-shadow: 8px 8px 0 #1a1a1a;
+  width: 100%;
+  max-width: 960px;
+  min-height: 580px;
+  max-height: 94vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: modalPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.92); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.teko-live-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: #faf5ff;
+  border-bottom: 3px solid #1a1a1a;
+  border-radius: 20px 20px 0 0;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.teko-live-header__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.teko-live-header__pin-box {
+  background: #ffffff;
+  border: 2px solid #1a1a1a;
+  border-radius: 12px;
+  padding: 4px 14px;
+  box-shadow: 2px 2px 0 #1a1a1a;
+  font-family: var(--font-mono, monospace);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #7e22ce;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.teko-live-close-btn {
+  background: #fee2e2;
+  border: 2px solid #dc2626;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  color: #dc2626;
+  font-size: 1.2rem;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 0 #dc2626;
+  transition: transform 0.15s ease;
+}
+
+.teko-live-close-btn:hover {
+  transform: scale(1.1);
+  background: #fca5a5;
+}
+
+.teko-live-body {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   PANTALLA 1: LOBBY DE ESPERA (Host & Alumno)
+   ============================================ */
+.teko-lobby {
+  text-align: center;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.teko-lobby__pin-hero {
+  background: #ffffff;
+  border: 4px solid #1a1a1a;
+  border-radius: 20px;
+  padding: 16px 36px;
+  box-shadow: 6px 6px 0 #7e22ce;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.teko-lobby__pin-label {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.teko-lobby__pin-number {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 3.2rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  letter-spacing: 6px;
+  line-height: 1.1;
+  margin-top: 4px;
+}
+
+.teko-lobby__player-count {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.teko-lobby__player-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 680px;
+  min-height: 120px;
+  padding: 16px;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.teko-lobby__player-badge {
+  background: #ffffff;
+  border: 2px solid #1a1a1a;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  box-shadow: 2px 2px 0 #1a1a1a;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  animation: badgePop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badgePop {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ============================================
+   PANTALLA 2: PREGUNTA ACTIVA (Host & Jugador)
+   ============================================ */
+.teko-game-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.teko-timer-badge {
+  background: #fef08a;
+  border: 2.5px solid #1a1a1a;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  box-shadow: 3px 3px 0 #1a1a1a;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+}
+
+.teko-timer-badge--warning {
+  background: #fca5a5 !important;
+  color: #991b1b !important;
+  animation: pulseTimer 0.5s infinite alternate;
+}
+
+@keyframes pulseTimer {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+.teko-question-card {
+  background: #ffffff;
+  border: 3px solid #1a1a1a;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 5px 5px 0 #1a1a1a;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.teko-question-card__concept {
+  display: inline-block;
+  background: #e0e7ff;
+  border: 1.5px solid #6366f1;
+  color: #3730a3;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+}
+
+.teko-question-card__text {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* LAS 4 FORMAS Y COLORES KAHOOT */
+.teko-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.teko-opt-btn {
+  border: 3px solid #1a1a1a;
+  border-radius: 16px;
+  padding: 16px 20px;
+  color: #ffffff;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 1.1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #1a1a1a;
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: left;
+  position: relative;
+  min-height: 76px;
+}
+
+.teko-opt-btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #1a1a1a;
+}
+
+.teko-opt-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #1a1a1a;
+}
+
+.teko-opt-btn:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+/* FORMA 0: ROJO TRIÁNGULO */
+.teko-opt-btn--red {
+  background: #e11d48;
+}
+.teko-opt-btn--red:hover:not(:disabled) {
+  background: #be123c;
+}
+
+/* FORMA 1: AZUL ROMBO */
+.teko-opt-btn--blue {
+  background: #2563eb;
+}
+.teko-opt-btn--blue:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+/* FORMA 2: AMARILLO CÍRCULO */
+.teko-opt-btn--yellow {
+  background: #d97706;
+}
+.teko-opt-btn--yellow:hover:not(:disabled) {
+  background: #b45309;
+}
+
+/* FORMA 3: VERDE CUADRADO */
+.teko-opt-btn--green {
+  background: #16a34a;
+}
+.teko-opt-btn--green:hover:not(:disabled) {
+  background: #15803d;
+}
+
+.teko-opt-btn__icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: rgba(0,0,0,0.18);
+  border-radius: 8px;
+}
+
+.teko-opt-btn__text {
+  flex-grow: 1;
+  line-height: 1.25;
+}
+
+/* Opciones seleccionadas / feedback */
+.teko-opt-btn--selected {
+  outline: 4px solid #facc15;
+  box-shadow: 6px 6px 0 #1a1a1a !important;
+}
+
+.teko-opt-btn--correct-reveal {
+  border-color: #1a1a1a !important;
+  animation: glowCorrect 0.8s infinite alternate;
+}
+
+@keyframes glowCorrect {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.02); box-shadow: 0 0 16px #4ade80; }
+}
+
+.teko-opt-btn--wrong-dim {
+  opacity: 0.35 !important;
+  filter: grayscale(60%);
+}
+
+/* ============================================
+   PANTALLA 3: RESULTADOS / PODIO DE PREGUNTA
+   ============================================ */
+.teko-results-screen {
+  text-align: center;
+}
+
+.teko-answer-bars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  align-items: flex-end;
+  height: 160px;
+  margin-bottom: 24px;
+  padding: 10px;
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  border-radius: 16px;
+}
+
+.teko-bar-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.teko-bar-fill {
+  width: 100%;
+  border-radius: 8px 8px 0 0;
+  border: 2px solid #1a1a1a;
+  border-bottom: none;
+  transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.teko-bar-label {
+  margin-top: 6px;
+  font-size: 1.2rem;
+}
+
+/* LEADERBOARD TOP 5 */
+.teko-leaderboard {
+  background: #ffffff;
+  border: 3px solid #1a1a1a;
+  border-radius: 18px;
+  padding: 16px 20px;
+  box-shadow: 4px 4px 0 #1a1a1a;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.teko-leaderboard__title {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.teko-leaderboard__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  margin-bottom: 6px;
+  background: #f8fafc;
+  font-weight: 700;
+}
+
+.teko-leaderboard__row--top1 {
+  background: #fef9c3;
+  border-color: #facc15;
+  box-shadow: 2px 2px 0 #ca8a04;
+}
+
+.teko-leaderboard__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.teko-leaderboard__rank {
+  font-size: 1.1rem;
+  font-weight: 900;
+  width: 28px;
+  color: #7e22ce;
+}
+
+.teko-leaderboard__points {
+  font-family: var(--font-mono, monospace);
+  font-size: 1rem;
+  font-weight: 800;
+  color: #166534;
+}
+
+/* ============================================
+   PANTALLA 4: PODIO FINAL 🏆
+   ============================================ */
+.teko-podium-screen {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.teko-podium-stage {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 16px;
+  height: 240px;
+  margin: 24px 0;
+}
+
+.teko-podium-pillar {
+  border: 3px solid #1a1a1a;
+  border-radius: 16px 16px 0 0;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 4px 4px 0 #1a1a1a;
+  color: #ffffff;
+  width: 140px;
+  animation: risePillar 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes risePillar {
+  0% { height: 0; opacity: 0; }
+}
+
+.teko-podium-pillar--1st {
+  height: 220px;
+  background: #eab308;
+  order: 2;
+}
+
+.teko-podium-pillar--2nd {
+  height: 170px;
+  background: #94a3b8;
+  order: 1;
+}
+
+.teko-podium-pillar--3rd {
+  height: 130px;
+  background: #d97706;
+  order: 3;
+}
+
+.teko-podium-avatar {
+  font-size: 2.2rem;
+  margin-bottom: 4px;
+}
+
+.teko-podium-name {
+  font-size: 1rem;
+  font-weight: 900;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.teko-podium-score {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.teko-podium-rank-label {
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* ============================================
+   RESPONSIVIDAD MÓVIL (Smartphones & Pantallas Pequeñas)
+   ============================================ */
+@media (max-width: 640px) {
+  .teko-live-hero-card {
+    padding: 16px 14px;
+    margin-bottom: 18px;
+    border-radius: var(--radius-lg, 16px);
+  }
+  .teko-live-hero-card__title {
+    font-size: 1.3rem;
+  }
+  .teko-live-hero-card__desc {
+    font-size: 0.88rem;
+    margin-bottom: 14px;
+  }
+  .teko-live-join-form {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  .teko-live-join-form .teko-live-pin-input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    font-size: 1.15rem;
+    padding: 10px;
+    letter-spacing: 2px;
+  }
+  .teko-live-join-form .btn {
+    width: 100% !important;
+    justify-content: center;
+  }
+  .teko-live-overlay {
+    padding: 6px 4px;
+    align-items: flex-end;
+  }
+  .teko-live-container {
+    min-height: auto;
+    max-height: 95dvh;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 3px 3px 0 #1a1a1a;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .teko-live-header {
+    padding: 12px 14px;
+    border-radius: 16px 16px 0 0;
+  }
+  .teko-live-header__left {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .teko-live-header__pin-box {
+    font-size: 0.92rem;
+    padding: 3px 10px;
+  }
+  .teko-live-body {
+    padding: 12px 10px;
+    overflow-x: hidden;
+  }
+  .teko-lobby {
+    padding: 10px 0;
+  }
+  .teko-lobby__pin-hero {
+    padding: 10px 20px;
+    border-radius: 14px;
+    box-shadow: 4px 4px 0 #7e22ce;
+    margin-bottom: 14px;
+  }
+  .teko-lobby__pin-label {
+    font-size: 0.75rem;
+  }
+  .teko-lobby__pin-number {
+    font-size: 2.2rem;
+    letter-spacing: 4px;
+    margin-top: 2px;
+  }
+  .teko-lobby__player-count {
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+  }
+  .teko-lobby__player-grid {
+    min-height: 60px;
+    max-height: 160px;
+    overflow-y: auto;
+    padding: 10px 8px;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .teko-lobby__player-badge {
+    font-size: 0.78rem;
+    padding: 4px 10px;
+  }
+  .teko-game-topbar {
+    margin-bottom: 12px;
+    gap: 8px;
+  }
+  .teko-timer-badge {
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+  .teko-question-card {
+    padding: 14px 10px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: 3px 3px 0 #1a1a1a;
+  }
+  .teko-question-card__text {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+  .teko-options-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .teko-opt-btn {
+    min-height: 54px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    gap: 10px;
+    border-radius: 12px;
+    box-shadow: 3px 3px 0 #1a1a1a;
+    word-break: break-word;
+  }
+  .teko-opt-btn__icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+  .teko-answer-bars {
+    height: 120px;
+    gap: 6px;
+    padding: 6px;
+    margin-bottom: 16px;
+  }
+  .teko-bar-fill {
+    font-size: 0.92rem;
+  }
+  .teko-bar-label {
+    font-size: 1rem;
+    margin-top: 4px;
+  }
+  .teko-leaderboard {
+    padding: 12px;
+    border-radius: 14px;
+    margin-bottom: 14px;
+  }
+  .teko-leaderboard__title {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .teko-leaderboard__row {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+    gap: 6px;
+  }
+  .teko-podium-stage {
+    height: 180px;
+    gap: 6px;
+    margin: 14px 0;
+    align-items: flex-end;
+  }
+  .teko-podium-pillar {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 8px 4px;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 2px 2px 0 #1a1a1a;
+  }
+  .teko-podium-pillar--1st {
+    height: 160px;
+  }
+  .teko-podium-pillar--2nd {
+    height: 125px;
+  }
+  .teko-podium-pillar--3rd {
+    height: 95px;
+  }
+  .teko-podium-avatar {
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+  }
+  .teko-podium-name {
+    font-size: 0.74rem;
+    max-width: 100%;
+  }
+  .teko-podium-score {
+    font-size: 0.72rem;
+  }
+  .teko-podium-rank-label {
+    font-size: 1.25rem;
+  }
+}

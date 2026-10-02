@@ -1,0 +1,3 @@
+from pathlib import Path
+p=Path('tests/stage2_browser.cjs');s=p.read_text(encoding='utf-8').replace("await page.route('**/api/**',route=>route.abort());", "await page.route('**/api/**',route=>route.abort());\n    await page.locator('#btn-toggle-sidebar').click();").replace('4 units/56 subtopics','4 units/59 subtopics');p.write_text(s,encoding='utf-8')
+p=Path('tests/learning_upgrade_browser.cjs');s=p.read_text(encoding='utf-8').replace("await page.screenshot({path:","await page.evaluate(()=>Promise.allSettled(document.getAnimations().map(a=>a.finished)));await page.screenshot({path:");p.write_text(s,encoding='utf-8')

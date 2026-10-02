@@ -1,0 +1,18 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),{spawnSync}=require('node:child_process');
+global.window={};for(const f of ['curriculum','language_data','language','problem_guide','question_resolver','problem_workshop_data','natural_problem','workshop_expression','general_problem','problem_workshop','trig_questions','lesson_engine'])vm.runInThisContext(fs.readFileSync(`assets/js/${f}.js`,'utf8'));
+let state=LessonEngine.initial('funciones','introduccion');state.language='jopara';state.mode='TEACHING_MODE';
+const teaching=LessonEngine.response(state).tutor_message_jopara;
+assert.match(teaching,/Ñepyrũrã/);assert.match(teaching,/Ñapensa oñondive/);assert.match(teaching,/Jahecha peteĩ ejemplo/);assert.ok(teaching.split(/\s+/).length>=150);assert.match(teaching,/4\.000/);
+state.lesson.variant=1;assert.ok(LessonEngine.response(state).tutor_message_jopara.length<teaching.length,'A simpler explanation remains shorter');
+const expanded=LessonEngine.transition(state,'Explicame un poco más','more');
+assert.equal(expanded.lesson.variant,0,'More detail must not trigger simplified remediation');
+assert.match(LessonEngine.response(expanded).tutor_message_jopara,/Otro ejemplo para comparar/);
+const simpler=LessonEngine.transition(state,'explicame mejor','');
+assert.ok(simpler.question_context?.intent==='simple'||(simpler.mode==='TEACHING_MODE'&&simpler.lesson.variant>0));
+assert.ok(LessonEngine.response(simpler).tutor_message_jopara.length<teaching.length);
+const events=[['cuanto es dos multiplicado por doce',''],['sí son correctos',''],['24',''],['otro problema',''],['mokõi mas mbohapy',''],['sí','confirm_data'],['5','']];
+state=LessonEngine.initial('funciones','concepto');state.workshop={stage:'topic'};
+const actual=events.map(([m,a])=>{state=LessonEngine.transition(state,m,a);return {workshop:structuredClone(state.workshop),response:LessonEngine.response(state)};});
+assert.equal(actual[0].workshop.stage,'confirm');assert.equal(actual[1].workshop.stage,'answer');assert.equal(actual[2].workshop.stage,'correct');assert.equal(actual[6].workshop.stage,'correct');
+const php=spawnSync('C:/xampp1/php/php.exe',['tests/workshop_intake_trace.php'],{input:JSON.stringify(events),encoding:'utf8'});assert.equal(php.status,0,php.stderr);assert.deepEqual(actual,JSON.parse(php.stdout));
+console.log('PASS: developed topic explanations, simpler remediation, Jopara, direct problem intake, spoken operators/numbers and PHP/JS parity');

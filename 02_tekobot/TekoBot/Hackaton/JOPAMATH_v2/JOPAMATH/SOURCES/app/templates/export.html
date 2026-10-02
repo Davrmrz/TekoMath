@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Exportar Proyecto - {{ project.name }}{% endblock %}
+{% block page_title %}Exportación y Auditoría: {{ project.name }}{% endblock %}
+
+{% block header_actions %}
+  <a href="/translations/{{ project.id }}" class="btn btn-outline"><span>📋</span> Volver a la Tabla</a>
+{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+  <!-- Export Summary Cards -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-value" style="color: var(--status-validated);">{{ summary.human_validated }}</div>
+      <div class="stat-label">Aprobadas por Humano</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color: var(--status-tm);">{{ summary.tm_match }}</div>
+      <div class="stat-label">Memoria Exacta</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color: var(--status-review);">{{ summary.needs_review }}</div>
+      <div class="stat-label">Requiere Revisión</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color: var(--status-error);">{{ summary.validation_error }}</div>
+      <div class="stat-label">Errores Técnicos</div>
+    </div>
+  </div>
+
+  <!-- Quality Checklist -->
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Auditoría Previa a la Exportación</h2>
+    </div>
+
+    {% if summary.is_production_ready %}
+      <div class="alert alert-success">
+        <span>✅</span> <strong>Listo para Producción:</strong> Todas las unidades cuentan con validación técnica y aprobación humana formal.
+      </div>
+    {% else %}
+      {% if summary.validation_error > 0 %}
+        <div class="alert alert-danger">
+          <span>❌</span> <strong>Bloqueo de Calidad:</strong> Existen {{ summary.validation_error }} unidades con fallos de validación técnica (fórmulas rotas, tokens o números alterados). La exportación de producción está deshabilitada por defecto.
+        </div>
+      {% else %}
+        <div class="alert alert-warning">
+          <span>⚠️</span> <strong>Revisión Pendiente:</strong> Existen unidades que aún no cuentan con validación humana formal (HUMAN_VALIDATED). En la exportación de producción, estas unidades se preservan en español original para evitar enviar contenido no verificado.
+        </div>
+      {% endif %}
+    {% endif %}
+
+    <!-- Export Action Form -->
+    <form action="/api/projects/{{ project.id }}/export" method="POST" style="margin-top: 20px;">
+      <div class="form-group">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" name="allow_preliminary" value="true" {% if summary.validation_error == 0 %}checked{% endif %}>
+          <span style="font-size: 13px; font-weight: 600;">
+            Generar exportación preliminar de trabajo (incluye propuestas IA en revisión)
+          </span>
+        </label>
+        <p style="font-size: 12px; color: var(--text-muted); margin-left: 24px; margin-top: 2px;">
+          Desmarcar esta casilla si desea exportar exclusivamente las cadenas con <strong>HUMAN_VALIDATED</strong> para producción.
+        </p>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+        <button type="submit" class="btn btn-primary" {% if summary.validation_error > 0 and not allow_force %}disabled id="btn-export-blocked"{% endif %}>
+          <span>📤</span> Generar Archivos de Entrega y Auditoría
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Generated Download Links (if available) -->
+  {% if export_result %}
+  <div class="card" style="border: 2px solid var(--accent); background-color: #F0FDF4;">
+    <h3 style="font-size: 16px; font-weight: 700; color: #166534; margin-bottom: 12px;">Archivos Generados con Éxito</h3>
+    <p style="font-size: 13px; color: #15803D; margin-bottom: 16px;">
+      Los archivos finales han sido generados en la carpeta <code>output/</code> sin alterar en ningún momento los archivos originales.
+    </p>
+
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 16px; border-radius: 6px; border: 1px solid var(--border);">
+        <div>
+          <strong>Archivo Localizado ({{ project.file_format | upper }})</strong>
+          <div style="font-size: 12px; color: var(--text-muted);">{{ export_result.output_filepath }}</div>
+        </div>
+        <a href="/api/download/file?path={{ export_result.output_filepath }}" class="btn btn-sm btn-primary">Descargar</a>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 16px; border-radius: 6px; border: 1px solid var(--border);">
+        <div>
+          <strong>Informe Técnico de Auditoría (JSON)</strong>
+          <div style="font-size: 12px; color: var(--text-muted);">translation_audit.json</div>
+        </div>
+        <a href="/api/download/file?path={{ export_result.audit_json_path }}" class="btn btn-sm btn-outline">Descargar JSON</a>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 16px; border-radius: 6px; border: 1px solid var(--border);">
+        <div>
+          <strong>Reporte Visual de Calidad (HTML)</strong>
+          <div style="font-size: 12px; color: var(--text-muted);">translation_report.html</div>
+        </div>
+        <div style="display: flex; gap: 6px;">
+          <a href="/api/download/file?path={{ export_result.audit_html_path }}" class="btn btn-sm btn-outline">Descargar HTML</a>
+          <a href="/output/report" target="_blank" class="btn btn-sm btn-accent">Ver Reporte ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  // Enable button if user checks preliminary export
+  const chk = document.querySelector('input[name="allow_preliminary"]');
+  const btn = document.getElementById("btn-export-blocked");
+  if (chk && btn) {
+    chk.addEventListener("change", function() {
+      btn.disabled = !this.checked;
+    });
+  }
+</script>
+{% endblock %}

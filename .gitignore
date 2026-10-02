@@ -1,0 +1,17 @@
+# Archivos de entorno y logs
+.env
+.env.local
+*.log
+
+# Scripts de prueba y archivos temporales aislados
+scratch/
+
+# Dependencias de NodeJS
+node_modules/
+**/node_modules/
+
+# Archivos de sistema operativo y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

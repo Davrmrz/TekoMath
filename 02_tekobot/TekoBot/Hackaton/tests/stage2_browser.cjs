@@ -1,0 +1,61 @@
+const { chromium }=require('C:/Users/bogad/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+(async()=>{
+    const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});
+    const page=await browser.newPage({viewport:{width:1365,height:950}});
+    const errors=[];page.on('pageerror',e=>errors.push(e.message));
+    await page.route('**/*',route=>route.request().url().startsWith('http://127.0.0.1:8127')?route.continue():route.abort());
+    await page.goto('http://127.0.0.1:8127/index.html');
+    await page.waitForSelector('.curriculum-unit', {state:'attached'});
+    assert.equal(await page.locator('.curriculum-unit').count(),4);
+    assert.equal(await page.locator('.curriculum-subtopic').count(),59);
+    await page.locator('#btn-toggle-sidebar').click();
+    await page.evaluate(()=>Promise.allSettled(document.getAnimations().map(a=>a.finished)));
+    fs.mkdirSync('tmp/qa',{recursive:true});
+    await page.screenshot({path:'tmp/qa/units-desktop.png',fullPage:true});
+    await page.getByRole('button',{name:'Circunferencia trigonométrica y líneas de seno, coseno y tangente',exact:true}).click();
+    await page.getByRole('button',{name:'Sí, jahecha',exact:true}).click();
+    await page.getByRole('button',{name:'Jahecha peteĩ ejemplo',exact:true}).waitFor();
+    assert.match(await page.locator('#lesson-context').innerText(),/Explicación/);
+    await page.getByRole('button',{name:'Tengo una pregunta',exact:true}).click();
+    await page.getByRole('button',{name:'Jasegi donde estábamos',exact:true}).click();
+    await page.getByRole('button',{name:'Jahecha peteĩ ejemplo',exact:true}).click();
+    await page.getByRole('button',{name:'Comprobar comprensión',exact:true}).waitFor();
+    assert.match(await page.locator('#chat-messages').innerText(),/cos\(90°\)=0/);
+    await page.evaluate(()=>Promise.allSettled(document.getAnimations().map(a=>a.finished)));
+    await page.screenshot({path:'tmp/qa/example-desktop.png',fullPage:true});
+    await page.reload();
+    await page.getByRole('button',{name:'Comprobar comprensión',exact:true}).click();
+    await page.getByRole('button',{name:'Sí, se entiende',exact:true}).click();
+    await page.getByRole('button',{name:'Jahecha peteĩ ejemplo',exact:true}).click();
+    await page.getByRole('button',{name:'Comprobar comprensión',exact:true}).click();
+    await page.getByRole('button',{name:'Sí, se entiende',exact:true}).click();
+    await page.getByRole('button',{name:'Sí, vamos a practicar',exact:true}).click();
+    await page.getByRole('button',{name:'Repasar lo aprendido',exact:true}).waitFor();
+    assert.match(await page.locator('#chat-messages').innerText(),/120°/);
+    await page.setViewportSize({width:390,height:844});
+    await page.evaluate(async()=>{await Promise.allSettled(document.getAnimations().map(a=>a.finished));const c=document.getElementById('chat-messages');c.scrollTop=c.scrollHeight;});
+    await page.screenshot({path:'tmp/qa/practice-mobile.png',fullPage:true});
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),'No horizontal overflow');
+    // PHP entry uses the same curriculum and state flow.
+    await page.goto('http://127.0.0.1:8127/index.php');
+    await page.waitForSelector('.curriculum-unit', {state:'attached'});
+    assert.equal(await page.locator('.curriculum-subtopic').count(),59);
+    // Offline transitions remain usable after reload, without calling Gemini/PHP.
+    await page.route('**/api/**',route=>route.abort());
+    await page.locator('#btn-toggle-sidebar').click();
+    await page.locator('.curriculum-unit summary').filter({hasText:'Análisis combinatorio'}).click();
+    await page.getByRole('button',{name:'Factorial de un número',exact:true}).click();
+    await page.getByRole('button',{name:'Sí, jahecha',exact:true}).click();
+    await page.getByRole('button',{name:'Jahecha peteĩ ejemplo',exact:true}).click();
+    await page.getByRole('button',{name:'Jahecha otro ejemplo',exact:true}).click();
+    assert.match(await page.locator('#chat-messages').innerText(),/3!=3×2×1=6/);
+    await page.reload();
+    await page.getByRole('button',{name:'Comprobar comprensión',exact:true}).waitFor();
+    assert.match(await page.locator('#lesson-context').innerText(),/Factorial.*Guardado en este dispositivo/);
+    assert.deepEqual(errors,[]);
+    await browser.close();console.log('PASS: desktop/mobile, 4 units/59 subtopics, welcome, teaching, question return, example, reload and practice consent');
+})().catch(e=>{console.error(e);process.exit(1)});
+
+

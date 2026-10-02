@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - MateJopara Localization Tool{% endblock %}
+{% block page_title %}Dashboard de Localización{% endblock %}
+
+{% block header_actions %}
+  <a href="/import" class="btn btn-primary"><span>📥</span> Importar Archivo</a>
+{% endblock %}
+
+{% block content %}
+<!-- Welcome & Philosophy Banner -->
+<div class="card" style="background: linear-gradient(135deg, var(--bg-dark), var(--primary)); color: white; border: none;">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 6px;">Bienvenido a MateJopara Localization Tool</h2>
+      <p style="opacity: 0.9; font-size: 14px;">Herramienta interna profesional para localización por lotes de contenido educativo a jopara pedagógico.</p>
+    </div>
+    <div style="text-align: right; background: rgba(255,255,255,0.1); padding: 12px 18px; border-radius: 8px;">
+      <div style="font-size: 11px; text-transform: uppercase; color: var(--accent); font-weight: 700; letter-spacing: 0.05em;">Principio Rector</div>
+      <div style="font-size: 13px; font-weight: 600; margin-top: 2px;">La IA propone. Las fuentes orientan.<br>El software verifica. La persona valida.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Stats Grid -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.total_projects }}</div>
+    <div class="stat-label">Proyectos Activos</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.total_units }}</div>
+    <div class="stat-label">Unidades Totales</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" style="color: var(--status-validated);">{{ stats.human_validated }}</div>
+    <div class="stat-label">Aprobadas (Humano)</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" style="color: var(--status-tm);">{{ stats.tm_matches }}</div>
+    <div class="stat-label">Memoria de Traducción</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" style="color: var(--status-auto);">{{ stats.auto_generated }}</div>
+    <div class="stat-label">Propuestas IA</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" style="color: var(--status-error);">{{ stats.validation_errors }}</div>
+    <div class="stat-label">Errores Técnicos</div>
+  </div>
+</div>
+
+<!-- Quick Demo Action Banner -->
+<div class="card" style="border-left: 4px solid var(--accent); background-color: #F0FDF4; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+  <div>
+    <h3 style="font-size: 15px; font-weight: 600; color: #166534;">¿Deseas probar el flujo completo con datos oficiales de prueba?</h3>
+    <p style="font-size: 13px; color: #15803D; margin-top: 2px;">Carga <code>data/demo/demo_es.json</code> con ejercicios matemáticos, trigonometría, fórmulas y placeholders.</p>
+  </div>
+  <form action="/api/load-demo" method="POST" style="margin: 0;">
+    <button type="submit" class="btn btn-accent"><span>🚀</span> Cargar Proyecto Demo</button>
+  </form>
+</div>
+
+<!-- Recent Projects Table -->
+<div class="card">
+  <div class="card-header">
+    <h2 class="card-title">Proyectos Recientes</h2>
+    <a href="/translations" class="btn btn-outline btn-sm">Ver Todos</a>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Nombre del Archivo</th>
+          <th>Formato</th>
+          <th>Unidades</th>
+          <th>Aprobadas</th>
+          <th>Errores</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if projects %}
+          {% for p in projects %}
+          <tr>
+            <td><strong>{{ p.original_filename }}</strong></td>
+            <td><span class="badge badge-preferred">{{ p.file_format | upper }}</span></td>
+            <td>{{ p.units | length }}</td>
+            <td><span class="badge badge-human_validated">{{ p.units | selectattr("status", "equalto", "HUMAN_VALIDATED") | list | length }}</span></td>
+            <td>
+              {% set err_count = p.units | selectattr("status", "equalto", "VALIDATION_ERROR") | list | length %}
+              {% if err_count > 0 %}
+                <span class="badge badge-validation_error">{{ err_count }}</span>
+              {% else %}
+                <span style="color: #059669; font-weight: 500;">0</span>
+              {% endif %}
+            </td>
+            <td>{{ p.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>
+              <div style="display: flex; gap: 6px;">
+                <a href="/translations/{{ p.id }}" class="btn btn-outline btn-sm">Tabla</a>
+                <a href="/review/{{ p.id }}" class="btn btn-primary btn-sm">Revisar</a>
+                <a href="/export/{{ p.id }}" class="btn btn-secondary btn-sm">Exportar</a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 32px; color: var(--text-muted);">
+              No hay proyectos creados aún. <a href="/import" style="color: var(--primary); font-weight: 600;">Importa tu primer archivo</a> para comenzar.
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

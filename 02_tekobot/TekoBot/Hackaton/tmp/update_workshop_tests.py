@@ -1,0 +1,9 @@
+from pathlib import Path
+for file in ['tests/workshop_test.cjs','tests/natural_workshop_test.cjs']:
+ p=Path(file);s=p.read_text(encoding='utf8').replace("'natural_problem','problem_workshop'","'natural_problem','workshop_expression','problem_workshop'")
+ s=s.replace('state=LessonEngine.transition(state,m,a);return',"if(state.workshop.stage==='topic'&&a!=='new_problem')state=LessonEngine.transition(state,'No sé el tema','topic_unsure');state=LessonEngine.transition(state,m,a);if(state.workshop.stage==='confirm')state=LessonEngine.transition(state,'Sí, son correctos','confirm_data');return")
+ p.write_text(s,encoding='utf8')
+p=Path('tests/workshop_trace.php');s=p.read_text(encoding='utf8').replace("$state=PedagogyService::transition($state,$message,$action);", "if($state['workshop']['stage']==='topic'&&$action!=='new_problem')$state=PedagogyService::transition($state,'No sé el tema','topic_unsure');$state=PedagogyService::transition($state,$message,$action);if($state['workshop']['stage']==='confirm')$state=PedagogyService::transition($state,'Sí, son correctos','confirm_data');");p.write_text(s,encoding='utf8')
+p=Path('tests/workshop_browser.cjs');s=p.read_text(encoding='utf8').replace("async function ask(message){", "async function ask(message){if(await page.getByRole('button',{name:'No sé el tema',exact:true}).count()){await page.getByRole('button',{name:'No sé el tema',exact:true}).click();await page.waitForFunction(()=>!document.getElementById('typing-indicator'));}")
+s=s.replace("return page.locator('.chat-message.tutor').last().innerText();", "if(await page.getByRole('button',{name:'Sí, son correctos',exact:true}).count()){await page.getByRole('button',{name:'Sí, son correctos',exact:true}).click();await page.waitForFunction(()=>!document.getElementById('typing-indicator'));}return page.locator('.chat-message.tutor').last().innerText();")
+p.write_text(s,encoding='utf8')

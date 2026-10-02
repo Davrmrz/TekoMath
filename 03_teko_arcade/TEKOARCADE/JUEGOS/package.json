@@ -1,0 +1,35 @@
+{
+  "name": "juegos",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:lan": "npm run dev",
+    "predev": "node scripts/prepareOcrAssets.mjs",
+    "build": "tsc -b && vite build",
+    "prebuild": "node scripts/prepareOcrAssets.mjs",
+    "missions:generate": "node --experimental-strip-types scripts/generate-missions.mjs",
+    "test": "node --experimental-strip-types --test src/engine/math/answerEvaluator.test.mjs src/games/triangle-forge/game.test.mjs src/games/pair-matrix/pair-logic.test.mjs src/games/signal-sync/signal-sync.test.mjs src/games/ratio-rush/ratio-rush.test.mjs src/games/vector-launch/vector-launch.test.mjs src/games/graph-lab/graph-lab.test.mjs src/services/progressService.test.mjs src/services/progressAnalytics.test.mjs src/services/missionEngine.test.mjs src/services/localExerciseGenerator.test.mjs src/services/networkManager.test.mjs src/services/exerciseSourceResolver.test.mjs src/services/exerciseGenerationProvider.test.mjs api/generate-exercise.test.mjs src/services/taskExerciseResolver.test.mjs src/services/imageTextRecognition.test.mjs",
+    "lint": "oxlint",
+    "preview": "vite preview",
+    "preview:lan": "npm run preview"
+  },
+  "dependencies": {
+    "@tesseract.js-data/spa": "^1.0.0",
+    "lucide-react": "^1.48.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.4",
+    "tesseract.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "oxlint": "^1.81.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  }
+}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Fuentes Lingüísticas - MateJopara{% endblock %}
+{% block page_title %}Fuentes Lingüísticas y Normativas{% endblock %}
+
+{% block content %}
+<div class="card" style="border-left: 4px solid var(--accent); background-color: #F8FAFC;">
+  <h3 style="font-size: 15px; font-weight: 700; color: var(--bg-dark); margin-bottom: 6px;">Protocolo de Trazabilidad y Honestidad Lingüística</h3>
+  <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+    Las fuentes normativas e institucionales aquí listadas sirven de <strong>referencia y orientación</strong> para los criterios lingüísticos y pedagógicos de la herramienta. 
+    Bajo ninguna circunstancia una propuesta generada por inteligencia artificial debe atribuirse como "Traducción oficial de la SPL". 
+    El localizador utiliza las siguientes fórmulas de atribución estandarizadas:
+  </p>
+  <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px;">
+    <span class="badge badge-preferred">Referencia léxica: SPL</span>
+    <span class="badge badge-preferred">Referencia contextual: COREGUAPA</span>
+    <span class="badge badge-preferred">Terminología matemática: MEC</span>
+    <span class="badge badge-preferred">Uso lingüístico: Castellano Paraguayo</span>
+    <span class="badge badge-human_validated">Validación humana: pendiente / aprobada</span>
+  </div>
+</div>
+
+<div class="table-wrapper">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 180px;">Identificador</th>
+        <th>Nombre Institucional</th>
+        <th>Rol en MateJopara</th>
+        <th>Enlace Oficial</th>
+        <th>Notas Técnicas</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for src in sources %}
+      <tr>
+        <td><code>{{ src.id }}</code></td>
+        <td><strong>{{ src.name }}</strong></td>
+        <td><span class="badge" style="background: #E2E8F0; color: #1E293B;">{{ src.role }}</span></td>
+        <td>
+          {% if src.url.startswith("http") %}
+            <a href="{{ src.url }}" target="_blank" rel="noopener noreferrer" style="color: var(--primary); font-weight: 500; text-decoration: underline;">
+              Abrir enlace ↗
+            </a>
+          {% else %}
+            <code>{{ src.url }}</code>
+          {% endif %}
+        </td>
+        <td><small style="color: var(--text-muted);">{{ src.notes }}</small></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

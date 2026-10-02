@@ -1,0 +1,554 @@
+/* ============================================
+   TEKO MATH — Estilos del Visualizador Trigonométrico (visualizer.css)
+   Estilo Neo-brutalista Educativo × Verde & Morado Teko
+   ============================================ */
+
+/* Contenedor Principal del Visualizador */
+.visualizer-container {
+  background: var(--white-pure);
+  border: var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-solid-lg);
+  padding: var(--space-xl);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--space-2xl);
+}
+
+.visualizer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.visualizer-header__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.visualizer-header__icon {
+  width: 48px;
+  height: 48px;
+  background: var(--green-500);
+  border: var(--border-thin);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 2px 2px 0 var(--border-dark);
+}
+
+.visualizer-header__title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.visualizer-header__subtitle {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--gray-600);
+}
+
+/* ============================================
+   PESTAÑAS DE LAS 6 FUNCIONES TRIGONOMÉTRICAS
+   ============================================ */
+.visualizer-topic-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px var(--space-sm);
+  background: var(--gray-50);
+  border: var(--border-thin);
+  border-radius: var(--radius-pill);
+  overflow-x: auto;
+  margin-bottom: var(--space-lg);
+  scrollbar-width: thin;
+}
+
+.vis-trig-tab {
+  padding: 8px 16px;
+  background: var(--white);
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--duration) var(--ease-out);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vis-trig-tab:hover {
+  background: var(--green-50);
+  border-color: var(--green-600);
+  transform: translateY(-1px);
+}
+
+.vis-trig-tab--active {
+  background: var(--green-600) !important;
+  color: var(--white) !important;
+  border-color: var(--green-800) !important;
+  box-shadow: 2px 2px 0 var(--border-dark);
+}
+
+/* Workbench Layout (Canvas + Sidebar) */
+.visualizer-workbench {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-xl);
+  background: #f8fafc;
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  position: relative;
+  min-height: 580px;
+}
+
+/* Canvas Area */
+.visualizer-canvas-wrapper {
+  position: relative;
+  background: #ffffff;
+  border: var(--border-thin);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-solid-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.visualizer-canvas {
+  width: 100%;
+  height: 520px;
+  display: block;
+  cursor: crosshair;
+  background: #ffffff;
+}
+
+/* Canvas Floating Toolbar */
+.canvas-floating-tools {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  flex-wrap: wrap;
+}
+
+.canvas-tool-btn {
+  padding: 6px 12px;
+  background: var(--white);
+  border: var(--border-thin);
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--border-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--duration) ease;
+}
+
+.canvas-tool-btn:hover {
+  background: var(--green-100);
+  transform: translateY(-1px);
+}
+
+.canvas-tool-btn--active {
+  background: #fef08a !important;
+  border-color: #ca8a04 !important;
+  color: #854d0e !important;
+}
+
+/* Panel de Controles / Inspector Derecho */
+.visualizer-controls-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-height: 540px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.visualizer-controls-panel::-webkit-scrollbar {
+  width: 6px;
+}
+.visualizer-controls-panel::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 3px;
+}
+
+/* Tarjetas de Control (Style Cards) */
+.trig-card {
+  background: #ffffff;
+  border: var(--border-thin);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  box-shadow: 2px 2px 0 var(--border-dark);
+}
+
+.trig-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.trig-card__title {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* Fórmula en Vivo */
+.trig-formula-box {
+  font-family: var(--font-mono);
+  font-size: 1.12rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--gray-300);
+  margin-bottom: var(--space-sm);
+}
+
+/* Slider y Readouts de Ángulo */
+.trig-angle-readouts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.trig-readout-item {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.trig-readout-item span {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--gray-500);
+  font-family: var(--font-body);
+}
+
+.trig-readout-item strong {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
+.trig-slider-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.trig-step-btn {
+  padding: 5px 9px;
+  background: var(--white);
+  border: var(--border-thin);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--border-dark);
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.trig-step-btn:hover {
+  background: var(--green-200);
+  transform: translateY(-1px);
+}
+
+.trig-step-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+.trig-slider-wrapper {
+  margin-bottom: 0;
+}
+
+.trig-slider {
+  width: 100%;
+  accent-color: var(--green-600);
+  cursor: pointer;
+  height: 8px;
+}
+
+/* Botones Presets de Ángulos */
+.trig-presets-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.trig-preset-btn {
+  padding: 4px 8px;
+  background: var(--white);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.trig-preset-btn:hover {
+  background: var(--purple-100);
+  border-color: var(--purple-600);
+  color: var(--purple-800);
+}
+
+/* Desglose de Razón Geométrica */
+.trig-ratio-badge {
+  background: #f8fafc;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+/* Valores Exactos & Decimales */
+.trig-values-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.trig-val-box {
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.trig-val-box span {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--green-800);
+}
+
+.trig-val-box strong {
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  color: var(--green-900);
+}
+
+/* Cuadrantes & Signos */
+.trig-quadrant-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.trig-quadrant-table {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  text-align: center;
+  background: var(--gray-50);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gray-200);
+}
+
+.trig-q-col {
+  padding: 3px 2px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.trig-q-col small {
+  display: block;
+  font-size: 0.65rem;
+  color: var(--gray-500);
+}
+
+/* Propiedades (Dominio, Rango, Período, Ceros) */
+.trig-props-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.8rem;
+}
+
+.trig-prop-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px dashed var(--gray-200);
+  padding-bottom: 4px;
+}
+
+.trig-prop-label {
+  font-weight: 700;
+  color: var(--gray-600);
+  font-family: var(--font-display);
+}
+
+.trig-prop-val {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink);
+  text-align: right;
+  max-width: 60%;
+}
+
+/* Caja de Comparación Recíproca */
+.trig-reciprocal-card {
+  background: var(--purple-50);
+  border: 1.5px dashed var(--purple-300);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  color: var(--purple-950);
+  line-height: 1.45;
+}
+
+.trig-reciprocal-card code {
+  background: #ffffff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--purple-200);
+  font-weight: bold;
+  color: var(--purple-800);
+}
+
+/* Checkboxes de Capas */
+.trig-toggles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trig-toggle-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  user-select: none;
+}
+
+.trig-toggle-item input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--purple-600);
+  cursor: pointer;
+}
+
+/* Responsividad */
+@media (max-width: 1024px) {
+  .visualizer-workbench {
+    grid-template-columns: 1fr;
+  }
+
+  .visualizer-canvas {
+    height: 400px;
+  }
+
+  .visualizer-controls-panel {
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+@media (max-width: 640px) {
+  .visualizer-canvas {
+    height: 300px;
+  }
+
+  .visualizer-topic-tabs {
+    padding: 6px 4px;
+    gap: 6px;
+    scrollbar-width: none;
+  }
+  .visualizer-topic-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vis-trig-tab {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .visualizer-container {
+    padding: 14px 10px;
+    border-radius: var(--radius-lg);
+  }
+  .visualizer-header__title {
+    font-size: 1.15rem;
+  }
+  .visualizer-header__subtitle {
+    font-size: 0.8rem;
+  }
+  .visualizer-canvas {
+    height: 250px;
+  }
+  .canvas-floating-tools {
+    position: static;
+    margin-top: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .canvas-tool-btn {
+    font-size: 0.72rem;
+    padding: 4px 8px;
+  }
+  .trig-presets-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+  .trig-preset-btn {
+    font-size: 0.7rem;
+    padding: 4px 2px;
+  }
+}
+

@@ -1,0 +1,960 @@
+{
+  "version": 2,
+  "provenance": {
+    "sources": [
+      "JOPAMATH_v2/JOPAMATH/app/core/prompts.py",
+      "JOPAMATH_v2/JOPAMATH/app/core/contexts.py",
+      "JOPAMATH_v2/JOPAMATH/app/core/protector.py",
+      "JOPAMATH_v2/JOPAMATH/app/core/memory.py",
+      "JOPAMATH_v2/JOPAMATH/app/core/provenance.py",
+      "JOPAMATH_v2/JOPAMATH/app/providers/http_utils.py",
+      "JOPAMATH_v2/JOPAMATH/data/starter_glossary.json"
+    ],
+    "review_status": "authored_adaptation_not_human_validated",
+    "note": "La memoria de JOPAMATH v2 no contiene traducciones HUMAN_VALIDATED. No se importan salidas del proveedor mock como traducciones aprobadas. v2 incorpora reintentos HTTP exponenciales, módulo de provenance y glosario extendido."
+  },
+  "profiles": {
+    "jopara": {
+      "label": "Jopara",
+      "instruction": "Jopara pedagógico paraguayo natural. Integra guaraní en las decisiones y explicaciones, con español para la terminología matemática. Redacta ideas completas: no traduzcas palabra por palabra ni agregues un saludo y cierre guaraní a un cuerpo sin adaptar. Sin cuotas de idioma, muletillas repetidas, traducciones paralelas automáticas ni neologismos técnicos. Usa aclaraciones solo si son necesarias para comprender."
+    },
+    "es_py": {
+      "label": "Español paraguayo",
+      "instruction": "Español paraguayo coloquial, cercano y respetuoso. Usa voseo coherente: vos, tenés, podés, fijate, probá, contame. Explica como un profesor que conversa con el alumno. Usa de vez en cuando expresiones naturales como dale, de a poco o mirá; no las agregues a todas las frases. Sin frases guaraníes, caricaturas, exceso de jerga ni lenguaje infantil."
+    },
+    "es": {
+      "label": "Español neutro",
+      "instruction": "Español internacional neutro con tuteo coherente: tú, tienes, puedes, observa, prueba, explica. Evita voseo, regionalismos paraguayos, guaraní, muletillas como dale o nomás. Mantén un tono claro, cercano y preciso, sin volverlo burocrático."
+    }
+  },
+  "glossary": [
+    {
+      "id": "gloss_001",
+      "source_term": "seno",
+      "preferred_output": "seno",
+      "status": "KEEP_SPANISH",
+      "contexts": [
+        "MATH_CONTENT",
+        "EXPLANATION",
+        "INSTRUCTION"
+      ],
+      "sources": [
+        "MEC_STUDENT",
+        "MATEJOPARA_GLOSSARY"
+      ],
+      "reason": "Término trigonométrico estándar en currículo MEC Paraguay.",
+      "notes": "Configuración inicial para evitar distorsiones técnicas en trigonometría.",
+      "created_at": "2026-09-25T00:00:00Z",
+      "updated_at": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "gloss_002",
+      "source_term": "coseno",
+      "preferred_output": "coseno",
+      "status": "KEEP_SPANISH",
+      "contexts": [
+        "MATH_CONTENT",
+        "EXPLANATION",
+        "INSTRUCTION"
+      ],
+      "sources": [
+        "MEC_STUDENT",
+        "MATEJOPARA_GLOSSARY"
+      ],
+      "reason": "Término trigonométrico estándar.",
+      "notes": "Preservar en español para mantener correlación curricular y fórmulas.",
+      "created_at": "2026-09-25T00:00:00Z",
+      "updated_at": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "gloss_003",
+      "source_term": "tangente",
+      "preferred_output": "tangente",
+      "status": "KEEP_SPANISH",
+      "contexts": [
+        "MATH_CONTENT",
+        "EXPLANATION",
+        "INSTRUCTION"
+      ],
+      "sources": [
+        "MEC_STUDENT",
+        "MATEJOPARA_GLOSSARY"
+      ],
+      "reason": "Función trigonométrica curricular.",
+      "notes": "Mantener exactamente en español.",
+      "created_at": "2026-09-25T00:00:00Z",
+      "updated_at": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "gloss_004",
+      "source_term": "hipotenusa",
+      "preferred_output": "hipotenusa",
+      "status": "KEEP_SPANISH",
+      "contexts": [
+        "MATH_CONTENT",
+        "EXPLANATION",
+        "INSTRUCTION",
+        "HINT"
+      ],
+      "sources": [
+        "MEC_STUDENT",
+        "MATEJOPARA_GLOSSARY"
+      ],
+      "reason": "Geometría del triángulo rectángulo según manuales MEC.",
+      "notes": "No inventar neologismos forzados.",
+      "created_at": "2026-09-25T00:00:00Z",
+      "updated_at": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "gloss_005",
+      "source_term": "cateto opuesto",
+      "preferred_output": "cateto opuesto",
+      "status": "KEEP_SPANISH",
+      "contexts": [
+        "MATH_CONTENT",
+        "EXPLANATION",
+        "INSTRUCTION",
+        "HINT"
+      ],
+      "sources": [
+        "MEC_STUDENT",
+        "MATEJOPARA_GLOSSARY"
+      ],
+      "reason": "Elemento trigonométrico estándar.",
+      "notes": "Preservar denominación exacta.",
+      "created_at": "2026-09-25T00:00:00Z",
+      "updated_at": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "gloss_006",
+      "source_term": "cateto adyacente",
+      "preferred_output": "cateto adyacente",
+      "status": "KEEP_SPANISH",
+      "contexts": [
+        "MATH_CONTENT",
+        "EXPLANATION",
+        "INSTRUCTION",
+        "HINT"
+      ],
+      "sources": [
+        "MEC_STUDENT",
+        "MATEJOPARA_GLOSSARY"
+      ],
+      "reason": "Elemento trigonométrico estándar.",
+      "notes": "Preservar denominación exacta.",
+      "created_at": "2026-09-25T00:00:00Z",
+      "updated_at": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "gloss_007",
+      "source_term": "triángulo",
+      "preferred_output": "triángulo",
+      "status": "PREFERRED",
+      "contexts": [
+        "MATH_CONTENT",
+        "INSTRUCTION"
+      ],
+      "sources": [
+        "MEC_STUDENT",
+        "PARAGUAYAN_SPANISH"
+      ],
+      "reason": "Uso común en jopara pedagógico escolar.",
+      "notes": "Puede usarse mbohapyasýva en contextos formales guaraní puro, pero en jopara escolar triángulo es natural.",
+      "created_at": "2026-09-25T00:00:00Z",
+      "updated_at": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "gloss_008",
+      "source_term": "clic",
+      "preferred_output": "cliquea",
+      "status": "PREFERRED",
+      "contexts": [
+        "UI",
+        "INSTRUCTION"
+      ],
+      "sources": [
+        "PARAGUAYAN_SPANISH"
+      ],
+      "reason": "Acción directa de interfaz entendida de forma unívoca.",
+      "notes": "Evitar neologismos confusos de informática.",
+      "created_at": "2026-09-25T00:00:00Z",
+      "updated_at": "2026-09-25T00:00:00Z"
+    },
+    {
+      "id": "gloss_009",
+      "source_term": "pista",
+      "preferred_output": "pista",
+      "status": "PREFERRED",
+      "contexts": [
+        "HINT",
+        "UI"
+      ],
+      "sources": [
+        "MATEJOPARA_GLOSSARY"
+      ],
+      "reason": "Término pedagógico habitual en juegos educativos paraguayos.",
+      "notes": "Ej: 'Eipotápa peteĩ pista?'",
+      "created_at": "2026-09-25T00:00:00Z",
+      "updated_at": "2026-09-25T00:00:00Z"
+    }
+  ],
+  "phrases": [
+    {
+      "source": "Hola.",
+      "context": "DIALOGUE",
+      "jopara": "Mba'éichapa.",
+      "es_py": "¿Qué tal?",
+      "es": "Hola."
+    },
+    {
+      "source": "Vamos a estudiar",
+      "context": "DIALOGUE",
+      "jopara": "Jahecha",
+      "es_py": "Vamos a ver",
+      "es": "Vamos a estudiar"
+    },
+    {
+      "source": "¿Querés que primero te explique desde el principio?",
+      "context": "DIALOGUE",
+      "jopara": "¿Jahechápa desde el principio?",
+      "es_py": "¿Arrancamos de cero?",
+      "es": "¿Quieres que te explique desde el principio?"
+    },
+    {
+      "source": "Veamos un ejemplo del profesor.",
+      "context": "EXPLANATION",
+      "jopara": "Jahecha peteĩ ejemplo, paso a paso.",
+      "es_py": "Mirá este ejemplo, vamos paso a paso.",
+      "es": "Veamos un ejemplo paso a paso."
+    },
+    {
+      "source": "Este ejemplo está resuelto para mostrarte cómo se usa la idea.",
+      "context": "EXPLANATION",
+      "jopara": "Ko ejemplo ohechauka mba'éichapa joguaha esta idea. Emaña porã cada paso.",
+      "es_py": "Con este ejemplo podés ver cómo se usa la idea.",
+      "es": "Este ejemplo resuelto muestra cómo aplicar la idea."
+    },
+    {
+      "source": "Ya tenemos una base para",
+      "context": "DIALOGUE",
+      "jopara": "Jaguerekóma peteĩ base para",
+      "es_py": "Bueno, ya tenemos una base para",
+      "es": "Ya tenemos una base para"
+    },
+    {
+      "source": "¿Querés que empecemos a practicar? También podemos explicar un poco más.",
+      "context": "DIALOGUE",
+      "jopara": "¿Ñañepyrũpa a practicar? Ndaikuaái porã rã, jahecha jey la explicación.",
+      "es_py": "¿Probamos un ejercicio? Si hace falta, lo vemos un poco más.",
+      "es": "¿Quieres empezar a practicar? También podemos ampliar la explicación."
+    },
+    {
+      "source": "Vamos por partes.",
+      "context": "HINT",
+      "jopara": "Jaha mbeguekatúpe, peteĩ peteĩ.",
+      "es_py": "Vamos de a poco.",
+      "es": "Vamos paso a paso."
+    },
+    {
+      "source": "¡Bien!",
+      "context": "FEEDBACK",
+      "jopara": "¡Iporã upéicha!",
+      "es_py": "¡Eso, bien ahí!",
+      "es": "¡Bien!"
+    },
+    {
+      "source": "Trabajemos juntos.",
+      "context": "DIALOGUE",
+      "jopara": "Ñamba'apo oñondive, ndaipóri problema.",
+      "es_py": "Vamos a verlo juntos.",
+      "es": "Trabajemos juntos."
+    },
+    {
+      "source": "Ahora te toca.",
+      "context": "INSTRUCTION",
+      "jopara": "Ko'ág̃a nde ra'e. Eha'ã nde añoite.",
+      "es_py": "Ahora probá vos.",
+      "es": "Ahora es tu turno."
+    },
+    {
+      "source": "¿Qué parte querés que aclaremos? Podés escribir tu duda; guardé el punto donde estábamos.",
+      "context": "DIALOGUE",
+      "jopara": "¿Mba'épa ndereikuaái porã rã? Ehai nde ryepy'a; upéi jasegi araka'eve oĩva.",
+      "es_py": "¿Qué parte no quedó clara? Contame nomás; después seguimos donde estábamos.",
+      "es": "¿Qué parte quieres aclarar? Escribe tu duda; conservé el punto de la lección."
+    },
+    {
+      "source": "Explicá con tus palabras qué representa cada dato y por qué usarías esta relación. Si un paso no está claro, señalalo y lo desarrollamos con más detalle.",
+      "context": "INSTRUCTION",
+      "jopara": "Emombe'u ne ñe’ẽme mba'éichapa ohechauka cada dato ha mba'érepa eipuru ko relación. Peteĩ paso ndaikuaái rã, emoĩ jepe, jahecha oñondive.",
+      "es_py": "Contame con tus palabras qué representa cada dato y por qué usarías esta relación. Si un paso te trabó, decime cuál y lo vemos más despacio.",
+      "es": "Explica con tus palabras qué representa cada dato y por qué usarías esta relación. Si algún paso no está claro, indícalo para que podamos explicarlo con más detalle."
+    },
+    {
+      "source": "Leé el ejemplo en este orden: identificá los datos, localizá la regla que los relaciona y justificá cada transformación. Después compará lo que obtuviste con la definición del tema.",
+      "context": "INSTRUCTION",
+      "jopara": "Emaña porã al ejemplo ko ñepyrũme: ehecha los datos, upéi la regla ojoguaha hagua, ha emombe'u mba'érepa oĩ cada transformación. Upéi compará el resultado oĩva definición ndive.",
+      "es_py": "Mirá el ejemplo de a poco: primero los datos, después la regla que los conecta y el porqué de cada transformación. Al final, compará lo que obtuviste con la definición.",
+      "es": "Lee el ejemplo en este orden: identifica los datos, localiza la regla que los relaciona y justifica cada transformación. Después compara lo que obtuviste con la definición del tema."
+    },
+    {
+      "source": "La entrada es el valor que elegimos y la salida es lo que la regla le asigna.",
+      "context": "EXPLANATION",
+      "jopara": "Ñaikũmby ko relación: eligimos peteĩ valor de entrada ha la regla omondouka peteĩ salida. Péicha oiko siempre.",
+      "es_py": "Mirá: vos elegís una entrada y la regla le asigna una salida.",
+      "es": "La entrada es el valor elegido; la salida es el valor que le asigna la regla."
+    },
+    {
+      "source": "Primero reconocé la clase de función y leé su expresión respetando los paréntesis.",
+      "context": "EXPLANATION",
+      "jopara": "Ñepyrũrã, ehecha mba'éichapa función: reconocé de qué tipo es, upévare los paréntesis ndajepokuaái.",
+      "es_py": "Primero fijate qué tipo de función tenés y leé la expresión sin saltear los paréntesis.",
+      "es": "Primero identifica el tipo de función y lee su expresión respetando los paréntesis."
+    },
+    {
+      "source": "En una gráfica, una pareja entrada-salida corresponde a un punto: su coordenada horizontal es la entrada y la vertical es la imagen.",
+      "context": "EXPLANATION",
+      "jopara": "Jahecha el gráfico: peteĩ peteĩ pareja entrada-salida ombojoaju peteĩ punto ndive. La coordenada horizontal ohechauka la entrada; la vertical, la imagen.",
+      "es_py": "Fijate en el gráfico: cada pareja entrada-salida es un punto. La entrada va en la coordenada horizontal y la imagen en la vertical.",
+      "es": "En una gráfica, cada pareja entrada-salida corresponde a un punto: la coordenada horizontal es la entrada y la vertical es la imagen."
+    },
+    {
+      "source": "Primero distinguí un ángulo de una razón trigonométrica.",
+      "context": "EXPLANATION",
+      "jopara": "Ñamombyky ko ñepyrũgua: peteĩ ángulo ha peteĩ razón trigonométrica ha'e mokõi mba'e ndaikatúi oĩ peteĩcha.",
+      "es_py": "Primero fijate en esto: un ángulo y una razón trigonométrica son cosas distintas.",
+      "es": "Primero distingue entre un ángulo y una razón trigonométrica."
+    },
+    {
+      "source": "Leé qué conocés y qué querés averiguar antes de escoger una relación.",
+      "context": "EXPLANATION",
+      "jopara": "Emaña porã los datos oĩva ha mba'épa reikotevẽ rejuhu; upéi vasta eipuru la relación oñemongetáva.",
+      "es_py": "Antes de elegir una relación, fijate qué datos tenés y qué querés averiguar.",
+      "es": "Antes de elegir una relación, identifica los datos conocidos y lo que necesitas averiguar."
+    },
+    {
+      "source": "En la circunferencia unitaria, el coseno corresponde a la coordenada horizontal y el seno a la vertical; por eso sus signos cambian según el cuadrante.",
+      "context": "EXPLANATION",
+      "jopara": "Jahecha la circunferencia unitaria: el coseno ombojoaju la coordenada horizontal ndive, el seno la vertical ndive. Upévare sus signos oikuaase según el cuadrante oĩva.",
+      "es_py": "Mirá la circunferencia unitaria: el coseno va con la coordenada horizontal y el seno con la vertical. Por eso cambian de signo según el cuadrante.",
+      "es": "En la circunferencia unitaria, el coseno corresponde a la coordenada horizontal y el seno a la vertical; por eso sus signos cambian según el cuadrante."
+    },
+    {
+      "source": "Cada punto del plano se describe mediante una coordenada horizontal y otra vertical, en ese orden.",
+      "context": "EXPLANATION",
+      "jopara": "Emaña al orden: ñepyrũrã la coordenada horizontal, upéi la vertical. Péicha ñaikũmby cada punto del plano.",
+      "es_py": "Ojo con el orden: para ubicar un punto del plano va primero la coordenada horizontal y después la vertical.",
+      "es": "Cada punto del plano se describe mediante una coordenada horizontal y otra vertical, en ese orden."
+    },
+    {
+      "source": "Elegí la relación que conecta los datos conocidos con la incógnita.",
+      "context": "INSTRUCTION",
+      "jopara": "Eipuru la relación ojoguaha los datos reikuaáva ha la incógnita ndive. ¿Mba'épa oĩ ko'ãva oñondive?",
+      "es_py": "Elegí la relación que une los datos que tenés con lo que buscás.",
+      "es": "Elige la relación que conecta los datos conocidos con la incógnita."
+    },
+    {
+      "source": "Una distancia no puede ser negativa.",
+      "context": "EXPLANATION",
+      "jopara": "Nemandu'áke ko mba'e: peteĩ distancia ndaikatúi oĩ negativa. Eikuaa ramo upéicha, ejerurea nde cálculo.",
+      "es_py": "Ojo: una distancia no puede ser negativa.",
+      "es": "Una distancia no puede ser negativa."
+    },
+    {
+      "source": "El objetivo es contar configuraciones sin enumerarlas una por una.",
+      "context": "EXPLANATION",
+      "jopara": "Jaipapa las configuraciones ndaijepokuaái peteĩ peteĩ reheguápe. Avei ko'ápe oĩ porã un método más corto.",
+      "es_py": "La idea es contar todas las posibilidades sin anotarlas una por una.",
+      "es": "El objetivo es contar configuraciones sin enumerarlas una por una."
+    },
+    {
+      "source": "Identificá cuántos elementos hay disponibles, cuántos se eligen y si pueden repetirse.",
+      "context": "EXPLANATION",
+      "jopara": "Emaña a estas condiciones: mba'e papa oĩ, mba'e papa reipuru ha oĩpa chance oñembohovái.",
+      "es_py": "Primero fijate cuántos elementos tenés, cuántos vas a elegir y si se pueden repetir.",
+      "es": "Identifica cuántos elementos hay disponibles, cuántos se eligen y si pueden repetirse."
+    },
+    {
+      "source": "Probá primero con un caso pequeño que puedas listar: así podés detectar si contaste el mismo resultado más de una vez o si falta alguno.",
+      "context": "EXPLANATION",
+      "jopara": "Eha'ã ñepyrũrã peteĩ caso michĩ reipapáva. Upéicha rejuhu mba'épa omboja mokõi jey térã peteĩ resultado ohejáva.",
+      "es_py": "Probá primero con un caso chiquito que puedas anotar completo. Así te das cuenta si contaste algo dos veces o si te faltó un resultado.",
+      "es": "Prueba primero con un caso pequeño que puedas enumerar para detectar repeticiones u omisiones."
+    },
+    {
+      "source": "Cómo entenderlo",
+      "context": "EXPLANATION",
+      "jopara": "Mba'éichapa jaikũmby ko'ã",
+      "es_py": "Veamos la idea",
+      "es": "Cómo entenderlo"
+    },
+    {
+      "source": "Qué conviene revisar",
+      "context": "EXPLANATION",
+      "jopara": "Mba'épa jahecháta jey",
+      "es_py": "Ojo con este detalle",
+      "es": "Qué debes revisar"
+    },
+    {
+      "source": "Por qué se usa esta relación",
+      "context": "EXPLANATION",
+      "jopara": "Mba'érepa jaipuru ko relación",
+      "es_py": "Por qué usamos esta relación",
+      "es": "Por qué se utiliza esta relación"
+    },
+    {
+      "source": "Para comprobar tu comprensión",
+      "context": "INSTRUCTION",
+      "jopara": "Emombe'u mba'éichapa reikũmby",
+      "es_py": "Contame cómo lo entendiste",
+      "es": "Comprueba tu comprensión"
+    },
+    {
+      "source": "Sí, explicame",
+      "context": "UI",
+      "jopara": "Heẽ, jahecha",
+      "es_py": "Dale, explicame",
+      "es": "Sí, explícame"
+    },
+    {
+      "source": "Mostrame un ejemplo",
+      "context": "UI",
+      "jopara": "Jahecha peteĩ ejemplo",
+      "es_py": "Mostrame un ejemplo",
+      "es": "Muéstrame un ejemplo"
+    },
+    {
+      "source": "Mostrame otro ejemplo",
+      "context": "UI",
+      "jopara": "Jahecha ambuéva",
+      "es_py": "Mostrame otro ejemplo",
+      "es": "Muéstrame otro ejemplo"
+    },
+    {
+      "source": "Dame una pista",
+      "context": "UI",
+      "jopara": "Aikotevẽ peteĩ pista",
+      "es_py": "Dame una pista",
+      "es": "Dame una pista"
+    },
+    {
+      "source": "Una pista",
+      "context": "UI",
+      "jopara": "Peteĩ pista",
+      "es_py": "Una pista",
+      "es": "Una pista"
+    },
+    {
+      "source": "Explicame un poco más",
+      "context": "UI",
+      "jopara": "Jahecha jey la idea",
+      "es_py": "Contame un poco más",
+      "es": "Explícame un poco más"
+    },
+    {
+      "source": "Sí, vamos a practicar",
+      "context": "UI",
+      "jopara": "Heẽ, ñañepyrũ",
+      "es_py": "Dale, vamos a practicar",
+      "es": "Sí, vamos a practicar"
+    },
+    {
+      "source": "Retomar donde estábamos",
+      "context": "UI",
+      "jopara": "Jasegi oĩva",
+      "es_py": "Seguimos donde estábamos",
+      "es": "Retomar la lección"
+    },
+    {
+      "source": "Volver a la lección",
+      "context": "UI",
+      "jopara": "Jajevy la lección-pe",
+      "es_py": "Volver a la lección",
+      "es": "Volver a la lección"
+    },
+    {
+      "source": "para vos",
+      "context": "GENERAL",
+      "jopara": "ndéve",
+      "es_py": "para vos",
+      "es": "para ti"
+    },
+    {
+      "source": "con vos",
+      "context": "GENERAL",
+      "jopara": "nde ndive",
+      "es_py": "con vos",
+      "es": "contigo"
+    },
+    {
+      "source": "Explicámelo más fácil",
+      "context": "UI",
+      "jopara": "Jahecha ambue ñepyrũme",
+      "es_py": "Explicame más fácil",
+      "es": "Explícamelo de forma sencilla"
+    },
+    {
+      "source": "Vamos con una sola idea.",
+      "context": "GENERAL",
+      "jopara": "Jahecha mbeguekatúpe, peteĩ idea año.",
+      "es_py": "Mirá, vamos con una sola idea.",
+      "es": "Veamos una sola idea."
+    },
+    {
+      "source": "El seno es la altura del punto en la circunferencia de radio uno.",
+      "context": "GENERAL",
+      "jopara": "Emaña porã: el seno ohechauka mba'e yvate oĩva el punto circunferencia de radio uno-pe.",
+      "es_py": "Fijate: el seno indica la altura del punto en la circunferencia de radio uno.",
+      "es": "El seno indica la altura del punto en la circunferencia de radio uno."
+    },
+    {
+      "source": "El coseno es la coordenada horizontal del punto en la circunferencia de radio uno.",
+      "context": "GENERAL",
+      "jopara": "Ko'ápe jahecha el coseno: ohechauka mba'e pytu oĩva el punto circunferencia de radio uno-pe.",
+      "es_py": "Mirá la posición horizontal del punto: eso indica el coseno en la circunferencia de radio uno.",
+      "es": "El coseno indica la coordenada horizontal del punto en la circunferencia de radio uno."
+    },
+    {
+      "source": "En la circunferencia unitaria es la coordenada vertical.",
+      "context": "GENERAL",
+      "jopara": "Upéva ko circunferencia unitaria-pe: ha'e la coordenada vertical.",
+      "es_py": "En la circunferencia unitaria, fijate en la coordenada vertical.",
+      "es": "En la circunferencia unitaria es la coordenada vertical."
+    },
+    {
+      "source": "¿Qué parte te cuesta: identificar los datos o entender la relación?",
+      "context": "GENERAL",
+      "jopara": "¿Mba'épa ndereikuaaporãi: los datos térã la relación oĩva ko'ãva oñondive? Emombe'u ndéve oĩvagua.",
+      "es_py": "Contame qué parte te cuesta: ¿los datos o la relación?",
+      "es": "¿Qué parte te cuesta: identificar los datos o entender la relación?"
+    },
+    {
+      "source": "Primero identificá",
+      "context": "GENERAL",
+      "jopara": "Ñepyrũrã, ehecha",
+      "es_py": "Primero fijate en",
+      "es": "Primero identifica"
+    },
+    {
+      "source": "Ahora escribí tu resultado para comprobarlo.",
+      "context": "GENERAL",
+      "jopara": "Ko'ág̃a ehai nde resultado; jahecháta mba'éichapa oĩva.",
+      "es_py": "Ahora pasame tu resultado y lo comprobamos.",
+      "es": "Ahora escribe tu resultado para comprobarlo."
+    },
+    {
+      "source": "Todavía no es correcto. Revisá tu cálculo y volvé a intentarlo.",
+      "context": "GENERAL",
+      "jopara": "Neĩra oĩ porã. Emaña jey nde cálculo ha eha'ã jey.",
+      "es_py": "Todavía no está bien. Revisá la cuenta y probá de nuevo.",
+      "es": "Todavía no es correcto. Revisa el cálculo e inténtalo de nuevo."
+    },
+    {
+      "source": "Revisemos la interpretación",
+      "context": "GENERAL",
+      "jopara": "Jahecha oñondive mba'éichapa ñaikũmby",
+      "es_py": "Revisemos qué entendimos",
+      "es": "Revisemos la interpretación"
+    },
+    {
+      "source": "Cada elemento del dominio debe tener exactamente una imagen.",
+      "context": "GENERAL",
+      "jopara": "Nemandu'áke ko mba'e: peteĩ peteĩ elemento del dominio oguereko exactamente peteĩ imagen. Ndaikatúi mokõi.",
+      "es_py": "Mirá: vos elegís una entrada del dominio y le corresponde una sola imagen.",
+      "es": "Cada valor elegido del dominio debe tener exactamente una imagen."
+    },
+    {
+      "source": "¡Muy bien!",
+      "context": "FEEDBACK",
+      "jopara": "¡Iporãve upéicha! Nde añeténte reikuaa.",
+      "es_py": "¡Muy bien hecho!",
+      "es": "¡Muy bien!"
+    },
+    {
+      "source": "¡Excelente!",
+      "context": "FEEDBACK",
+      "jopara": "¡Porãvéva! Reikuaa hína.",
+      "es_py": "¡Excelente!",
+      "es": "¡Excelente!"
+    },
+    {
+      "source": "Casi, revisá un detalle.",
+      "context": "FEEDBACK",
+      "jopara": "Ichupente, emaña jey peteĩ mba'e michĩ.",
+      "es_py": "Casi, revisá un detalle.",
+      "es": "Casi, revisa un detalle."
+    },
+    {
+      "source": "Pensá qué dato te da el problema.",
+      "context": "HINT",
+      "jopara": "Emandu'a mba'épa omeẽ el problema. ¿Mba'épa reikuaá rã?",
+      "es_py": "Pensá qué dato te da el problema.",
+      "es": "Piensa qué dato te da el problema."
+    },
+    {
+      "source": "¿Qué fórmula usarías?",
+      "context": "HINT",
+      "jopara": "¿Mba'éichapa fórmula reipuru ko caso-pe?",
+      "es_py": "¿Qué fórmula usarías?",
+      "es": "¿Qué fórmula utilizarías?"
+    },
+    {
+      "source": "Intentá el primer paso.",
+      "context": "HINT",
+      "jopara": "Eha'ã ñepyrũ paso-pe. ¿Mba'épa oĩ ko'ápe?",
+      "es_py": "Intentá el primer paso.",
+      "es": "Intenta el primer paso."
+    },
+    {
+      "source": "¿Entendiste?",
+      "context": "DIALOGUE",
+      "jopara": "¿Reikũmbýpa?",
+      "es_py": "¿Te quedó claro?",
+      "es": "¿Lo entendiste?"
+    },
+    {
+      "source": "¿Tenés alguna duda?",
+      "context": "DIALOGUE",
+      "jopara": "¿Oĩpa peteĩ mba'e ndereikuaái?",
+      "es_py": "¿Tenés alguna duda?",
+      "es": "¿Tienes alguna duda?"
+    },
+    {
+      "source": "Vamos paso a paso.",
+      "context": "HINT",
+      "jopara": "Jaha ñepyrũrãgui, peteĩ peteĩ.",
+      "es_py": "Vamos de a poco.",
+      "es": "Vamos paso a paso."
+    },
+    {
+      "source": "¿Por dónde empezamos?",
+      "context": "DIALOGUE",
+      "jopara": "¿Mba'egui ñepyrũta?",
+      "es_py": "¿Por dónde arrancamos?",
+      "es": "¿Por dónde empezamos?"
+    },
+    {
+      "source": "Seguimos.",
+      "context": "DIALOGUE",
+      "jopara": "Jasegi.",
+      "es_py": "Seguimos.",
+      "es": "Continuamos."
+    },
+    {
+      "source": "Recordá que",
+      "context": "HINT",
+      "jopara": "Nemandu'áke:",
+      "es_py": "Recordá que",
+      "es": "Recuerda que"
+    },
+    {
+      "source": "¿Querés otro ejemplo?",
+      "context": "DIALOGUE",
+      "jopara": "¿Reikotevẽpa ambuéva ejemplo?",
+      "es_py": "¿Querés otro ejemplo?",
+      "es": "¿Quieres otro ejemplo?"
+    },
+    {
+      "source": "Muy bien, seguimos.",
+      "context": "FEEDBACK",
+      "jopara": "Iporã, jasegi ko'ápe.",
+      "es_py": "Muy bien, seguimos.",
+      "es": "Muy bien, continuamos."
+    },
+    {
+      "source": "Eso es correcto.",
+      "context": "FEEDBACK",
+      "jopara": "Upéva añetégua.",
+      "es_py": "Eso está bien.",
+      "es": "Eso es correcto."
+    },
+    {
+      "source": "No exactamente, pero vas por buen camino.",
+      "context": "FEEDBACK",
+      "jopara": "Ndañetéi upéicha, katu reĩ porãva ñane ñe'ẽme.",
+      "es_py": "No exactamente, pero vas bien.",
+      "es": "No exactamente, pero vas por buen camino."
+    },
+    {
+      "source": "Practiquemos.",
+      "context": "INSTRUCTION",
+      "jopara": "Ñañepyrũ práctica-pe.",
+      "es_py": "Practiquemos.",
+      "es": "Practiquemos."
+    },
+    {
+      "source": "Observá la fórmula.",
+      "context": "EXPLANATION",
+      "jopara": "Emaña porã la fórmula ko'ápe.",
+      "es_py": "Fijate en la fórmula.",
+      "es": "Observa la fórmula."
+    },
+    {
+      "source": "Calculá el resultado.",
+      "context": "INSTRUCTION",
+      "jopara": "Eikuaa el resultado. ¿Mba'épa rejuhu?",
+      "es_py": "Calculá el resultado.",
+      "es": "Calcula el resultado."
+    },
+    {
+      "source": "Identificá los datos del problema.",
+      "context": "INSTRUCTION",
+      "jopara": "Ehecha mba'épa omeẽ el problema. Emopyahu nde lista.",
+      "es_py": "Fijate en los datos del problema.",
+      "es": "Identifica los datos del problema."
+    },
+    {
+      "source": "Escribí tu respuesta.",
+      "context": "INSTRUCTION",
+      "jopara": "Ehai nde mbohovái ko'ápe.",
+      "es_py": "Escribí tu respuesta.",
+      "es": "Escribe tu respuesta."
+    },
+    {
+      "source": "Verifiquemos el resultado.",
+      "context": "INSTRUCTION",
+      "jopara": "Jahecha mba'éichapa oĩ el resultado.",
+      "es_py": "Comprobemos el resultado.",
+      "es": "Verifiquemos el resultado."
+    },
+    {
+      "source": "¿Qué observás en la gráfica?",
+      "context": "INSTRUCTION",
+      "jopara": "¿Mba'épa rejuhúva el gráfico-pe? Emombe'u ndéve.",
+      "es_py": "¿Qué ves en la gráfica?",
+      "es": "¿Qué observas en la gráfica?"
+    },
+    {
+      "source": "Leé el enunciado con cuidado.",
+      "context": "HINT",
+      "jopara": "Eñandu porã el enunciado. Ndajepokuaái peteĩ dato.",
+      "es_py": "Leé el enunciado despacio.",
+      "es": "Lee el enunciado con cuidado."
+    }
+  ],
+  "neutral_words": {
+    "querés": "quieres",
+    "podés": "puedes",
+    "tenés": "tienes",
+    "sos": "eres",
+    "vos": "tú",
+    "acá": "aquí",
+    "explicá": "explica",
+    "explicame": "explícame",
+    "mostrame": "muéstrame",
+    "fijate": "fíjate",
+    "mirá": "mira",
+    "observá": "observa",
+    "identificá": "identifica",
+    "reconocé": "reconoce",
+    "elegí": "elige",
+    "revisá": "revisa",
+    "comprobá": "comprueba",
+    "leé": "lee",
+    "compará": "compara",
+    "justificá": "justifica",
+    "sustituí": "sustituye",
+    "reemplazá": "reemplaza",
+    "seguí": "sigue",
+    "empezá": "empieza",
+    "terminá": "termina",
+    "usá": "usa",
+    "eipuru": "usa",
+    "pensá": "piensa",
+    "marcá": "marca",
+    "anotá": "anota",
+    "dibujá": "dibuja",
+    "distinguí": "distingue",
+    "señalá": "señala",
+    "señalalo": "señálalo",
+    "probá": "prueba",
+    "resolvé": "resuelve",
+    "calculá": "calcula",
+    "contá": "cuenta",
+    "completá": "completa",
+    "definí": "define",
+    "conservá": "conserva",
+    "mantené": "mantén",
+    "evitá": "evita",
+    "volvé": "vuelve",
+    "escribí": "escribe",
+    "recordá": "recuerda",
+    "relacioná": "relaciona",
+    "localizá": "localiza",
+    "separá": "separa",
+    "decidí": "decide",
+    "aplicá": "aplica",
+    "ordená": "ordena",
+    "verificá": "verifica",
+    "conocés": "conoces",
+    "buscás": "buscas",
+    "necesitás": "necesitas",
+    "obtenés": "obtienes",
+    "elegís": "eliges",
+    "reemplazás": "reemplazas",
+    "estás": "estás",
+    "sabés": "sabes",
+    "entendés": "entiendes",
+    "hacé": "haz",
+    "decime": "dime",
+    "contame": "cuéntame",
+    "preguntá": "pregunta",
+    "intentá": "intenta",
+    "prepará": "prepara",
+    "ubicá": "ubica",
+    "analizá": "analiza",
+    "tomá": "toma",
+    "notá": "nota",
+    "pasá": "pasa",
+    "encontrá": "encuentra",
+    "imaginá": "imagina",
+    "trazá": "traza",
+    "cambiá": "cambia",
+    "avanzá": "avanza",
+    "miralo": "míralo",
+    "considerá": "considera",
+    "pensalo": "piénsalo",
+    "agrandás": "agrandas",
+    "indicá": "indica",
+    "subís": "subes",
+    "avanzás": "avanzas"
+  },
+  "workshop_phrases": {
+    "Vamos a calcular:": "Jaipapa ko cuenta:",
+    "¿Es esto lo que querés calcular?": "¿Kóva piko reikuaa porãse?",
+    "Separá el segundo factor:": "Emboja’o pe segundo factor:",
+    "Multiplicá por cada parte y sumá los dos productos.": "Eipuru la multiplicación peteĩteĩ parte rehe; upéi embyaty umi mokõi producto.",
+    "Multiplicá los factores.": "Eipuru la multiplicación ko’ã número rehe.",
+    "Sumá las cantidades.": "Embyaty ko’ã cantidad.",
+    "Restá la segunda cantidad de la primera.": "Eipe’a pe segunda cantidad pe primera-gui.",
+    "Dividí la primera cantidad por la segunda. El divisor no puede ser cero.": "Emboja’o pe primera cantidad pe segunda rehe. Nemandu’áke: divisor ndaha’éi cero.",
+    "Elevá la base al exponente.": "Eipuru pe potencia: emaña porã base ha exponente rehe.",
+    "Buscá la raíz cuadrada no negativa.": "Eheka pe raíz cuadrada no negativa.",
+    "Usá seno en modo grados (DEG).": "Eipuru seno; emoĩ calculadora modo grados (DEG)-pe.",
+    "Usá coseno en modo grados (DEG).": "Eipuru coseno; emoĩ calculadora modo grados (DEG)-pe.",
+    "Usá tangente en modo grados (DEG).": "Eipuru tangente; emoĩ calculadora modo grados (DEG)-pe.",
+    "Usá logaritmo natural; la entrada debe ser positiva.": "Eipuru logaritmo natural; pe entrada ha’eva’erã positiva.",
+    "Multiplicá los enteros positivos hasta el número indicado.": "Eipuru la multiplicación umi enteros positivos rehe, pe número indicado peve.",
+    "Para sumar fracciones, usá un denominador común.": "Ñasuma hag̃ua fracciones, eipuru peteĩ denominador común.",
+    "Para restar fracciones, usá un denominador común.": "Ñarresta hag̃ua fracciones, eipuru peteĩ denominador común.",
+    "Multiplicá numeradores entre sí y denominadores entre sí.": "Eipuru la multiplicación: numeradores oñondive, ha denominadores oñondive.",
+    "Multiplicá por el recíproco de la segunda fracción. No puede ser cero.": "Eipuru pe recíproco de la segunda fracción ha emultiplica. Ndaikatúi ha’e cero.",
+    "Escribí tu resultado.": "Ehai nde resultado; jahecháta oñondive.",
+    "Podés continuar o enviar tu resultado.": "Ejapo pe paso oúva térã ehai nde resultado.",
+    "Todavía no es correcto. Revisá tu cálculo y volvé a intentarlo.": "Ne’ĩra oĩ porã. Emaña jey nde cálculo rehe ha eha’ã jey.",
+    "¿Qué tema querés practicar? Elegí una opción o escribí el enunciado y después «No sé el tema».": "¿Mba’e témapa reipota? Eiporavo peteĩ opción. Ndereikuaáiramo, eiporavo «No sé el tema».",
+    "Escribí el enunciado completo.": "Ehai ko’ápe pe enunciado completo.",
+    "Primero te mostraré los datos y la incógnita para confirmarlos.": "Ñepyrũrã jahecháta umi datos ha mba’épa jahekáta.",
+    "Indicá ángulos con sus unidades, lados o distancias conocidos y qué altura, distancia o razón buscás.": "Emombe’u umi ángulos ha distancias, unidad reheve; upéi mba’épa reheka.",
+    "Indicá las cantidades, sus unidades y qué operación o cantidad se busca.": "Emombe’u umi cantidades ha mba’e operaciónpa rejapose.",
+    "Datos: distancia horizontal": "Jaikuaa ko’ã datos: distancia horizontal",
+    "¿Buscás la altura sobre el punto de observación?": "¿Rehekápa pe altura sobre el punto de observación?",
+    "Suponemos suelo horizontal. Si la persona observa desde cierta altura, falta ese dato para hallar la altura total.": "Ñaimo’ã pe suelo ha’e horizontal. Oĩramo altura del observador, emombe’u avei jahupyty hag̃ua la altura total.",
+    "Dibujá un triángulo rectángulo.": "Ejapo peteĩ triángulo rectángulo.",
+    "Identificá los lados:": "Ehechakuaa ko’ã lados:",
+    "Usamos tangente porque relaciona opuesto y adyacente.": "Jaipuru tangente: ombojoaju opuesto ha adyacente.",
+    "Usamos seno porque relaciona opuesto e hipotenusa.": "Jaipuru seno: ombojoaju opuesto ha hipotenusa.",
+    "Despejá la altura:": "Eheka pe altura ko relación rupive:",
+    "Despejá la distancia:": "Eheka pe distancia ko relación rupive:",
+    "Calculá en grados y enviá el resultado en metros.": "Eipuru grados ha ehai nde resultado metros-pe.",
+    "Enviá tu resultado en": "Ehai nde resultado ko unidad-pe:",
+    "se acepta redondeo a dos decimales.": "ikatúma redondear mokõi decimales-pe.",
+    "Falta el ángulo en grados. ¿Cuánto mide?": "Oĩmbáma ambue dato; falta pe ángulo en grados. ¿Mboy grado piko?",
+    "Falta una longitud. Indicá si es distancia horizontal, sombra, altura o escalera, con su unidad.": "Falta peteĩ longitud. Emombe’u ha’épa distancia horizontal, sombra, altura térã escalera, unidad reheve.",
+    "Ya tengo una longitud y un ángulo. ¿Qué buscás: altura, distancia horizontal o longitud de la escalera? Si hay altura del observador o suelo inclinado, aclaralo.": "Jaikuaáma peteĩ longitud ha peteĩ ángulo. ¿Mba’épa reheka: altura, distancia horizontal térã longitud de la escalera? Oĩramo altura del observador térã suelo inclinado, emombe’u avei."
+  },
+  "lesson_phrases": {
+    "Entendamos la relación": "Ñaikũmby ko relación",
+    "Otro ejemplo para comparar": "Ambue ejemplo ñambojoja hag̃ua",
+    "Compará los datos de ambos ejemplos: pueden cambiar las cantidades o la forma de presentar el problema, pero la definición y las condiciones de la relación siguen siendo las mismas. Identificá qué se conserva antes de hacer una cuenta nueva.": "Embojoja umi mokõi ejemplo datos: ikatu iñambue cantidades térã mba’éichapa oñepresenta problema, ha katu definición ha relación condiciones opyta peteĩcha. Ejapo mboyve ambue cuenta, ehechakuaa mba’épa noñemoambuéiva.",
+    "El seno es y/ρ: cateto opuesto dividido por hipotenusa en un triángulo rectángulo. En la circunferencia unitaria es la coordenada vertical.": "Seno ha’e y/ρ: peteĩ triángulo rectángulo-pe, ñadividi cateto opuesto hipotenusa rupive. Circunferencia unitaria-pe katu ha’e coordenada vertical.",
+    "El coseno es x/ρ: cateto adyacente dividido por hipotenusa. En la circunferencia unitaria es la coordenada horizontal.": "Coseno ha’e x/ρ: ñadividi cateto adyacente hipotenusa rupive. Circunferencia unitaria-pe katu ha’e coordenada horizontal.",
+    "La tangente es y/x=sen θ/cos θ cuando cos θ≠0. En un triángulo rectángulo compara cateto opuesto con adyacente.": "Tangente ha’e y/x=sen θ/cos θ, oñekumpli jave cos θ≠0. Peteĩ triángulo rectángulo-pe, ombojoja cateto opuesto cateto adyacente ndive.",
+    "La cotangente es x/y=cos θ/sen θ cuando sen θ≠0. En un triángulo rectángulo es adyacente dividido por opuesto.": "Cotangente ha’e x/y=cos θ/sen θ, oñekumpli jave sen θ≠0. Peteĩ triángulo rectángulo-pe, ñadividi cateto adyacente cateto opuesto rupive.",
+    "La secante es ρ/x=1/cos θ cuando cos θ≠0. En un triángulo rectángulo es hipotenusa dividida por adyacente. Es el recíproco del coseno.": "Secante ha’e ρ/x=1/cos θ, oñekumpli jave cos θ≠0. Peteĩ triángulo rectángulo-pe, ñadividi hipotenusa cateto adyacente rupive. Ha’e coseno recíproco.",
+    "La cosecante es ρ/y=1/sen θ cuando sen θ≠0. En un triángulo rectángulo es hipotenusa dividida por opuesto. Es el recíproco del seno.": "Cosecante ha’e ρ/y=1/sen θ, oñekumpli jave sen θ≠0. Peteĩ triángulo rectángulo-pe, ñadividi hipotenusa cateto opuesto rupive. Ha’e seno recíproco.",
+    "Los triángulos rectángulos que comparten un ángulo agudo son semejantes: sus lados correspondientes cambian por el mismo factor. Ese factor se cancela en el cociente. Con coordenadas x, y y radio ρ=√(x²+y²), la definición se extiende a los cuatro cuadrantes.": "Umi triángulos rectángulos oguerekóva peteĩ ángulo agudo peteĩcha ha’e semejantes: ilados correspondientes oñemoambue peteĩ factor rupive. Ko factor oñecancela cociente-pe. Jaiporúvo coordenadas x, y ha radio ρ=√(x²+y²), ko definición ojepuru avei umi cuatro cuadrantes-pe.",
+    "Al dividir seno por coseno, la hipotenusa se cancela: (opuesto/hipotenusa)/(adyacente/hipotenusa)=opuesto/adyacente.": "Ñadividi jave seno coseno rupive, hipotenusa oñecancela: (opuesto/hipotenusa)/(adyacente/hipotenusa)=opuesto/adyacente.",
+    "Para leer la gráfica, localizá el ángulo en el eje horizontal y su razón en el vertical.": "Relee hag̃ua gráfico, eheka ángulo eje horizontal-pe ha irazón eje vertical-pe.",
+    "Las razones no tienen unidad; el ángulo debe interpretarse en grados o radianes. Dividir por cero no da un valor infinito: la función queda sin definir. Las recíprocas no son las funciones arco.": "Umi razones ndoguerekói unidad; ángulo katu ñainterpreta va’erã grados térã radianes-pe. Ñadividi ramo cero rupive, nosẽi peteĩ valor infinito: función opyta sin definir. Umi recíprocas ha umi funciones arco ha’e mba’e ojoavýva.",
+    "Con hipotenusa 30 y cateto opuesto 20, sen α=20/30=2/3. El adyacente mide √(30²−20²)=10√5. Si duplicamos los lados a 60 y 40, 40/60 sigue siendo 2/3.": "Hipotenusa omedíramo 30 ha cateto opuesto 20, jaguereko sen α=20/30=2/3. Cateto adyacente omedi √(30²−20²)=10√5. Ñamokõijey ramo lados, 60 ha 40-pe, cociente 40/60 opyta gueteri 2/3.",
+    "Si la hipotenusa mide 30 y el cateto opuesto 20, el adyacente es √500=10√5. Entonces cos α=(10√5)/30=√5/3≈0,745. No se usa 20/30: ese cociente es el seno.": "Hipotenusa omedíramo 30 ha cateto opuesto 20, cateto adyacente ha’e √500=10√5. Upéicha, cos α=(10√5)/30=√5/3≈0,745. Ndajaipurúi 20/30: upe cociente ha’e seno.",
+    "Para hipotenusa 30 y opuesto 20, el adyacente es 10√5. Por tanto tan α=20/(10√5)=2/√5≈0,894. En una rampa es altura dividida por avance horizontal.": "Hipotenusa omedíramo 30 ha cateto opuesto 20, cateto adyacente ha’e 10√5. Upévare tan α=20/(10√5)=2/√5≈0,894. Peteĩ rampa-pe, ñadividi altura avance horizontal rupive.",
+    "En el triángulo de hipotenusa 30 y opuesto 20, cot α=(10√5)/20=√5/2≈1,118. Es el cociente inverso al de la tangente donde ambas están definidas.": "Peteĩ triángulo hipotenusa 30 ha cateto opuesto 20 reheve, cot α=(10√5)/20=√5/2≈1,118. Ha’e tangente cociente inverso, mokõivéva oĩ jave definidas.",
+    "Como cos(60°)=1/2, sec(60°)=1/(1/2)=2. Como cos(120°)=−1/2, sec(120°)=−2. Conservar el signo es esencial.": "Jaikuaágui cos(60°)=1/2, jaguereko sec(60°)=1/(1/2)=2. Ha cos(120°)=−1/2 rupi, sec(120°)=−2. Eñatendéke: signo opyta va’erã peteĩcha.",
+    "Con hipotenusa 30 y opuesto 20, csc α=30/20=3/2. Si sen(30°)=1/2, entonces csc(30°)=2; si sen(210°)=−1/2, csc(210°)=−2.": "Hipotenusa omedíramo 30 ha cateto opuesto 20, csc α=30/20=3/2. Oĩramo sen(30°)=1/2, upéicharõ csc(30°)=2; ha oĩramo sen(210°)=−1/2, csc(210°)=−2.",
+    "En una vuelta: crece de 0 a 1 en I; decrece de 1 a 0 en II y de 0 a −1 en III; crece de −1 a 0 en IV. Período 2π. Es impar: sen(−θ)=−sen θ.": "Peteĩ vuelta-pe: I-pe ojupi 0 guive 1 peve; II-pe oguejy 1 guive 0 peve ha III-pe 0 guive −1 peve; IV-pe ojupi −1 guive 0 peve. Iperíodo ha’e 2π. Ha’e impar: sen(−θ)=−sen θ.",
+    "En I desciende de 1 a 0; en II de 0 a −1; en III asciende de −1 a 0 y en IV de 0 a 1. Período 2π. Es par: cos(−θ)=cos θ.": "I-pe oguejy 1 guive 0 peve; II-pe 0 guive −1 peve; III-pe ojupi −1 guive 0 peve ha IV-pe 0 guive 1 peve. Iperíodo ha’e 2π. Ha’e par: cos(−θ)=cos θ.",
+    "Cada rama es creciente. Las asíntotas verticales están en π/2+kπ: no se deben unir las ramas. Período π; no tiene amplitud. Es impar.": "Peteĩteĩ rama ha’e creciente. Umi asíntotas verticales oĩ π/2+kπ-pe: ani embojoaju ramas. Iperíodo ha’e π; ndoguerekói amplitud. Ha’e impar.",
+    "Cada rama es decreciente. Asíntotas en kπ; ceros a mitad de cada rama. Período π. En 90° vale cero aunque la tangente no esté definida allí.": "Peteĩteĩ rama ha’e decreciente. Asíntotas oĩ kπ-pe ha ceros peteĩteĩ rama mbytépe. Iperíodo ha’e π. 90°-pe ivalor ha’e cero, tangente ndoĩriramo jepe definida upépe.",
+    "Tiene ramas separadas por asíntotas en π/2+kπ. En la rama positiva cercana a 0 alcanza mínimo 1; en la negativa centrada en π alcanza máximo −1. No son extremos globales: no está acotada. Período 2π; es par.": "Umi ramas ojepe’a ojuehegui asíntotas π/2+kπ-pe rupive. Rama positiva 0 ypýpe oguereko mínimo 1; rama negativa π jerére oguereko máximo −1. Ko’ãva ndaha’éi extremos globales: función ndoĩri acotada. Iperíodo ha’e 2π; ha’e par.",
+    "Asíntotas en kπ. En (0,π) baja hasta 1 en π/2 y vuelve a subir. En (π,2π) sube hasta −1 en 3π/2 y vuelve a bajar. Período 2π; es impar. No tiene máximo ni mínimo global.": "Asíntotas oĩ kπ-pe. (0,π)-pe oguejy 1 peve π/2-pe ha upéi ojupi jey. (π,2π)-pe ojupi −1 peve 3π/2-pe ha upéi oguejy jey. Iperíodo ha’e 2π; ha’e impar. Ndoguerekói máximo térã mínimo global.",
+    "El seno compara el cateto opuesto al ángulo con la hipotenusa. En la circunferencia unitaria, pensalo como la altura del punto.": "Seno ombojoja cateto opuesto ángulo rehegua hipotenusa ndive. Circunferencia unitaria-pe, eñeimahina ha’eha punto altura.",
+    "El coseno compara el cateto adyacente al ángulo con la hipotenusa. En la circunferencia unitaria, indica la posición horizontal del punto.": "Coseno ombojoja cateto adyacente ángulo rehegua hipotenusa ndive. Circunferencia unitaria-pe, ohechauka punto posición horizontal.",
+    "Imaginá una rampa. Para un mismo ángulo, la tangente compara lo que subís con lo que avanzás horizontalmente: altura dividida por avance. En el triángulo rectángulo, eso es cateto opuesto dividido por cateto adyacente.": "Eñeimahina peteĩ rampa. Peteĩ ángulo-pe, tangente ombojoja mboypa rejupi ha mboypa reho tenonde gotyo: ñadividi altura avance horizontal rupive. Triángulo rectángulo-pe, ha’e cateto opuesto dividido por cateto adyacente.",
+    "Dominio: todos los números reales.": "Dominio: opaite números reales.",
+    "El recorrido es [−1, 1], incluidos ambos extremos.": "Recorrido ha’e [−1, 1], mokõive extremos oike avei.",
+    "El recorrido es todo R: puede tomar cualquier valor real.": "Recorrido ha’e R tuichakue: ikatu oguereko oimeraẽ valor real.",
+    "Recorrido: todos los reales.": "Recorrido: opaite números reales.",
+    "Recorrido: (−∞,−1]∪[1,∞). Incluye −1 y 1, pero no los valores entre ellos.": "Recorrido: (−∞,−1]∪[1,∞). Oike −1 ha 1, ha katu ndoikéi umi valores oĩva mbytépe.",
+    "Recorrido: (−∞,−1]∪[1,∞). Nunca toma valores estrictamente entre −1 y 1.": "Recorrido: (−∞,−1]∪[1,∞). Ndoguerekói valores oĩva estrictamente −1 ha 1 mbytépe.",
+    "Positivo en I y II; negativo en III y IV. Se anula en kπ, con k entero.": "I ha II-pe ha’e positivo; III ha IV-pe negativo. Ivalor ha’e cero kπ-pe, k ha’éramo entero.",
+    "Positivo en I y IV; negativo en II y III. Se anula en π/2+kπ.": "I ha IV-pe ha’e positivo; II ha III-pe negativo. Ivalor ha’e cero π/2+kπ-pe.",
+    "Positiva en I y III; negativa en II y IV. Vale cero en kπ. En I y III seno y coseno tienen el mismo signo.": "I ha III-pe ha’e positiva; II ha IV-pe negativa. Ivalor ha’e cero kπ-pe. I ha III-pe seno ha coseno oguereko peteĩ signo.",
+    "Positiva en I y III; negativa en II y IV. Vale cero en π/2+kπ.": "I ha III-pe ha’e positiva; II ha IV-pe negativa. Ivalor ha’e cero π/2+kπ-pe.",
+    "Mismo signo que el coseno: positiva en I y IV, negativa en II y III. Nunca vale cero.": "Oguereko coseno signo: I ha IV-pe positiva, II ha III-pe negativa. Araka’eve ndaha’éi cero.",
+    "Mismo signo que el seno: positiva en I y II, negativa en III y IV. Nunca vale cero.": "Oguereko seno signo: I ha II-pe positiva, III ha IV-pe negativa. Araka’eve ndaha’éi cero.",
+    "Dominio: R excepto π/2+kπ, con k entero; en grados se excluyen 90°+k·180°. En 90° el coseno vale cero y el cociente no se puede calcular.": "Dominio: R, ojepe’ávo π/2+kπ, k entero reheve; grados-pe ojepe’a 90°+k·180°. 90°-pe coseno ha’e cero ha ndaikatúi ñacalcula cociente.",
+    "Dominio: R excepto kπ, con k entero; se excluyen los múltiplos de 180°.": "Dominio: R, ojepe’ávo kπ, k entero reheve; umi múltiplos 180° rehegua ndoikéi.",
+    "Dominio: R excepto π/2+kπ, con k entero.": "Dominio: R, ojepe’ávo π/2+kπ, k entero reheve.",
+    "Dominio: R excepto kπ, con k entero.": "Dominio: R, ojepe’ávo kπ, k entero reheve.",
+    "tan(90°) no está definida; no es infinito.": "tan(90°) ndoĩri definida; ndaha’éi infinito.",
+    "cot(180°) no está definida.": "cot(180°) ndoĩri definida.",
+    "sec(90°) no está definida.": "sec(90°) ndoĩri definida.",
+    "En 0°, 180° y 360° no está definida.": "0°, 180° ha 360°-pe ndoĩri definida."
+  },
+  "guidance_phrases": {
+    "La idea principal": "Ñepyrũrã · La idea principal",
+    "Por qué funciona": "Mba’érepa oiko · Por qué funciona",
+    "Cuándo usarlo": "Araka’épa jaipuru · Cuándo usarlo",
+    "Veamos cómo se aplica": "Jahecha peteĩ ejemplo",
+    "Cómo razonar con esta idea": "Ñapensa oñondive",
+    "Qué conviene revisar": "Emaña porã · Qué revisar",
+    "Antes de calcular, identificá qué representa cada dato y qué cantidad buscás. Relacioná esos datos con la definición; después elegí la fórmula y comprobá sus condiciones. En el ejemplo, seguí cada transformación y preguntate por qué es válida.": "Ñepyrũrã, ehechakuaa mba’épa he’ise peteĩteĩ dato ha mba’épa reheka. Upéi embojoaju umi datos pe definición rehe; eiporavo la fórmula ha ehecha araka’épa ikatu jaipuru. Emaña pe ejemplo rehe, paso a paso: ¿mba’érepa jajapo ko transformación?",
+    "Para comprobar que entendiste, explicá con tus palabras qué relación usamos y qué cambiaría si cambiara uno de los datos. Podés pedirme otro ejemplo o una explicación más sencilla.": "Ko’ág̃a emombe’u ne ñe’ẽme mba’e relaciónpa jaipuru. ¿Mba’épa iñambuéta peteĩ dato iñambuéramo? Reikotevẽramo, jajapóta ambue ejemplo térã ñamyesakãta mbegueve.",
+    "La fórmula resume esa relación; primero identificá qué representa cada dato antes de sustituirlo.": "Pe fórmula ombyky ko relación. Ñepyrũrã ehechakuaa mba’épa he’ise peteĩteĩ dato; upéi eipuru pe fórmula-pe.",
+    "Una función describe cómo una cantidad depende de otra. Elegimos una entrada y observamos la salida que le corresponde.": "Peteĩ función ohechauka mba’éichapa peteĩ cantidad odepende ambuére. Jaiporavo peteĩ entrada ha jahecha mba’e salida-pa oguereko.",
+    "¿Qué parte te cuesta: identificar los datos o entender la relación?": "¿Mba’épa ijetu’u ndéve: ehechakuaa umi datos térã reikũmby la relación?",
+    "No identifiqué con suficiente precisión el concepto de tu pregunta.": "Ne’ĩra aikũmby porã mba’e concepto rehepa reporandu.",
+    "¿Podés nombrarlo o escribir la parte que querés entender?": "¿Ikatúpa ehai pe concepto réra térã pe parte reikũmbyse?",
+    "Conservé el punto de tu lección.": "Ñañongatu pe lección, ikatu jajevy upépe.",
+    "Este ejemplo está resuelto para mostrarte cómo se usa la idea.": "Ko ejemplo ohechauka mba’éichapa jaipuru ko idea.",
+    "Vamos por partes.": "Jajapo mbeguekatúpe, peteĩ paso peteĩ jeýpe."
+  },
+  "conversation_intents": {
+    "resume": [
+      "^(?:(?:quiero|quisiera|podemos|podrias|podes|puedes) )?(?:volver|volvamos|volve|regresar|regresemos|retomar|retomemos|seguir|sigamos|seguimos|continuar|continuemos|continua)(?: (?:a |con |en |desde )?(?:donde (?:nos )?(?:estabamos|quedamos|lo dejamos)|lo (?:de antes|anterior|que estabamos (?:viendo|haciendo|estudiando))|(?:la |el )?(?:leccion|tema|explicacion|ejercicio)(?: anterior)?))?$",
+      "^volvamos a lo nuestro$",
+      "^jasegi(?: jey)?$",
+      "^retoma(?:mos)? (?:la leccion|el tema|donde estabamos)$"
+    ],
+    "example": [
+      "^(?:(?:me )?(?:das|mostras|podrias dar(?:me)?|podes dar(?:me)?|puedes dar(?:me)?)|dame|mostrame|muestrame|quiero|quisiera) (?:un|otro) ejemplo(?: mas| diferente| distinto)?$",
+      "^(?:otro|un) ejemplo(?: mas| diferente| distinto)?$"
+    ],
+    "confused": [
+      "^(?:no (?:lo )?entiendo|no (?:lo )?entendi|no me (?:queda|quedo) claro|me perdi|estoy perdido|estoy perdida)$",
+      "^(?:(?:me )?(?:lo )?(?:explicas|podes explicar|puedes explicar|podrias explicar)|explicame|explicalo|explicamelo) (?:mejor|mas (?:facil|simple|sencillo)|de otra (?:forma|manera))$"
+    ],
+    "more": [
+      "^(?:(?:me )?(?:lo )?(?:explicas|podes explicar|puedes explicar|podrias explicar)|explicame|explicalo|explicamelo|amplia|ampliame) (?:un poco mas|mas|con mas detalle|mas detalladamente)$",
+      "^(?:quiero|quisiera) (?:saber|entender) (?:un poco )?mas$"
+    ],
+    "hint": [
+      "^(?:dame|necesito|quiero|me das|podes darme|puedes darme) (?:una pista|una ayudita|un empujon)$"
+    ],
+    "practice": [
+      "^(?:quiero practicar|vamos a practicar|hagamos un ejercicio|practiquemos)$"
+    ]
+  }
+}

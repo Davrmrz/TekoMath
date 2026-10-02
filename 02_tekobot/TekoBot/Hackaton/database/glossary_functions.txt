@@ -1,0 +1,44 @@
+Conjunto|conjuntos|Colección de objetos bien determinados llamados elementos.|A={1,2,3}.
+Elemento de un conjunto|pertenencia|Objeto que pertenece a un conjunto; se escribe ∈.|2∈{1,2,3}.
+Conjunto vacío||Conjunto sin elementos.|No hay reales cuyo cuadrado sea negativo.
+Subconjunto||Conjunto cuyos elementos pertenecen todos a otro conjunto.|{1,2} es subconjunto de {1,2,3}.
+Unión de conjuntos||Elementos que están en al menos uno de los conjuntos.|{1,2}∪{2,3}={1,2,3}.
+Intersección de conjuntos|interseccion|Elementos comunes a los conjuntos.|{1,2}∩{2,3}={2}.
+Diferencia de conjuntos||Elementos del primer conjunto que no están en el segundo.|{1,2} menos {2,3} da {1}.
+Complemento de un conjunto||Elementos del universo elegido que no están en el conjunto.|Si U={1,2,3} y A={1}, el complemento es {2,3}.
+Producto cartesiano||Conjunto de pares ordenados formados por elementos de dos conjuntos.|{1}×{a,b}={(1,a),(1,b)}.
+Par ordenado|pares ordenados|Pareja en la que importa el orden.|(2,3) es distinto de (3,2).
+Intervalo|intervalos|Conjunto de reales entre extremos, incluidos o excluidos.|[1,3) incluye 1, pero no 3.
+Intervalo abierto||Intervalo sin sus extremos finitos.|(1,3) significa 1<x<3.
+Intervalo cerrado||Intervalo con ambos extremos finitos.|[1,3] significa 1≤x≤3.
+Codominio|conjunto de llegada|Conjunto de llegada declarado de una función; puede ser mayor que su recorrido.|En x²:R→R, el recorrido es [0,+∞), pero el codominio es R.
+Preimagen|antecedente de una funcion|Entrada que produce una salida dada; puede haber varias o ninguna.|Para x², las preimágenes de 4 son 2 y −2.
+Variable independiente||Variable de entrada de un modelo.|En y=f(x), normalmente x.
+Variable dependiente||Variable determinada por la entrada mediante la regla.|En y=2x+1, y depende de x.
+Función inyectiva|inyectiva|Función que asigna distintas salidas a entradas distintas.|f(x)=2x en R.
+Función sobreyectiva|sobreyectiva;suprayectiva|Función cuyo recorrido coincide con el codominio declarado.|x²:R→[0,+∞) es sobreyectiva.
+Función biyectiva|biyectiva|Función inyectiva y sobreyectiva; tiene inversa entre sus conjuntos declarados.|x+1:R→R es biyectiva.
+Función inversa||Función que revierte una correspondencia biyectiva; no es 1/f(x).|La inversa de 2x es x/2.
+Función cuadrática|parabola|Función ax²+bx+c, con a no nulo; su gráfica es una parábola.|x² tiene mínimo cero.
+Función cúbica||Polinomio de grado tres como función.|f(x)=x³.
+Función creciente|crecimiento de una funcion|Al aumentar la entrada aumenta la salida en el intervalo considerado, en sentido estricto.|2x es creciente en R.
+Función decreciente|decrecimiento de una funcion|Al aumentar la entrada disminuye la salida en el intervalo considerado.|−2x es decreciente en R.
+Máximo de una función||Mayor valor en el conjunto o entorno considerado; puede ser global o local.|−x² tiene máximo global cero.
+Mínimo de una función||Menor valor en el conjunto o entorno considerado; puede ser global o local.|x² tiene mínimo global cero.
+Función par||Tiene dominio simétrico y cumple f(−x)=f(x).|x² y cos(x) son pares.
+Función impar||Tiene dominio simétrico y cumple f(−x)=−f(x).|x³ y sen(x) son impares.
+Continuidad intuitiva|continuidad;funcion continua|Ausencia de saltos en la gráfica sobre el dominio considerado; la definición con límites se estudia después.|Los polinomios son continuos en R.
+Asíntota|asintotas|Recta a la que una gráfica se aproxima en cierto comportamiento; no necesariamente es inalcanzable en todo punto.|La tangente tiene asíntotas verticales x=π/2+kπ.
+Cero de una función|raiz de una funcion|Entrada para la que la salida vale cero.|x−2 tiene cero en x=2.
+Ordenada al origen||Salida para x=0 si pertenece al dominio; corte con el eje vertical.|En y=2x+3, vale 3.
+Cosecante|csc|Recíproco del seno, donde el seno no es cero; no es arcoseno.|Si sen(θ)=1/2, csc(θ)=2.
+Secante trigonométrica|secante;sec|Recíproco del coseno, donde no es cero; no es arcocoseno.|Si cos(θ)=1/2, sec(θ)=2.
+Cotangente|cot;ctg|Razón coseno/seno, definida donde el seno no es cero. No es arcotangente.|cot(45°)=1.
+Radián|radianes|Ángulo central cuyo arco mide lo mismo que el radio.|π radianes=180°.
+Grado sexagesimal|grados sexagesimales|Una de las 360 partes iguales de una vuelta.|90° es un cuarto de vuelta.
+Ángulo de referencia||Ángulo agudo con el eje horizontal para un lado terminal fuera de los ejes.|Para 150°, vale 30°.
+Ángulos coterminales||Ángulos con el mismo lado terminal, separados por vueltas completas.|30° y 390°.
+Frecuencia de una onda||Cantidad de ciclos por unidad; inversa del período en unidades compatibles.|Período 2 s implica frecuencia 0,5 Hz.
+Desfase|desplazamiento horizontal|Traslación horizontal; en A·sen(B(x−h))+k, h la indica.|sen(x−π/2) se desplaza π/2 a la derecha.
+Traslación vertical|desplazamiento vertical|Suma de una constante a todas las salidas.|sen(x)+2 tiene línea media y=2.
+Cofunciones||Razones relacionadas mediante ángulos complementarios.|sen(90°−θ)=cos(θ).

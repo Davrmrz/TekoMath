@@ -1,0 +1,46 @@
+{
+  "app_title": "MateJopara - Aprendizaje de Matemática",
+  "navigation": {
+    "start_button": "Comenzar",
+    "home_button": "Volver al inicio",
+    "retry_button": "Intentá nuevamente",
+    "hint_button": "Necesito una pista"
+  },
+  "greeting": "Hola, {nombre}.",
+  "instructions": [
+    "Observá el triángulo.",
+    "Identificá la hipotenusa.",
+    "Calculá sen(30°)."
+  ],
+  "exercises": [
+    {
+      "id": "ex_001",
+      "level": 1,
+      "prompt": "Si el cateto opuesto mide 3 y la hipotenusa mide 5, calculá sen(α).",
+      "hint": "Recordá que sen(α) = cateto opuesto / hipotenusa.",
+      "formula": "sen(α) = 3/5",
+      "points": 10
+    },
+    {
+      "id": "ex_002",
+      "level": 2,
+      "prompt": "Calculá el valor de cos(α) sabiendo que el cateto adyacente mide 4 y la hipotenusa mide 5.",
+      "feedback": "Tu procedimiento va bien. Revisá qué lado está frente al ángulo.",
+      "formula": "cos(α) = 4/5",
+      "points": 15
+    },
+    {
+      "id": "ex_003",
+      "level": 3,
+      "prompt": "Verificá la identidad con π/2 y √3/2 en https://matejopara.edu.py/ayuda",
+      "hint": "Para más detalles visita https://matejopara.edu.py/ayuda con tu usuario {{user}}.",
+      "formula": "π/2 + √3/2",
+      "points": 20
+    }
+  ],
+  "system_info": {
+    "version": "1.0.0",
+    "score_label": "Puntaje actual: %score%",
+    "support_url": "https://matejopara.edu.py/soporte"
+  }
+}

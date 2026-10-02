@@ -1,0 +1,40 @@
+from pathlib import Path
+p=Path('assets/js/problem_workshop.js');s=p.read_text(encoding='utf8')
+s=s.replace("if(action==='new_problem'){state.workshop={stage:'statement'};return state;}","""if(action==='new_problem'||action==='change_topic'){state.workshop={stage:'topic'};return state;}
+  if(w.stage==='topic'){
+   const normalized=QuestionResolver.normalize(message);const topic=window.PROBLEM_WORKSHOP.topics.find(t=>action==='topic_'+t.id||QuestionResolver.normalize(t.label)===normalized||t.aliases.some(a=>(' '+normalized+' ').includes(' '+a+' ')));
+   if(topic){state.workshop={stage:'statement',topic:topic.id};}else{w.pending_statement=message;}
+   if(topic&&w.pending_statement){state.workshop.statement=w.pending_statement;state.workshop.stage='clarify';return this.transition(state,w.pending_statement,'');}return state;
+  }
+  if(action==='edit_problem'){state.workshop={stage:'statement',topic:w.topic||'unsure'};return state;}
+  if(w.stage==='confirm'){if(action==='confirm_data'||/^(si|correcto|esta bien|confirmo)$/.test(QuestionResolver.normalize(message)))w.stage='guidance';return state;}""")
+s=s.replace("{stage:'guidance',statement:","{stage:'confirm',topic:w.topic||'unsure',statement:")
+s=s.replace("{stage:'clarify',statement}","{stage:'clarify',topic:w.topic||'unsure',statement}")
+s=s.replace("const plan=this.parse(w.statement);", "const plan=w.ast?{expected:WorkshopExpression.evaluate(w.ast)}:this.parse(w.statement);")
+s=s.replace("if(w.stage==='statement')text=window.PROBLEM_WORKSHOP.welcome;", """if(w.stage==='topic'){text=window.PROBLEM_WORKSHOP.topic_question;options=window.PROBLEM_WORKSHOP.topics.map(t=>({id:'topic_'+t.id,label:t.label}));}
+  else if(w.stage==='statement'){const topic=window.PROBLEM_WORKSHOP.topics.find(t=>t.id===w.topic);text=`**${topic?.label||'Tu problema'}**\\n\\nEscribí el enunciado completo. ${topic?.prompt||''} Primero te mostraré los datos y la incógnita para confirmarlos.`;options=[{id:'change_topic',label:'Cambiar tema'}];}
+  else if(w.stage==='confirm'){const description=w.rule==='linear'?'La incógnita es x; buscamos el valor que hace verdadera la igualdad.':w.rule==='hypotenuse'?'Los datos son los dos catetos; buscamos la hipotenusa.':'Buscamos el resultado de la operación indicada.';text=`**Revisemos la interpretación**\\n\\n${w.summary||('Enunciado: '+w.statement+'\\n'+description)}\\n\\n¿Estos datos y lo que se busca son correctos? Confirmalos o usá «Corregir datos» para reemplazar el enunciado.`;options=[{id:'confirm_data',label:'Sí, son correctos'},{id:'edit_problem',label:'Corregir datos'},{id:'change_topic',label:'Cambiar tema'}];}""")
+s=s.replace("else if(w.stage==='clarify')text=window.PROBLEM_WORKSHOP.unknown;", """else if(w.stage==='clarify'){const topic=window.PROBLEM_WORKSHOP.topics.find(t=>t.id===w.topic);const quantities=w.statement?.match(/[+-]?\\d+(?:[.,]\\d+)?\\s*(?:°|grados|cm|metros|m|%|km)?/g)||[];text=`Tema: ${topic?.label||'Por identificar'}.\\n${quantities.length?'Cantidades detectadas (falta asignarles su significado): '+quantities.join('; ')+'.\\n':''}${topic?.prompt||''}\\n\\n${window.PROBLEM_WORKSHOP.unknown}`;options=[{id:'edit_problem',label:'Corregir datos'},{id:'change_topic',label:'Cambiar tema'}];}""")
+s=s.replace("{id:'new_problem',label:'Otro problema'}];", "{id:'new_problem',label:'Otro problema'}];")
+s=s.replace("{id:'hint',label:'Una pista'},{id:'new_problem'", "{id:'hint',label:'Una pista'},{id:'edit_problem',label:'Corregir datos'},{id:'new_problem'")
+p.write_text(s,encoding='utf8')
+p=Path('services/problem_workshop.php');s=p.read_text(encoding='utf8').replace("require_once __DIR__.'/natural_problem.php';", "require_once __DIR__.'/natural_problem.php';\nrequire_once __DIR__.'/workshop_expression.php';")
+s=s.replace("if($action==='new_problem'){$w=['stage'=>'statement'];return $state;}","""if(in_array($action,['new_problem','change_topic'],true)){$w=['stage'=>'topic'];return $state;}
+  if($w['stage']==='topic'){$normalized=QuestionResolver::normalize($message);$topic=null;foreach(self::data()['topics'] as $t){if($action==='topic_'.$t['id']||QuestionResolver::normalize($t['label'])===$normalized||array_filter($t['aliases'],fn($a)=>str_contains(' '.$normalized.' ',' '.$a.' '))){$topic=$t;break;}}
+   if($topic){$pending=$w['pending_statement']??null;$w=['stage'=>'statement','topic'=>$topic['id']];if($pending){$w['stage']='clarify';$w['statement']=$pending;return self::transition($state,$pending,'');}}else $w['pending_statement']=$message;return $state;}
+  if($action==='edit_problem'){$w=['stage'=>'statement','topic'=>$w['topic']??'unsure'];return $state;}
+  if($w['stage']==='confirm'){if($action==='confirm_data'||preg_match('/^(si|correcto|esta bien|confirmo)$/',QuestionResolver::normalize($message)))$w['stage']='guidance';return $state;}""")
+s=s.replace("['stage'=>'guidance','statement'=>", "['stage'=>'confirm','topic'=>$w['topic']??'unsure','statement'=>")
+s=s.replace("['stage'=>'clarify','statement'=>$statement]", "['stage'=>'clarify','topic'=>$w['topic']??'unsure','statement'=>$statement]")
+s=s.replace("$plan=self::parse($w['statement']);", "$plan=isset($w['ast'])?['expected'=>WorkshopExpression::evaluate($w['ast'])]:self::parse($w['statement']);")
+s=s.replace("if($w['stage']==='statement')$text=self::data()['welcome'];", """if($w['stage']==='topic'){$text=self::data()['topic_question'];$options=array_map(fn($t)=>['id'=>'topic_'.$t['id'],'label'=>$t['label']],self::data()['topics']);}
+  elseif($w['stage']==='statement'){$topic=self::topic($w);$text='**'.($topic['label']??'Tu problema')."**\\n\\nEscribí el enunciado completo. ".($topic['prompt']??'').' Primero te mostraré los datos y la incógnita para confirmarlos.';$options=[['id'=>'change_topic','label'=>'Cambiar tema']];}
+  elseif($w['stage']==='confirm'){$description=$w['rule']==='linear'?'La incógnita es x; buscamos el valor que hace verdadera la igualdad.':($w['rule']==='hypotenuse'?'Los datos son los dos catetos; buscamos la hipotenusa.':'Buscamos el resultado de la operación indicada.');$text="**Revisemos la interpretación**\\n\\n".($w['summary']??('Enunciado: '.$w['statement']."\\n".$description))."\\n\\n¿Estos datos y lo que se busca son correctos? Confirmalos o usá «Corregir datos» para reemplazar el enunciado.";$options=[['id'=>'confirm_data','label'=>'Sí, son correctos'],['id'=>'edit_problem','label'=>'Corregir datos'],['id'=>'change_topic','label'=>'Cambiar tema']];}""")
+s=s.replace("elseif($w['stage']==='clarify')$text=self::data()['unknown'];", """elseif($w['stage']==='clarify'){$topic=self::topic($w);preg_match_all('/[+-]?\\d+(?:[.,]\\d+)?\\s*(?:°|grados|cm|metros|m|%|km)?/u',$w['statement']??'',$quantities);$text='Tema: '.($topic['label']??'Por identificar').".\\n".($quantities[0]?'Cantidades detectadas (falta asignarles su significado): '.implode('; ',$quantities[0]).".\\n":'').($topic['prompt']??'')."\\n\\n".self::data()['unknown'];$options=[['id'=>'edit_problem','label'=>'Corregir datos'],['id'=>'change_topic','label'=>'Cambiar tema']];}""")
+s=s.replace("$options[]=['id'=>'hint','label'=>'Una pista'];", "$options[]=['id'=>'hint','label'=>'Una pista'];$options[]=['id'=>'edit_problem','label'=>'Corregir datos'];")
+s=s.replace(' private static function rule(', " private static function topic(array $w): ?array {foreach(self::data()['topics'] as $t)if($t['id']===($w['topic']??''))return $t;return null;}\n private static function rule(")
+p.write_text(s,encoding='utf8')
+for file in ['api/sessions.php','assets/js/app.js']:
+ p=Path(file);s=p.read_text(encoding='utf8').replace("workshop']=['stage'=>'statement']","workshop']=['stage'=>'topic']").replace("workshop={stage:'statement'}","workshop={stage:'topic'}");p.write_text(s,encoding='utf8')
+for file in ['index.html','views/footer.php']:
+ p=Path(file);s=p.read_text(encoding='utf8').replace('<script src="assets/js/problem_workshop.js','<script src="assets/js/workshop_expression.js?v=20260926-intake"></script>\n<script src="assets/js/problem_workshop.js').replace('20260926-natural','20260926-intake');p.write_text(s,encoding='utf8')

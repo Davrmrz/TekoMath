@@ -1,0 +1,33 @@
+Variable|variables|Símbolo que puede tomar valores de un conjunto permitido.|En y=2x, x puede variar.
+Incógnita|incognitas|Cantidad desconocida que se busca bajo ciertas condiciones.|En x+3=7 se busca x.
+Coeficiente|coeficientes|Factor numérico de una parte literal.|En −4x², es −4.
+Expresión algebraica|expresiones algebraicas|Combinación de números, letras y operaciones; no necesariamente una ecuación.|3x+2 es una expresión.
+Término algebraico||Parte de una suma algebraica con su signo.|En 3x−5, son 3x y −5.
+Términos semejantes||Términos con la misma parte literal y exponentes.|3x²+2x²=5x².
+Monomio|monomios|Producto de coeficiente y variables con exponentes enteros no negativos.|4x²y es monomio.
+Binomio|binomios|Polinomio de dos términos no nulos reducidos.|x+3 es binomio.
+Trinomio|trinomios|Polinomio de tres términos no nulos reducidos.|x²+2x+1 es trinomio.
+Polinomio|polinomios|Suma finita de monomios.|x³−2x+5 es polinomio; 1/x no lo es.
+Grado de un polinomio|grado del polinomio|Mayor grado de sus términos no nulos.|3x⁴−x tiene grado cuatro.
+Término independiente||Término sin la variable considerada.|En 2x+7, es 7.
+Valor numérico||Resultado de sustituir variables por valores permitidos.|Si x=2, 3x+1 vale 7.
+Igualdad||Afirmación de que dos expresiones tienen igual valor.|2+3=5.
+Ecuación|ecuaciones|Igualdad con incógnitas cuyos valores se buscan.|x+2=6.
+Solución de una ecuación|raiz de una ecuacion|Valor que cumple la igualdad y todas sus restricciones.|x=4 resuelve x+2=6.
+Ecuación de primer grado|ecuacion lineal|Ecuación reducible a ax+b=0, con a no nulo, en una incógnita.|2x−6=0 tiene solución 3.
+Despeje|despejar|Transformación equivalente para aislar una incógnita.|Restar 3 a ambos miembros de x+3=8 da x=5.
+Sistema de ecuaciones|sistemas de ecuaciones|Ecuaciones que deben cumplirse simultáneamente.|x+y=5 y x−y=1 se cumplen para x=3,y=2.
+Método de sustitución||Se despeja una incógnita y se reemplaza en otra ecuación.|Si y=5−x, se usa esa expresión en la otra ecuación.
+Método de eliminación|metodo de reduccion|Se combinan ecuaciones equivalentes para cancelar una incógnita.|Sumar x+y=5 y x−y=1 elimina y.
+Ecuación cuadrática|ecuacion de segundo grado|Ecuación ax²+bx+c=0, a no nulo, con hasta dos soluciones reales distintas.|x²−9=0 tiene soluciones 3 y −3.
+Discriminante||Expresión b²−4ac de una cuadrática real; determina la cantidad de raíces reales distintas.|Si es negativo, no hay raíces reales.
+Fórmula cuadrática|formula general de segundo grado;formula de bhaskara|Resuelve ax²+bx+c=0: x=(−b±√(b²−4ac))/(2a), a no nulo.|x²−5x+6=0 tiene raíces 2 y 3.
+Factorización|factorizar|Escritura de una expresión como producto.|x²−9=(x−3)(x+3).
+Factor común||Factor presente en todos los términos, extraíble por distributiva.|6x+9=3(2x+3).
+Productos notables|producto notable|Multiplicaciones algebraicas que siguen identidades frecuentes.|(a+b)²=a²+2ab+b².
+Diferencia de cuadrados||Identidad que transforma una resta de cuadrados en producto.|a²−b²=(a−b)(a+b).
+Cuadrado de un binomio||Cuadrado de suma o diferencia, incluyendo el doble producto.|(x−2)²=x²−4x+4.
+Fracción algebraica|fracciones algebraicas|Cociente de expresiones con denominador no nulo.|(x²−1)/(x−1)=x+1 solo para x≠1.
+Racionalización|racionalizar|Transformación equivalente que elimina radicales del denominador.|1/√2=√2/2.
+Desigualdad||Relación de orden mediante <, >, ≤ o ≥.|3<5.
+Inecuación|inecuaciones|Desigualdad con incógnitas. Multiplicar ambos miembros por un negativo invierte el sentido.|−2x<4 equivale a x>−2.

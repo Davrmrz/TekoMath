@@ -1,0 +1,37 @@
+{
+  "taxonomy_version": "1.0",
+  "subject": "Matemática - 1er Curso Media",
+  "core_domain": "Funciones Trigonométricas",
+  "error_types": {
+    "ERR_SIGN_QUADRANT": {
+      "name": "Error de Signo por Cuadrante",
+      "description": "El estudiante calcula el valor absoluto o de referencia correctamente pero asigna el signo incorrecto para el cuadrante del ángulo.",
+      "jopara_hint": "Tranqui, tu ángulo de referencia está impecable. Pe problema ndaha'éi el número. Revisemos solamente el cuadrante: ¿en ese cuadrante la coordenada es positiva o negativa?",
+      "visual_action": { "highlight_quadrant": "auto", "show_sin_y": true, "show_cos_x": true }
+    },
+    "ERR_CONFUSE_SIN_COS": {
+      "name": "Confusión Seno y Coseno / Coordenadas X e Y",
+      "description": "El estudiante asocia el seno con el eje X (horizontal) o el coseno con el eje Y (vertical).",
+      "jopara_hint": "Ñanemandu'ami peteĩ regla clave: en la circunferencia unitaria, Coseno siempre va con el eje horizontal X y Seno con el eje vertical Y.",
+      "visual_action": { "show_cos_x": true, "show_sin_y": true }
+    },
+    "ERR_REF_ANGLE": {
+      "name": "Error de Ángulo de Referencia",
+      "description": "Cálculo incorrecto del ángulo agudo formado con el semieje X.",
+      "jopara_hint": "Casi. El ángulo de referencia siempre se mide respecto al eje horizontal (180° o 360°), nunca respecto al eje Y (90° o 270°). ¿Cuánto le falta o le sobra para llegar a 180°?",
+      "visual_action": { "highlight_quadrant": "auto" }
+    },
+    "ERR_DEG_RAD": {
+      "name": "Confusión Grados y Radianes",
+      "description": "El estudiante confunde la escala angular (por ejemplo pensar que pi radianes es 360° en lugar de 180°).",
+      "jopara_hint": "Recordá la equivalencia fundamental: media vuelta a la circunferencia es 180°, y eso equivale exactamente a π radianes.",
+      "visual_action": { "angle_deg": 180 }
+    },
+    "ERR_AMPLITUDE_PERIOD": {
+      "name": "Confusión Amplitud y Período",
+      "description": "El estudiante confunde la altura de la onda (amplitud) con la longitud horizontal de una repetición (período).",
+      "jopara_hint": "Amplitud ha'e qué tan alta es la onda (altura vertical), mientras que el Período es el tiempo o distancia horizontal en que la onda completa un ciclo.",
+      "visual_action": { "highlight_feature": "amplitude" }
+    }
+  }
+}

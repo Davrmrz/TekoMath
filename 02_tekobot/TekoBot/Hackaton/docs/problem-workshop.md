@@ -1,0 +1,25 @@
+# Resolver un problema
+
+## Tema, interpretación y confirmación
+
+Cada chat nuevo y «Otro problema» empieza preguntando el tema: números, álgebra, funciones, trigonometría, geometría, combinatoria/probabilidad, estadística o «No sé el tema». Luego solicita el enunciado, muestra los datos y la incógnita e incorpora una etapa de confirmación. «Corregir datos» permite reemplazar el enunciado conservando el tema; «Cambiar tema» reinicia la selección. Si se envía el problema antes de elegir tema, se conserva para interpretarlo después.
+
+La interpretación local incorpora porcentajes directos, áreas/perímetros de rectángulos con unidades homogéneas, media aritmética sin ponderación y ecuaciones verbales simples, además de las familias anteriores. La selección del tema orienta estos reconocimientos y las preguntas de aclaración. Elegir un tema no garantiza que cualquier enunciado de ese tema pueda resolverse localmente.
+
+Si `GEMINI_API_KEY` está configurada, los enunciados no reconocidos se envían para extraer datos, incógnita y un árbol de cálculo sin evaluar. El servidor valida operaciones, dominios y límites; genera los pasos y exige confirmar la interpretación. Un intérprete independiente calcula para comprobar la respuesta. No ejecuta código del modelo. Los casos ambiguos, no numéricos o no representables requieren aclaración. En esta sesión no había clave configurada: se verificó el contrato con planes de prueba y se probó el flujo local; la integración con respuestas reales del proveedor queda sin verificar.
+
+Sustituye el botón «Evaluación Diagnóstica». Crea una conversación independiente con `purpose=problem_workshop` y un estado `workshop` persistido tanto en PHP como en almacenamiento local. No altera las conversaciones anteriores ni utiliza los ejercicios de diagnóstico.
+
+El flujo tiene etapas de recepción, aclaración, guía, espera del resultado y respuesta correcta. El estudiante avanza con «Siguiente paso», solicita pistas y puede reintentar sin límite. «Otro problema» reinicia el ejercicio dentro del mismo chat. Una respuesta textual o ambigua no se califica como un resultado erróneo.
+
+La comprobación actual es determinista: ecuaciones lineales de la forma ax+b=c, expresiones numéricas y cálculo de la hipotenusa a partir de los catetos. El intérprete `workshop_expression` admite suma, resta, multiplicación (`*`, `×`, `·`, `x`), división (`/`, `÷`, `:`), signos negativos, paréntesis, potencias, raíces cuadradas (`sqrt(81)`, `raiz(81)`, `√(81)`), factoriales, porcentajes (`20% * 150`), logaritmo natural y seno/coseno/tangente en grados. Respeta prioridades y potencias asociadas por la derecha. Las divisiones consecutivas se resuelven de izquierda a derecha: para dividir por una fracción, escribí `1/2 / (3/4)`. Cada paso y pista corresponde al árbol de operaciones; la multiplicación de enteros no recibe una guía de fracciones. Enunciados fuera de las formas admitidas requieren aclaración; no se promete interpretar automáticamente cualquier problema libre.
+
+Las expresiones y respuestas numéricas usan punto de miles y coma decimal: `9.022` representa 9022, `1.234,56` representa 1234,56. Por compatibilidad, se admite punto decimal cuando no tiene forma de agrupación de miles (`1.5`, `0.125`). La confirmación muestra la expresión interpretada y la convención antes de calificar. `tests/arithmetic_workshop_test.cjs` cubre el caso 347 × 26, prioridades, dominios inválidos y paridad de conversaciones PHP/JavaScript.
+
+El resultado esperado se calcula al verificar, no se guarda en el estado ni se devuelve en la respuesta de guía. Se aceptan fracciones equivalentes y decimales con tolerancia de 1e-6 · max(1, |resultado|). Se rechazan división por cero, longitudes no positivas, enunciados parcialmente reconocidos y código arbitrario. Los ejercicios de cursos superiores conservan el aviso curricular.
+
+Reconstruir datos del navegador con `scripts/build_curriculum.py`. Verificaciones: `tests/workshop_test.cjs` (paridad PHP/JavaScript, progresión, validación y entradas inválidas) y `tests/workshop_browser.cjs` (botón, nuevo chat, pasos, reintentos, recarga y nuevo ejercicio en servidor y sin API).
+
+## Enunciados en lenguaje natural
+
+La interpretación local también reconoce problemas de sombras y alturas, elevación para hallar alturas o distancias horizontales, y escaleras para hallar alturas con ángulo respecto del suelo. Extrae una longitud con su unidad y un ángulo en grados, independientemente del orden de las frases. Identifica la incógnita, explica los supuestos y sustituye los datos en los pasos sin efectuar la cuenta final. Acepta metros, centímetros y kilómetros y redondeo a dos decimales en metros. Si falta información, conserva el enunciado para combinarlo con la aclaración siguiente. Casos con terreno inclinado, varias longitudes, altura del observador o ángulos no válidos requieren aclaración; no se afirma comprensión universal de cualquier enunciado. `tests/natural_workshop_test.cjs` verifica el problema del árbol aportado, variantes y paridad PHP/JavaScript.

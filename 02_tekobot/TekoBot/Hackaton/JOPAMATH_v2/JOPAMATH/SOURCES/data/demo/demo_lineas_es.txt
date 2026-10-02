@@ -1,0 +1,7 @@
+¡Bienvenido a MateJopara!
+Observá con atención el triángulo rectángulo.
+La hipotenusa mide exactamente 5 unidades y el cateto opuesto mide 3.
+Calculá el valor de sen(30°) para desbloquear la siguiente lección.
+Si necesitás una pista, hacé clic en el botón de ayuda.
+Excelente trabajo: sen(α) = 3/5.
+Visitá https://matejopara.edu.py para ver tu progreso con el usuario {{user}}.

@@ -1,0 +1,53 @@
+Punto geométrico||Objeto que indica posición, sin dimensiones.|Un punto puede llamarse A.
+Recta|linea recta|Línea que se prolonga indefinidamente en ambos sentidos.|Dos puntos distintos determinan una recta.
+Semirrecta||Parte de una recta con origen y prolongación en un sentido.|Los lados de un ángulo son semirrectas.
+Segmento||Parte de una recta limitada por dos extremos.|AB tiene longitud finita.
+Plano geométrico||Superficie ideal extendida en dos dimensiones.|Una hoja representa una porción de plano.
+Ángulo|angulos|Abertura o giro entre semirrectas de origen común.|Un cuarto de vuelta son 90°.
+Vértice|vertices|Punto donde concurren lados o semirrectas según la figura.|Es el origen común de los lados de un ángulo.
+Ángulo agudo||Ángulo mayor que cero y menor que 90°.|45° es agudo.
+Ángulo recto||Ángulo de 90°, equivalente a π/2 radianes.|Un rectángulo tiene cuatro ángulos rectos.
+Ángulo obtuso||Ángulo mayor que 90° y menor que 180°.|120° es obtuso.
+Ángulo llano||Ángulo de 180°.|Equivale a media vuelta.
+Ángulos complementarios||Dos ángulos que suman 90°.|30° y 60°.
+Ángulos suplementarios||Dos ángulos que suman 180°.|70° y 110°.
+Ángulos opuestos por el vértice||Ángulos enfrentados formados por dos rectas que se cortan; son iguales.|Si uno mide 40°, su opuesto también.
+Bisectriz||Semirrecta que divide un ángulo en dos iguales.|Divide 60° en 30° y 30°.
+Mediatriz||Recta perpendicular a un segmento por su punto medio.|Sus puntos equidistan de ambos extremos.
+Triángulo|triangulos|Polígono de tres lados, con suma de ángulos interiores de 180° en el plano euclídeo.|60°+60°+60°=180°.
+Triángulo equilátero||Triángulo con tres lados iguales.|Sus ángulos son de 60°.
+Triángulo isósceles||Triángulo con al menos dos lados iguales.|Tiene ángulos iguales frente a los lados iguales.
+Triángulo escaleno||Triángulo con todos sus lados distintos.|El triángulo de lados 3,4,5.
+Hipotenusa||Lado frente al ángulo recto, el más largo del triángulo rectángulo.|En 3,4,5, mide 5.
+Cateto|catetos|Cada lado que forma el ángulo recto.|En 3,4,5, miden 3 y 4.
+Cateto opuesto||Cateto frente al ángulo agudo de referencia.|Puede cambiar al cambiar el ángulo elegido.
+Cateto adyacente||Cateto que toca al ángulo agudo de referencia; excluye la hipotenusa.|Se usa con la hipotenusa para calcular el coseno.
+Teorema de Pitágoras|pitagoras|En un triángulo rectángulo, el cuadrado de la hipotenusa es suma de los cuadrados de los catetos.|3²+4²=5².
+Semejanza|triangulos semejantes|Figuras con ángulos correspondientes iguales y lados proporcionales.|Los triángulos 3-4-5 y 6-8-10 son semejantes.
+Congruencia|triangulos congruentes|Figuras de igual forma y tamaño, superponibles por movimientos rígidos.|Tres lados correspondientes iguales determinan triángulos congruentes.
+Teorema de Thales|teorema de tales|Paralelas cortadas por transversales determinan segmentos correspondientes proporcionales.|Permite hallar longitudes por semejanza.
+Polígono|poligonos|Figura plana cerrada delimitada por segmentos consecutivos.|Un pentágono tiene cinco lados.
+Diagonal|diagonales|Segmento entre vértices no consecutivos de un polígono.|Un cuadrilátero tiene dos diagonales.
+Cuadrilátero||Polígono de cuatro lados.|Sus ángulos interiores suman 360°.
+Paralelogramo||Cuadrilátero con lados opuestos paralelos.|El rectángulo es un paralelogramo.
+Rectángulo||Cuadrilátero con cuatro ángulos rectos.|Su área es base por altura.
+Cuadrado geométrico|un cuadrado;el cuadrado|Cuadrilátero de cuatro lados iguales y cuatro ángulos rectos.|Lado 3 cm implica perímetro 12 cm.
+Rombo||Paralelogramo de cuatro lados iguales.|Su área es la mitad del producto de diagonales.
+Trapecio||Cuadrilátero con dos bases paralelas; hay convenciones que incluyen o excluyen paralelogramos.|Área=(base mayor+base menor)×altura/2.
+Perímetro||Longitud del contorno de una figura.|Un rectángulo 3 por 5 tiene perímetro 16.
+Área|areas|Medida de superficie, en unidades cuadradas.|Un rectángulo 3 cm por 5 cm tiene área 15 cm².
+Altura de un triángulo||Distancia perpendicular de un vértice a la recta de la base opuesta.|Área=base×altura/2.
+Círculo||Región plana limitada por una circunferencia, incluyendo su interior.|Área=πr².
+Radio de una circunferencia|radio geometrico|Segmento del centro a la circunferencia, o su longitud.|Todos los radios de una circunferencia son iguales.
+Diámetro||Cuerda que pasa por el centro; mide el doble del radio.|Radio 4 implica diámetro 8.
+Cuerda de una circunferencia||Segmento entre dos puntos de la circunferencia.|El diámetro es su cuerda mayor.
+Arco de circunferencia||Parte de una circunferencia entre dos puntos.|90° centrales abarcan un cuarto de circunferencia.
+Tangente a una circunferencia|recta tangente a una circunferencia|Recta con un único punto común con la circunferencia, perpendicular al radio allí.|No es la función trigonométrica tangente.
+Volumen||Medida del espacio ocupado por un cuerpo, en unidades cúbicas.|Un cubo de arista 2 tiene volumen 8.
+Prisma|prismas|Poliedro con bases congruentes paralelas y caras laterales paralelogramos.|Volumen=área de base×altura.
+Pirámide||Poliedro con base poligonal y caras triangulares concurrentes en un vértice.|Volumen=área de base×altura/3.
+Cilindro||En el caso circular recto, cuerpo con bases circulares iguales y paralelas.|Volumen=πr²h.
+Cono||En el caso circular recto, cuerpo con base circular y vértice sobre su eje.|Volumen=πr²h/3.
+Esfera||Superficie de puntos a igual distancia de un centro; limita el cuerpo esférico.|El volumen del cuerpo esférico es 4πr³/3.
+Unidad de medida|unidades de medida|Referencia para comparar una magnitud.|Metro para longitud y metro cuadrado para área.
+Conversión de unidades||Cambio de unidad conservando la magnitud.|1 m=100 cm, pero 1 m²=10000 cm².

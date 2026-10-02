@@ -1,0 +1,16 @@
+MATEJOPARA LOCALIZATION TOOL v1.1 — CORREGIDO
+
+1) USÁ ESTA CARPETA RAÍZ JOPAMATH. No hace falta entrar a SOURCES/.
+2) En Windows abrí start.bat.
+3) Web: cargá un JSON de textos (por ejemplo web_es.json). Las claves como home.title ahora se preservan correctamente.
+4) Juego CSV: si hay varias columnas de texto, escribilas separadas por coma al importar, por ejemplo:
+   dialogo,pregunta,respuesta_a,respuesta_b,pista
+   Si dejás el campo vacío, el programa intenta detectar todas las columnas textuales conocidas.
+5) Traducí todo.
+6) Para probar rápido en web/juego, usá EXPORTAR BORRADOR: incluye las propuestas IA técnicamente válidas.
+7) Para PRODUCCIÓN, desmarcá borrador y aprobá todo: el sistema ya no mezcla silenciosamente textos españoles con traducidos.
+8) Los proveedores Gemini / OpenAI-compatible / NVIDIA NIM reintentan automáticamente si reciben 429, timeout o errores 5xx temporales.
+
+IMPORTANTE: el modo Mock sirve solo para probar el flujo. Para traducción real configurá un proveedor real en Configuración.
+
+Ver: FIX_REPORT_v1.1.md

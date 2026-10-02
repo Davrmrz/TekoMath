@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Traducciones - {{ project.name }}{% endblock %}
+{% block page_title %}Proyecto: {{ project.name }}{% endblock %}
+
+{% block header_actions %}
+  <div style="display: flex; gap: 8px;">
+    <button id="btn-translate-all" class="btn btn-primary" onclick="translateAll('{{ project.id }}');">
+      <span>⚡</span> Traducir Todo
+    </button>
+    <button class="btn btn-outline" onclick="retryErrors('{{ project.id }}');">
+      <span>🔄</span> Reintentar Errores
+    </button>
+    <a href="/review/{{ project.id }}" class="btn btn-accent">
+      <span>🔍</span> Modo Revisión
+    </a>
+    <a href="/export/{{ project.id }}" class="btn btn-secondary">
+      <span>📤</span> Exportar
+    </a>
+  </div>
+{% endblock %}
+
+{% block content %}
+<!-- Batch Progress Bar (hidden by default) -->
+<div id="batch-progress" class="alert alert-info" style="display: none;">
+  <span>⏳</span> Procesando unidades en lote (búsqueda en memoria, protección matemática y generación jopara)...
+</div>
+
+<!-- Project Summary Bar -->
+<div class="card" style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+  <div style="display: flex; gap: 16px; align-items: center;">
+    <div><strong>Archivo:</strong> {{ project.original_filename }}</div>
+    <div><strong>Formato:</strong> <span class="badge badge-preferred">{{ project.file_format | upper }}</span></div>
+    <div><strong>Total:</strong> {{ units | length }} unidades</div>
+  </div>
+
+  <div style="display: flex; gap: 8px; align-items: center;">
+    <input type="text" id="search-units" class="form-input" placeholder="Buscar texto o clave..." style="width: 240px; padding: 6px 10px;" oninput="filterTable('units-table', this.value);">
+  </div>
+</div>
+
+<!-- Filter Pills -->
+<div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+  <button class="btn btn-sm btn-outline active-filter" onclick="filterByStatus('ALL');">Todos ({{ units | length }})</button>
+  <button class="btn btn-sm btn-outline" onclick="filterByStatus('HUMAN_VALIDATED');">Aprobadas ({{ units | selectattr('status', 'equalto', 'HUMAN_VALIDATED') | list | length }})</button>
+  <button class="btn btn-sm btn-outline" onclick="filterByStatus('AUTO_GENERATED');">Propuestas IA ({{ units | selectattr('status', 'equalto', 'AUTO_GENERATED') | list | length }})</button>
+  <button class="btn btn-sm btn-outline" onclick="filterByStatus('TM_MATCH');">Memoria Exacta ({{ units | selectattr('status', 'equalto', 'TM_MATCH') | list | length }})</button>
+  <button class="btn btn-sm btn-outline" onclick="filterByStatus('NEEDS_REVIEW');">Requiere Revisión ({{ units | selectattr('status', 'equalto', 'NEEDS_REVIEW') | list | length }})</button>
+  <button class="btn btn-sm btn-outline" onclick="filterByStatus('VALIDATION_ERROR');" style="color: var(--status-error);">Errores ({{ units | selectattr('status', 'equalto', 'VALIDATION_ERROR') | list | length }})</button>
+</div>
+
+<!-- Units Table -->
+<div class="table-wrapper">
+  <table class="data-table" id="units-table">
+    <thead>
+      <tr>
+        <th style="width: 140px;">Clave / Ruta</th>
+        <th style="width: 110px;">Contexto</th>
+        <th>Español (Original)</th>
+        <th>Jopara (Propuesta)</th>
+        <th style="width: 120px;">Estado</th>
+        <th style="width: 110px;">Validación</th>
+        <th style="width: 100px;">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in units %}
+      <tr data-status="{{ u.status }}">
+        <td><code>{{ u.key_path }}</code></td>
+        <td><span class="badge" style="background: #EEF2F6; color: #334155;">{{ u.context }}</span></td>
+        <td style="font-weight: 500;">{{ u.source_text }}</td>
+        <td>
+          {% if u.target_text %}
+            {{ u.target_text }}
+          {% else %}
+            <span style="color: var(--text-muted); font-style: italic;">Sin traducir</span>
+          {% endif %}
+        </td>
+        <td>
+          <span class="badge badge-{{ u.status | lower }}" id="status-badge-{{ u.id }}">
+            {{ u.status }}
+          </span>
+        </td>
+        <td>
+          {% if u.status == "VALIDATION_ERROR" %}
+            <span style="color: var(--status-error); font-size: 11px; font-weight: 600;" title="{{ u.validation_error }}">
+              ⚠️ Error
+            </span>
+          {% elif u.target_text %}
+            <span style="color: var(--status-validated); font-size: 11px; font-weight: 600;">
+              ✓ Válido
+            </span>
+          {% else %}
+            <span style="color: var(--text-muted); font-size: 11px;">-</span>
+          {% endif %}
+        </td>
+        <td>
+          <div style="display: flex; gap: 4px;">
+            {% if u.status != "HUMAN_VALIDATED" and u.target_text %}
+              <button class="btn btn-success btn-sm" onclick="approveUnit('{{ u.id }}');" title="Aprobar traducción">
+                ✓
+              </button>
+            {% endif %}
+            <a href="/review/{{ project.id }}#unit-{{ u.id }}" class="btn btn-outline btn-sm" title="Revisar en detalle">
+              ✎
+            </a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function filterByStatus(status) {
+    const rows = document.querySelectorAll("#units-table tbody tr");
+    rows.forEach(r => {
+      if (status === "ALL" || r.getAttribute("data-status") === status) {
+        r.style.display = "";
+      } else {
+        r.style.display = "none";
+      }
+    });
+  }
+</script>
+{% endblock %}

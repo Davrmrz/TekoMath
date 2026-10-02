@@ -1,0 +1,1487 @@
+/* ============================================
+   TEKO MATH — Misiones de Aprendizaje (misiones.css)
+   Estilos visuales, interactivos y progresivos
+   Identidad: Verde + Morado | Neo-brutalist / Editorial
+   ============================================ */
+
+/* --- Contenedor Modal de Misión --- */
+.mission-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-out);
+}
+
+.mission-modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mission-modal-container {
+  background: var(--white-pure);
+  border: var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-solid-lg);
+  width: 100%;
+  max-width: 960px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.96) translateY(12px);
+  transition: transform 0.3s var(--ease-out);
+}
+
+.mission-modal-backdrop.active .mission-modal-container {
+  transform: scale(1) translateY(0);
+}
+
+/* --- Header de Misión --- */
+.mission-header {
+  background: linear-gradient(135deg, var(--green-700) 0%, var(--purple-800) 100%);
+  color: var(--white);
+  padding: 18px 24px;
+  border-bottom: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  position: relative;
+}
+
+.mission-header__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mission-header__top-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mission-header__title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mission-header__subtitle {
+  font-size: 0.85rem;
+  color: var(--green-100);
+  margin: 0;
+  max-width: 650px;
+  line-height: 1.35;
+}
+
+.mission-close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.mission-close-btn:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+  transform: rotate(90deg);
+}
+
+/* --- Barra de Progreso de Etapas (1 a 5) --- */
+.mission-stepper {
+  background: var(--gray-50);
+  border-bottom: 2px solid var(--border-dark);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.mission-step-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--white-pure);
+  border: 2px solid var(--gray-300);
+  color: var(--gray-500);
+  white-space: nowrap;
+  transition: all 0.25s var(--ease-out);
+}
+
+.mission-step-pill.completed {
+  background: var(--green-100);
+  border-color: var(--green-600);
+  color: var(--green-800);
+}
+
+.mission-step-pill.active {
+  background: var(--purple-100);
+  border-color: var(--purple-700);
+  color: var(--purple-900);
+  box-shadow: 2px 2px 0 var(--border-dark);
+  transform: translateY(-1px);
+}
+
+.mission-step-pill__num {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: currentColor;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+.mission-step-pill.completed .mission-step-pill__num {
+  background: var(--green-600);
+  color: white;
+}
+.mission-step-pill.active .mission-step-pill__num {
+  background: var(--purple-700);
+  color: white;
+}
+
+.mission-stepper-divider {
+  flex: 1;
+  height: 2px;
+  background: var(--gray-300);
+  min-width: 16px;
+}
+
+/* --- Cuerpo Principal de la Misión --- */
+.mission-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  background: #fafaf9;
+}
+
+/* --- Banner de Historia / Lore --- */
+.mission-lore-box {
+  background: var(--purple-50);
+  border: 2px solid var(--purple-300);
+  border-left: 6px solid var(--purple-600);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.mission-lore-box__icon {
+  font-size: 1.5rem;
+}
+
+.mission-lore-box__text {
+  font-size: 0.88rem;
+  color: var(--purple-900);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* --- Tarjeta de Etapa Activa --- */
+.stage-card {
+  background: var(--white-pure);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-solid);
+  padding: 24px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.stage-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stage-card__badge {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--border-dark);
+}
+
+.stage-card__badge--explora {
+  background: var(--green-100);
+  color: var(--green-800);
+}
+
+.stage-card__badge--descubri {
+  background: var(--purple-100);
+  color: var(--purple-900);
+}
+
+.stage-card__badge--resolve {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.stage-card__badge--desafio {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.stage-card__badge--final {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.stage-card__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+
+.stage-card__prompt {
+  font-size: 0.95rem;
+  color: var(--gray-700);
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+/* --- Área de Interacción Visual (Etapa 1: EXPLORÁ) --- */
+.mission-visual-workbench {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  background: var(--gray-50);
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .mission-visual-workbench {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mission-canvas-wrapper {
+  background: var(--white-pure);
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 280px;
+}
+
+.mission-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.mission-controls-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mission-readout-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.mission-readout-grid .mission-readout-item:nth-child(9) {
+  grid-column: span 3;
+  text-align: center;
+}
+
+.mission-readout-item {
+  background: var(--white-pure);
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mission-readout-item span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+}
+
+.mission-readout-item strong {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--ink);
+  margin-top: 2px;
+}
+
+
+.mission-quadrant-dial {
+  background: var(--purple-50);
+  border: 2px solid var(--purple-300);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  text-align: center;
+}
+
+.mission-quadrant-dial strong {
+  font-family: var(--font-display);
+  color: var(--purple-900);
+  font-size: 0.95rem;
+}
+
+/* --- Lista de Opciones Conceptuales (Etapas 2, 4, 5) --- */
+.mission-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.mission-option-btn {
+  background: var(--white-pure);
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  box-shadow: 2px 2px 0 var(--border-dark);
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--ink);
+  transition: all 0.2s var(--ease-out);
+  width: 100%;
+}
+
+.mission-option-btn:hover:not(:disabled) {
+  background: var(--green-50);
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0 var(--border-dark);
+}
+
+.mission-option-btn__letter {
+  background: var(--gray-100);
+  border: 1.5px solid var(--border-dark);
+  border-radius: 6px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.8rem;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mission-option-btn.selected-correct {
+  background: var(--green-100);
+  border-color: var(--green-600);
+  color: var(--green-900);
+  box-shadow: 3px 3px 0 var(--green-700);
+}
+
+.mission-option-btn.selected-correct .mission-option-btn__letter {
+  background: var(--green-500);
+  color: white;
+  border-color: var(--green-700);
+}
+
+.mission-option-btn.selected-wrong {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #991b1b;
+  box-shadow: 3px 3px 0 #b91c1c;
+}
+
+.mission-option-btn.selected-wrong .mission-option-btn__letter {
+  background: #ef4444;
+  color: white;
+  border-color: #b91c1c;
+}
+
+/* --- Caja de Diagnóstico Pedagógico de Error --- */
+.mission-diagnostic-box {
+  background: #fffbeb;
+  border: 2px solid #f59e0b;
+  border-left: 6px solid #d97706;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 20px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.mission-diagnostic-box__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: #92400e;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.mission-diagnostic-box__text {
+  font-size: 0.9rem;
+  color: #78350f;
+  line-height: 1.45;
+  margin: 0 0 12px;
+}
+
+.mission-diagnostic-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* --- Caja de Éxito / Feedback Positivo --- */
+.mission-success-box {
+  background: var(--green-50);
+  border: 2px solid var(--green-400);
+  border-left: 6px solid var(--green-600);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 20px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.mission-success-box__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--green-800);
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.mission-success-box__text {
+  font-size: 0.9rem;
+  color: var(--green-900);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* --- Sección Guiada Paso a Paso (Etapa 3: RESOLVÉ) --- */
+.step-by-step-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.step-item {
+  background: var(--gray-50);
+  border: 2px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  transition: border-color 0.2s;
+}
+
+.step-item.step-item--active {
+  border-color: var(--purple-500);
+  background: var(--white-pure);
+  box-shadow: 2px 2px 0 var(--purple-700);
+}
+
+.step-item.step-item--completed {
+  border-color: var(--green-500);
+  background: var(--green-50);
+}
+
+.step-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.step-item__title {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+/* --- Botón y Caja de Pistas de Teko --- */
+.mission-hint-container {
+  margin-top: 14px;
+}
+
+.btn-teko-hint {
+  background: var(--purple-50);
+  border: 2px dashed var(--purple-400);
+  color: var(--purple-800);
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-teko-hint:hover {
+  background: var(--purple-100);
+  border-color: var(--purple-600);
+  color: var(--purple-900);
+  transform: translateY(-1px);
+}
+
+.mission-hint-card {
+  background: #fdf4ff;
+  border: 2px solid #e879f9;
+  border-left: 5px solid var(--purple-600);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-top: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  animation: slideDown 0.25s ease-out;
+}
+
+.mission-hint-card__content {
+  font-size: 0.86rem;
+  color: #701a75;
+  line-height: 1.4;
+}
+
+/* --- Barra de Navegación Inferior de la Misión --- */
+.mission-footer {
+  padding: 16px 24px;
+  background: var(--white-pure);
+  border-top: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mission-footer__telemetry {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.82rem;
+  color: var(--gray-600);
+  font-weight: 600;
+}
+
+.mission-telemetry-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* --- Pantalla de Resultados Finales de la Misión --- */
+.mission-results-view {
+  text-align: center;
+  padding: 20px 10px;
+  animation: fadeIn 0.4s var(--ease-out);
+}
+
+.results-badge-icon {
+  font-size: 4rem;
+  margin-bottom: 8px;
+  animation: bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.results-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--ink);
+  margin: 0 0 6px;
+  letter-spacing: -0.02em;
+}
+
+.results-subtitle {
+  font-size: 1rem;
+  color: var(--gray-600);
+  margin: 0 auto 24px;
+  max-width: 580px;
+  line-height: 1.4;
+}
+
+/* Medidor Principal de Dominio */
+.mastery-score-card {
+  background: linear-gradient(135deg, var(--green-50) 0%, var(--purple-50) 100%);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-solid);
+  padding: 20px;
+  max-width: 440px;
+  margin: 0 auto 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mastery-score-label {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mastery-score-val {
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  font-weight: 900;
+  color: var(--green-700);
+  line-height: 1;
+  margin: 8px 0;
+}
+
+.mastery-progress-bar-wrap {
+  width: 100%;
+  height: 12px;
+  background: var(--gray-200);
+  border: 2px solid var(--border-dark);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.mastery-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green-400), var(--purple-500));
+  border-radius: 999px;
+  transition: width 1s var(--ease-out);
+}
+
+/* Desglose Conceptual */
+.concepts-breakdown-section {
+  max-width: 640px;
+  margin: 0 auto 24px;
+  text-align: left;
+}
+
+.concepts-breakdown-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+}
+
+.concept-card {
+  background: var(--white-pure);
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  box-shadow: 2px 2px 0 var(--border-dark);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.concept-card__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+.concept-card__status {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.concept-card__status--mastered {
+  background: var(--green-100);
+  color: var(--green-800);
+  border: 1px solid var(--green-600);
+}
+
+.concept-card__status--practice {
+  background: #fef9c3;
+  color: #854d0e;
+  border: 1px solid #ca8a04;
+}
+
+/* Grid de Métricas de Progreso */
+.results-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  max-width: 640px;
+  margin: 0 auto 28px;
+}
+
+.results-telemetry-card {
+  background: var(--white-pure);
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  text-align: center;
+  box-shadow: 2px 2px 0 var(--border-dark);
+}
+
+.results-telemetry-card__val {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--purple-700);
+}
+
+.results-telemetry-card__lbl {
+  font-size: 0.72rem;
+  color: var(--gray-600);
+  font-weight: 700;
+  margin-top: 2px;
+  text-transform: uppercase;
+}
+
+/* Animaciones */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bounce {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* --- Tarjeta de Misión en el Dashboard --- */
+.mission-card {
+  background: var(--white-pure);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-solid);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.mission-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-solid-lg);
+}
+
+.mission-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.mission-card__title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.mission-card__story {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  line-height: 1.45;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mission-card__stages-preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.mission-card__stage-dot {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  color: var(--gray-600);
+}
+
+.mission-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1.5px solid var(--gray-200);
+  gap: 8px;
+}
+
+/* ============================================
+   TARJETAS DE CONCEPTOS INTERACTIVAS EN DESAFÍOS
+   ============================================ */
+.mission-concept-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fdf4ff;
+  border: 1.5px solid #a855f7;
+  color: #7e22ce;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  box-shadow: 2px 2px 0 #a855f7;
+  transition: all 0.15s ease;
+  margin-bottom: 12px;
+}
+
+.mission-concept-card-btn:hover {
+  background: #fae8ff;
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 #a855f7;
+}
+
+.mission-embedded-concept-card {
+  background: #ffffff;
+  border: 2.5px solid #1a1a1a;
+  border-radius: var(--radius-xl);
+  padding: 16px;
+  margin-bottom: 18px;
+  box-shadow: 4px 4px 0 #1a1a1a;
+  animation: arenaPop 0.25s ease-out;
+  position: relative;
+}
+
+.mission-embedded-concept-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid var(--gray-200);
+}
+
+.mission-embedded-concept-card__title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #6b21a8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.mission-embedded-concept-card__close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--gray-500);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.mission-embedded-concept-card__close:hover {
+  background: var(--gray-100);
+  color: var(--ink);
+}
+
+.mission-embedded-concept-card__body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.mission-embedded-formula {
+  background: #faf5ff;
+  border: 1.5px solid #d8b4fe;
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #581c87;
+}
+
+.mission-embedded-signs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+
+.mission-embedded-sign-pill {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  text-align: center;
+}
+
+.mission-embedded-sign-pill--pos {
+  background: #f0fdf4;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.mission-embedded-sign-pill--neg {
+  background: #fef2f2;
+  border-color: #fca5a5;
+  color: #991b1b;
+}
+
+.mission-embedded-mnemonic {
+  font-size: 0.82rem;
+  color: #78350f;
+  background: #fef3c7;
+  border-radius: var(--radius-md);
+  padding: 6px 10px;
+  border: 1px solid #fde68a;
+  line-height: 1.35;
+}
+
+/* --- Footer Acciones Base --- */
+.mission-footer__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mission-footer__actions .btn {
+  margin-top: 0 !important;
+}
+
+
+/* ============================================
+   RESPONSIVIDAD MÓVIL (Smartphones & Pantallas Pequeñas)
+   ============================================ */
+@media (max-width: 640px) {
+  .mission-modal-backdrop {
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+  .mission-modal-container {
+    height: auto;
+    max-height: calc(100dvh - 20px);
+    border-radius: var(--radius-xl);
+    border: 2.5px solid var(--border-dark);
+    box-shadow: 4px 4px 0 var(--border-dark);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .mission-header {
+    padding: 10px 12px;
+    gap: 4px;
+    border-radius: 16px 16px 0 0;
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .mission-header__meta {
+    min-width: 0;
+    max-width: calc(100% - 36px);
+    box-sizing: border-box;
+  }
+  .mission-header__top-row {
+    gap: 4px;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+  .mission-header__top-row .pill {
+    padding: 2px 6px;
+    font-size: 0.65rem;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mission-header__title {
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 2px 0;
+    padding-right: 4px;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .mission-header__subtitle {
+    font-size: 0.72rem;
+    line-height: 1.2;
+    margin: 0;
+    color: var(--green-100);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .mission-close-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    flex-shrink: 0;
+  }
+  .mission-stepper {
+    padding: 6px 8px;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    background: #f8fafc;
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-stepper::-webkit-scrollbar {
+    display: none;
+  }
+  .mission-step-pill {
+    padding: 3px 7px;
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    gap: 3px;
+    font-weight: 800;
+  }
+  .mission-step-pill__num {
+    width: 14px;
+    height: 14px;
+    font-size: 0.62rem;
+  }
+  .mission-stepper-divider {
+    min-width: 4px;
+    height: 2px;
+    flex: 0 1 6px;
+  }
+  .mission-body {
+    padding: 10px 8px;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    min-height: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-lore-box {
+    padding: 8px 10px;
+    gap: 6px;
+    margin-bottom: 10px;
+    border-left-width: 4px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-lore-box__icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .mission-lore-box__text {
+    font-size: 0.78rem;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+  .stage-card {
+    padding: 12px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 0 var(--border-dark);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .stage-card__header {
+    margin-bottom: 6px;
+    gap: 4px;
+  }
+  .stage-card__title {
+    font-size: 1.02rem;
+    line-height: 1.25;
+    margin-bottom: 4px;
+    word-break: break-word;
+  }
+  .stage-card__prompt {
+    font-size: 0.84rem;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    word-break: break-word;
+  }
+  .mission-visual-workbench {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    gap: 8px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .mission-canvas-wrapper {
+    height: 170px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-canvas {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
+  .mission-controls-box {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    gap: 8px;
+  }
+  .mission-quadrant-dial {
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-quadrant-dial strong {
+    font-size: 0.86rem;
+  }
+  .mission-readout-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 5px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-readout-grid .mission-readout-item:nth-child(9) {
+    grid-column: span 2 !important;
+    text-align: center;
+  }
+  .mission-readout-item {
+    padding: 5px 6px;
+    border-width: 1.5px;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .mission-readout-item span {
+    font-size: 0.68rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+  .mission-readout-item strong {
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+  }
+  .mission-controls-box input[type="range"] {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 4px 0 0 0;
+  }
+  .mission-embedded-concept-card {
+    padding: 10px 8px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 0 #1a1a1a;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-embedded-concept-card__body {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .mission-options-list {
+    gap: 6px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-option-btn {
+    padding: 8px 10px;
+    font-size: 0.84rem;
+    min-height: 44px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    word-break: break-word;
+    border-radius: 10px;
+  }
+  .mission-diagnostic-box,
+  .mission-success-box {
+    padding: 10px 8px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-diagnostic-box__text,
+  .mission-success-box__text {
+    font-size: 0.8rem;
+    word-break: break-word;
+  }
+  .mission-diagnostic-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    width: 100%;
+  }
+  .mission-diagnostic-actions .btn {
+    width: 100% !important;
+    justify-content: center;
+    margin: 0 !important;
+    height: 38px;
+  }
+  .btn-teko-hint {
+    width: 100%;
+    justify-content: center;
+    padding: 6px 10px;
+    font-size: 0.78rem;
+    box-sizing: border-box;
+  }
+  .mission-hint-card {
+    padding: 8px 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-hint-card__content {
+    font-size: 0.8rem;
+    word-break: break-word;
+  }
+  .mission-footer {
+    padding: 8px 10px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    background: #ffffff;
+    border-top: 2px solid var(--border-dark);
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .mission-footer__telemetry {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 0.7rem;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--gray-200);
+    gap: 2px;
+    text-align: center;
+  }
+  .mission-telemetry-badge {
+    font-size: 0.68rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+  .mission-footer__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .mission-footer__actions .btn {
+    margin: 0 !important;
+    height: 42px;
+    min-height: 42px;
+    font-size: 0.88rem;
+    font-weight: 800;
+    border-radius: 10px;
+    box-shadow: 2px 2px 0 var(--border-dark);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .mission-footer__actions #m-btn-cancel {
+    flex: 0 0 74px;
+    padding: 0 8px;
+    width: auto !important;
+  }
+  .mission-footer__actions #m-btn-next-stage {
+    flex: 1 1 auto;
+    padding: 0 12px;
+    width: auto !important;
+    min-width: 0;
+  }
+  .results-title {
+    font-size: 1.4rem;
+  }
+  .results-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 12px;
+  }
+  .mastery-score-card {
+    padding: 12px 10px;
+    margin-bottom: 14px;
+    max-width: 100%;
+  }
+  .mastery-score-val {
+    font-size: 2.2rem;
+  }
+  .concepts-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .results-telemetry-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .results-telemetry-card {
+    padding: 6px;
+  }
+  .results-telemetry-card__val {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .mission-canvas-wrapper {
+    height: 150px;
+  }
+  .stage-card__title {
+    font-size: 0.95rem;
+  }
+  .mastery-score-val {
+    font-size: 1.9rem;
+  }
+  .mission-header__title {
+    font-size: 0.92rem;
+  }
+  .mission-footer__actions #m-btn-cancel {
+    flex: 0 0 64px;
+    font-size: 0.8rem;
+  }
+  .mission-footer__actions #m-btn-next-stage {
+    font-size: 0.82rem;
+  }
+}
+
+
+

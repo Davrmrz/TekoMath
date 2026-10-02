@@ -1,0 +1,1 @@
+var e={rounds:4,minimumPairs:3,maximumPairs:5,instruction:`Sincronizá señal y canal`,activityLabel:`Sincronización`};export{e as t};

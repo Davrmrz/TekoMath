@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Estudio de Revisión - {{ project.name }}{% endblock %}
+{% block page_title %}Estudio de Revisión Humana: {{ project.name }}{% endblock %}
+
+{% block header_actions %}
+  <a href="/translations/{{ project.id }}" class="btn btn-outline"><span>📋</span> Volver a la Tabla</a>
+  <a href="/export/{{ project.id }}" class="btn btn-primary"><span>📤</span> Exportar Proyecto</a>
+{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+  <p style="font-size: 14px; color: var(--text-muted);">
+    Revise las propuestas de IA lado a lado. Edite con libertad pedagógica. 
+    <strong>Al aprobar una unidad, su estado pasa a HUMAN_VALIDATED y se alimenta la Memoria de Traducción.</strong>
+  </p>
+</div>
+
+<!-- Units Review Cards Loop -->
+{% for u in units %}
+<div class="card" id="unit-{{ u.id }}" style="margin-bottom: 24px; border-left: 4px solid {% if u.status == 'HUMAN_VALIDATED' %}var(--status-validated){% elif u.status == 'VALIDATION_ERROR' %}var(--status-error){% elif u.status == 'NEEDS_REVIEW' %}var(--status-review){% else %}var(--border){% endif %};">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="font-weight: 700; font-size: 14px; color: var(--bg-dark);">#{{ loop.index }}</span>
+      <code>{{ u.key_path }}</code>
+      <span class="badge" style="background: #E0E7FF; color: #3730A3;">Contexto: {{ u.context }}</span>
+      {% if u.human_edited %}
+        <span class="badge" style="background: #F3E8FF; color: #6B21A8;">Editado por Humano</span>
+      {% endif %}
+    </div>
+
+    <div>
+      <span class="badge badge-{{ u.status | lower }}" id="status-badge-{{ u.id }}">
+        {{ u.status }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Side by side container -->
+  <div class="review-container">
+    <!-- Left: Original Spanish -->
+    <div class="review-panel">
+      <div class="panel-title">
+        <span>Español (Original)</span>
+        <button class="btn btn-outline btn-sm" onclick="openAddToGlossaryModal('{{ u.source_text | replace("'", "\\'") }}');">
+          + Glosario
+        </button>
+      </div>
+      <div class="source-box">{{ u.source_text }}</div>
+
+      <!-- Detected Protected items & glossary terms chips -->
+      <div style="margin-top: 12px; font-size: 11px; color: var(--text-muted);">
+        {% if u.protected_items_json and u.protected_items_json != '{}' %}
+          <div><strong>Elementos blindados:</strong> <code>{{ u.protected_items_json }}</code></div>
+        {% endif %}
+        {% if u.glossary_terms_json and u.glossary_terms_json != '[]' %}
+          <div style="margin-top: 4px;"><strong>Términos del glosario:</strong> {{ u.glossary_terms_json }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right: Jopara Proposal (Editable) -->
+    <div class="review-panel">
+      <div class="panel-title">
+        <span>Propuesta Jopara Pedagógico</span>
+        <span style="font-size: 11px; color: var(--text-muted);">
+          {% if u.provider_used %}Motor: {{ u.provider_used }} ({{ u.model_used }}){% endif %}
+        </span>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 12px;">
+        <textarea id="target-text-{{ u.id }}" class="form-textarea" style="min-height: 120px; font-size: 15px; line-height: 1.6;">{{ u.target_text }}</textarea>
+      </div>
+
+      {% if u.validation_error %}
+        <div class="alert alert-danger" style="padding: 8px 12px; font-size: 12px; margin-bottom: 12px;">
+          <span>⚠️</span> {{ u.validation_error }}
+        </div>
+      {% endif %}
+
+      <!-- Action buttons -->
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button class="btn btn-success btn-sm" onclick="approveUnit('{{ u.id }}');">
+          <span>✓</span> Aprobar (HUMAN_VALIDATED)
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="saveUnitEdit('{{ u.id }}');">
+          <span>💾</span> Guardar Edición
+        </button>
+        <button class="btn btn-outline btn-sm" onclick="regenerateUnit('{{ u.id }}');">
+          <span>🔄</span> Regenerar
+        </button>
+        <button class="btn btn-danger btn-sm" onclick="rejectUnit('{{ u.id }}');">
+          <span>✕</span> Rechazar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+<!-- Add to Glossary Modal -->
+<div class="modal-overlay" id="add-glossary-modal">
+  <div class="modal-card">
+    <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--bg-dark);">Añadir al Glosario Pedagógico</h3>
+    <form onsubmit="submitGlossaryItem(event);">
+      <div class="form-group">
+        <label class="form-label">Término en Español</label>
+        <input type="text" id="modal-source-term" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Salida Preferida en Jopara</label>
+        <input type="text" id="modal-preferred-output" class="form-input" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Estado de la Regla</label>
+        <select id="modal-status" class="form-select">
+          <option value="PREFERRED">PREFERRED (Sugerencia recomendada)</option>
+          <option value="KEEP_SPANISH">KEEP_SPANISH (Preservar estrictamente en español)</option>
+          <option value="FORBIDDEN">FORBIDDEN (Término prohibido/arcaico)</option>
+          <option value="HUMAN_VALIDATED">HUMAN_VALIDATED (Aprobado normativamente)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Motivo Pedagógico / Nota</label>
+        <input type="text" id="modal-reason" class="form-input" placeholder="Justificación curricular o de uso">
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px;">
+        <button type="button" class="btn btn-secondary" onclick="closeGlossaryModal();">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar en Glosario</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

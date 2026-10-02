@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Glosario Pedagógico - MateJopara{% endblock %}
+{% block page_title %}Glosario Pedagógico Curado{% endblock %}
+
+{% block header_actions %}
+  <button class="btn btn-primary" onclick="openCreateModal();">
+    <span>+</span> Nuevo Término
+  </button>
+{% endblock %}
+
+{% block content %}
+<div class="card" style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+  <div>
+    <p style="font-size: 13px; color: var(--text-muted); margin: 0;">
+      Control terminológico del localizador. Los términos <strong>KEEP_SPANISH</strong> se preservan obligatoriamente en español (ej. trigonometría curricular).
+    </p>
+  </div>
+  <div style="display: flex; gap: 8px;">
+    <input type="text" id="search-glossary" class="form-input" placeholder="Buscar término..." style="width: 240px; padding: 6px 10px;" oninput="filterTable('glossary-table', this.value);">
+  </div>
+</div>
+
+<div class="table-wrapper">
+  <table class="data-table" id="glossary-table">
+    <thead>
+      <tr>
+        <th>Término Español</th>
+        <th>Salida Jopara</th>
+        <th>Estado</th>
+        <th>Contextos</th>
+        <th>Fuentes</th>
+        <th>Motivo / Razón</th>
+        <th style="width: 100px;">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td><strong>{{ item.source_term }}</strong></td>
+        <td><code>{{ item.preferred_output }}</code></td>
+        <td>
+          <span class="badge badge-{{ item.status | lower }}">
+            {{ item.status }}
+          </span>
+        </td>
+        <td><small>{{ item.contexts_json }}</small></td>
+        <td><small>{{ item.sources_json }}</small></td>
+        <td><small style="color: var(--text-muted);">{{ item.reason }}</small></td>
+        <td>
+          <button class="btn btn-outline btn-sm" onclick="deleteGlossaryItem('{{ item.id }}');" title="Eliminar" style="color: var(--status-error);">
+            ✕
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Create Term Modal -->
+<div class="modal-overlay" id="create-glossary-modal">
+  <div class="modal-card">
+    <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--bg-dark);">Nuevo Término en Glosario</h3>
+    <form action="/api/glossary" method="POST">
+      <div class="form-group">
+        <label class="form-label">Término en Español</label>
+        <input type="text" name="source_term" class="form-input" required placeholder="Ej. cateto opuesto">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Salida Jopara</label>
+        <input type="text" name="preferred_output" class="form-input" required placeholder="Ej. cateto opuesto">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Estado de la Regla</label>
+        <select name="status" class="form-select">
+          <option value="KEEP_SPANISH">KEEP_SPANISH (Mantener en español)</option>
+          <option value="PREFERRED">PREFERRED (Salida preferida)</option>
+          <option value="FORBIDDEN">FORBIDDEN (Término prohibido)</option>
+          <option value="HUMAN_VALIDATED">HUMAN_VALIDATED (Aprobado por lingüista)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Razón Pedagógica</label>
+        <input type="text" name="reason" class="form-input" placeholder="Justificación didáctica o normativa">
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px;">
+        <button type="button" class="btn btn-secondary" onclick="closeCreateModal();">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar Término</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function openCreateModal() {
+    document.getElementById("create-glossary-modal").classList.add("active");
+  }
+  function closeCreateModal() {
+    document.getElementById("create-glossary-modal").classList.remove("active");
+  }
+
+  async function deleteGlossaryItem(id) {
+    if (!confirm("¿Está seguro de eliminar este término del glosario?")) return;
+    try {
+      await fetchAPI(`/api/glossary/${id}`, { method: "DELETE" });
+      showToast("Término eliminado.", "success");
+      setTimeout(() => window.location.reload(), 600);
+    } catch (e) {}
+  }
+</script>
+{% endblock %}

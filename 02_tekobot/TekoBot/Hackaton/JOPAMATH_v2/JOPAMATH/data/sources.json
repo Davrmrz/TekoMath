@@ -1,0 +1,79 @@
+[
+  {
+    "id": "SPL_DICTIONARY",
+    "name": "Diccionario Guaraní Paraguayo",
+    "url": "https://spl.gov.py/es/diccionario-guarani-paraguayo/",
+    "role": "Referencia léxica y normativa",
+    "notes": "Diccionario bilingüe oficial de la Secretaría de Políticas Lingüísticas."
+  },
+  {
+    "id": "COREGUAPA",
+    "name": "Corpus de Referencia del Guaraní Paraguayo Actual",
+    "url": "https://corpus.spl.gov.py/",
+    "role": "Uso contextual",
+    "notes": "Corpus lingüístico digital para verificar patrones reales de uso contextual."
+  },
+  {
+    "id": "GUARANI_ACADEMY",
+    "name": "Academia de la Lengua Guaraní",
+    "url": "https://spl.gov.py/es/academia-de-la-lengua-guarani/",
+    "role": "Referencia normativa",
+    "notes": "Directrices ortográficas y gramaticales normativas oficiales."
+  },
+  {
+    "id": "PARAGUAYAN_SPANISH",
+    "name": "Diccionario del Castellano Paraguayo",
+    "url": "https://spl.gov.py/es/castellano-paraguayo/",
+    "role": "Componente castellano del habla paraguaya",
+    "notes": "Garantiza naturalidad en el componente en español del jopara paraguayo."
+  },
+  {
+    "id": "SPL_DICTIONARIES",
+    "name": "Portal de Diccionarios SPL",
+    "url": "https://spl.gov.py/es/diccionarios/",
+    "role": "Consulta lexicológica general",
+    "notes": "Recopilación de vocabularios temáticos e interculturales."
+  },
+  {
+    "id": "SPL_RESEARCH",
+    "name": "Investigación Lingüística SPL",
+    "url": "https://spl.gov.py/es/investigacion-linguistica/",
+    "role": "Estudios sociolingüísticos",
+    "notes": "Publicaciones y diagnósticos sobre el bilingüismo y jopara en Paraguay."
+  },
+  {
+    "id": "LANGUAGE_LAW",
+    "name": "Ley N.º 4251/10 de Lenguas",
+    "url": "https://spl.gov.py/wp-content/uploads/2024/04/ley_de_lenguas.pdf",
+    "role": "Marco legal del bilingüismo oficial",
+    "notes": "Garantías y principios pedagógicos para el uso de lenguas oficiales en educación."
+  },
+  {
+    "id": "MEC_STUDENT",
+    "name": "Matemática 1 — Texto para el estudiante",
+    "url": "https://www.mec.gov.py/",
+    "role": "Terminología matemática y educativa",
+    "notes": "Libro de texto oficial del Ministerio de Educación y Ciencias de Paraguay."
+  },
+  {
+    "id": "MEC_TEACHER",
+    "name": "Matemática 1 — Guía didáctica para docente",
+    "url": "https://www.mec.gov.py/",
+    "role": "Terminología y lenguaje pedagógico",
+    "notes": "Guía oficial del docente con orientaciones didácticas en aula bilingüe."
+  },
+  {
+    "id": "MATEJOPARA_GLOSSARY",
+    "name": "Glosario Interno MateJopara",
+    "url": "local://data/starter_glossary.json",
+    "role": "Decisiones lingüísticas internas revisadas",
+    "notes": "Reglas locales curadas para términos clave y términos obligatorios en español."
+  },
+  {
+    "id": "MATEJOPARA_TM",
+    "name": "Memoria de Traducción MateJopara",
+    "url": "local://database/tm",
+    "role": "Memoria de traducciones aprobadas",
+    "notes": "Traducciones con validación humana que se reutilizan exactamente."
+  }
+]

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0F382A">
+    <title>TekoBot — Tutor Inteligente de Matemáticas</title>
+    
+    <!-- Fuentes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;60°0&family=Inter:wght@400;500;60°0;700;800&display=swap" rel="stylesheet">
+    
+    <!-- KaTeX para Fórmulas Matemáticas -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
+    <!-- Estilos de la Aplicación -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/components.css?v=20260926-welcome">
+    <link rel="icon" type="image/png" href="assets/images/tejuxi-face.png">
+</head>
+<body class="show-welcome">
+
+<!-- Barra de Navegaci�n Superior -->
+<header class="navbar">
+    <div class="nav-brand">
+        <button id="btn-toggle-sidebar" class="btn-icon" style="border-radius: 8px; padding: 0.4rem 0.6rem; margin-right: 0.5rem;" title="Unidades y subtemas" aria-label="Unidades y subtemas">☰</button>
+        <img class="brand-logo" src="assets/images/tejuxi-face.png" alt="TekoBot" width="60" height="60">
+        <div>
+            <div class="brand-title">
+                TekoBot
+                <span class="brand-badge">Hackathon GuaranIA</span>
+            </div>
+            <div class="brand-sub">TekoBot · Tu tutor de matemática • Plan MEC 1er Curso Media • Guaraní Jopara</div>
+        </div>
+    </div>
+    <div class="nav-quick-actions">
+        <button id="btn-welcome" class="btn-header" type="button">Inicio</button>
+        <button id="btn-toggle-chats" class="btn-header" style="padding: 0.4rem 0.6rem;" title="Ver historial de conversaciones">Mis chats</button>
+    </div>
+</header>
+
+<!-- SIDEBAR COMPACTO ESTILO CHATGPT -->
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<aside id="app-sidebar" class="app-sidebar">
+    <div class="sidebar-header">
+        <h3>Ñaikũmby · Temas</h3>
+        <button id="btn-close-sidebar" class="btn-icon" style="border: none; box-shadow: none;" aria-label="Cerrar menú">×</button>
+    </div>
+    
+    <div class="sidebar-section">
+        <h4>Conexión y preferencias</h4>
+        <div class="nav-actions-sidebar">
+            <span id="connection-status" class="status-badge online">Conectado</span>
+            
+            <select id="language-mode" class="lang-select" title="Modo de Idioma">
+                <option value="jopara" selected>Guaraní Jopara (Predeterminado)</option>
+                <option value="es_py">Español Paraguayo</option>
+                <option value="es">Español Estándar</option>
+            </select>
+
+            <button id="btn-problem-workshop" class="btn-header">Resolver un problema</button>
+        </div>
+    </div>
+
+    <div class="sidebar-section">
+        <h4>Temas del Plan MEC</h4>
+        <div id="topic-chips-bar" class="topic-chips-bar-sidebar">
+            <!-- Generado dinámicamente por app.js -->
+        </div>
+    </div>
+    <section class="sidebar-section" id="math-glossary">
+        <h4>Glosario matemático</h4>
+        <p>Conocimientos previos y primer curso. Definiciones propias contrastadas con materiales del MEC; las funciones arco se incluyen como ampliación didáctica.</p>
+        <label for="glossary-search">Buscar concepto</label>
+        <input id="glossary-search" type="search" placeholder="Fracción, arcoseno, pendiente…" autocomplete="off">
+        <label for="glossary-level">Nivel</label>
+        <select id="glossary-level"><option value="">Todos los niveles incluidos</option value="prerequisite">Conocimientos previos</option><option value="first_course">Primer curso</option><option value="extension">Funciones inversas · ampliación</option></select>
+        <p role="status" aria-live="polite"></p>
+        <div class="glossary-results"></div>
+        <details><summary>Fuentes y alcance</summary><p>La referencia oficial de 2021 es una priorización histórica. Este glosario no está certificado por el MEC ni garantiza ausencia de errores. Los términos desconocidos requieren aclaración.</p></details>
+    </section>
+    <section class="sidebar-section" id="extra-data">
+        <h4>Datos extras · Ñanemandu’a</h4>
+        <details><summary>Ángulos notables</summary><div class="extra-table"><table>
+        <thead><tr><th>θ</th><th>sen θ</th><th>cos θ</th><th>tg θ</th></tr></thead>
+        <tbody><tr><td>0°</td><td>0</td><td>1</td><td>0</td></tr><tr><td>30°</td><td>1/2</td><td>√3/2</td><td>√3/3</td></tr><tr><td>45°</td><td>√2/2</td><td>√2/2</td><td>1</td></tr><tr><td>60°</td><td>√3/2</td><td>1/2</td><td>√3</td></tr><tr><td>90°</td><td>1</td><td>0</td><td>No definida</td></tr><tr><td>180°</td><td>0</td><td>−1</td><td>0</td></tr><tr><td>270°</td><td>−1</td><td>0</td><td>No definida</td></tr><tr><td>360°</td><td>0</td><td>1</td><td>0</td></tr></tbody></table></div></details>
+        <details><summary>Signos por cuadrante</summary><table><thead><tr><th>Cuadrante</th><th>sen</th><th>cos</th><th>tg</th></tr></thead><tbody><tr><td>I · 0°–90°</td><td>+</td><td>+</td><td>+</td></tr><tr><td>II · 90°–180°</td><td>+</td><td>−</td><td>−</td></tr><tr><td>III · 180°–270°</td><td>−</td><td>−</td><td>+</td></tr><tr><td>IV · 270°–360°</td><td>−</td><td>+</td><td>−</td></tr></tbody></table><p>Los intervalos excluyen los ejes. tg θ = sen θ / cos θ solo si cos θ ≠ 0.</p></details>
+        <details><summary>Funciones inversas</summary><p>sen⁻¹ = arcsen, cos⁻¹ = arccos, tg⁻¹ = arctan. Devuelven un ángulo principal; no son recíprocas ni opuestos.</p><table><thead><tr><th>Función</th><th>Dominio</th><th>Recorrido</th></tr></thead><tbody><tr><td>arcsen</td><td>[−1, 1]</td><td>[−90°, 90°]</td></tr><tr><td>arccos</td><td>[−1, 1]</td><td>[0°, 180°]</td></tr><tr><td>arctan</td><td>ℝ</td><td>(−90°, 90°)</td></tr></tbody></table><h5>Valores principales</h5><table><thead><tr><th>x</th><th>arcsen x</th><th>arccos x</th><th>arctan x</th></tr></thead><tbody><tr><td>−1</td><td>−90°</td><td>180°</td><td>−45°</td></tr><tr><td>0</td><td>0°</td><td>90°</td><td>0°</td></tr><tr><td>1</td><td>90°</td><td>0°</td><td>45°</td></tr></tbody></table></details>
+        <details><summary>Aranduka · Libro MEC</summary><p>Matemática 1, texto para el estudiante, MEC 2016.</p><a href="assets/books/matematica-1-mec-2016.pdf" target="_blank" rel="noopener">Abrir libro completo</a></details>
+    </section>
+</aside>
+
+        <div id="chats-drawer" class="chats-drawer" style="display: none;">
+            <div class="drawer-header">
+                <span>Mis Conversaciones Guardadas</span>
+                <button id="btn-close-drawer" class="btn-close-modal">&times;</button>
+            </div>
+            <div id="chats-list-container" class="chats-list-container">
+                <!-- Cargado dinámicamente por app.js -->
+            </div>
+        </div>
+<section id="tutor-welcome" class="tutor-welcome" aria-labelledby="welcome-title">
+    <img src="assets/images/tejuxi-face.png" alt="TekoBot, tu tutor" width="100" height="100">
+    <p class="welcome-eyebrow">UNIDAD 2 · MATEMÁTICA</p>
+    <h1 id="welcome-title">¡Bienvenido a TekoBot!</h1>
+    <p class="welcome-intro">Aprendamos funciones trigonométricas. Elegí un tema para comenzar una nueva conversación con TekoBot.</p>
+    <div id="welcome-topics" class="welcome-topics"></div>
+    <p class="welcome-note">Podés retomar una conversación guardada desde «Mis chats».</p>
+</section>
+<nav class="mobile-study-nav" aria-label="Navegación de estudio"><a href="#learning-chat">Conversación</a><a href="#learning-visuals">Fórmula y gráfico</a></nav>
+<main class="app-container">
+
+    <!-- PANEL IZQUIERDO: PANELES SIEMPRE ABIERTOS (32% ANCHO - COMPACTO) -->
+    <section class="visual-panel" id="learning-visuals" aria-label="Fórmula y gráficos">
+
+        <!-- WIDGET 1: FÓRMULA ACTIVA -->
+        <div class="widget-card" data-widget-id="formula">
+            <div class="widget-header">
+                <span class="formula-label">Fórmula y Propiedad en Estudio</span>
+            </div>
+            <div class="widget-body formula-card-top">
+                <div id="active-formula" class="formula-katex-box">
+                    <!-- KaTeX render -->
+                </div>
+                <div id="active-formula-note" class="formula-note">
+                    Sincronizado en tiempo real con la explicación del tutor.
+                </div>
+            </div>
+        </div>
+
+        <!-- WIDGET 2: VISUALIZADOR MATEMÁTICO -->
+        <div class="widget-card" data-widget-id="visual">
+            <div class="widget-header">
+                <span>Visualizador Matemático Interactivo</span>
+            </div>
+            <div class="widget-body">
+                <div class="visual-tabs">
+                    <button id="tab-circle" class="visual-tab-btn active">Circunferencia Trigonométrica</button>
+                    <button id="tab-graph" class="visual-tab-btn">Gráfica de Función</button>
+                </div>
+
+                <!-- Vista 1: Circunferencia Unitaria -->
+                <div id="circle-view" class="canvas-container">
+                    <canvas id="unit-circle-canvas"></canvas>
+                    <div class="canvas-instruction">
+                        Emongu’e · Arrastrá el punto para explorar ángulos y cuadrantes. P(θ) = (cos θ, sen θ).
+                    </div>
+                </div>
+
+                <!-- Vista 2: Gráfica de Ondas -->
+                <div id="graph-view" class="canvas-container" style="display: none;">
+                    <canvas id="trig-graph-canvas"></canvas>
+                    <div class="canvas-instruction">
+                        Eiporavo · Arrastrá el radio o cambiá el ángulo para explorar la curva y su valor. Las funciones arco devuelven ángulos principales.
+                    </div>
+                </div>
+
+                <!-- Vista 3: Visualizadores Dinámicos MEC -->
+                <div id="mec-view" class="canvas-container" style="display: none;">
+                    <canvas id="mec-visual-canvas"></canvas>
+                    <div class="canvas-instruction">
+                        Ejemplo de exploración libre. Mové los controles para observar cómo cambia la recta.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- PANEL DERECHO: CHAT SOCRÁTICO AMPLIO (68% ANCHO) -->
+    <section class="chat-panel" id="learning-chat" aria-label="Conversación con TekoBot">
+        <div class="chat-header">
+            <div class="chat-title">
+                
+                <span>Aprendé con TekoBot</span>
+            </div>
+            <div class="chat-quick-bar">
+                <button id="btn-hint" class="chat-action-btn" title="Solicitar pista escalonada">Dame una pista</button>
+                <button id="btn-show-graph" class="chat-action-btn" title="Mostrar en el gráfico">Ver gráfico</button>
+                <button id="btn-retry" class="chat-action-btn" title="Volver a intentar">Probar de nuevo</button>
+            </div>
+        </div>
+
+        <!-- Drawer Lateral de Lista de Múltiples Chats -->
+
+
+        <!-- Contenedor de Mensajes del Chat Actual -->
+        <div id="chat-messages" class="chat-messages">
+            <!-- Mensajes inyectados dinámicamente por chat.js -->
+        </div>
+
+        <!-- Entrada de texto y foto del ejercicio -->
+        <div class="chat-input-area">
+            <div class="input-box-wrapper">
+                <label class="problem-toggle"><input type="checkbox" id="own-problem"> Che ejercicio · Mi problema</label>
+                
+                <!-- Botón Subir Foto / OCR -->
+                <label for="camera-upload" class="btn-icon" title="Subir foto del ejercicio" style="cursor: pointer; margin: 0;">
+                    Foto
+                    <input type="file" id="camera-upload" accept="image/*" style="display: none;">
+                </label>
+                
+                <input 
+                    type="text" 
+                    id="chat-input" 
+                    class="chat-input" 
+                    placeholder="Ehai ko’ápe · Escribí tu pregunta o problema…" 
+                    autocomplete="off"
+                />
+                <button id="send-btn" class="btn-send">
+                    <span>Emondo · Enviar</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Scripts de los Módulos de TekoBot -->
+<script src="modules/trigonometry/exercises_data.js"></script>
+<script src="modules/trigonometry/unit_circle.js"></script>
+<script src="modules/trigonometry/graphs.js"></script>
+<script src="modules/trigonometry/topic_graphs.js?v=20260926-doubts"></script>
+<script src="modules/mec_visualizers.js"></script>
+<script src="assets/js/curriculum.js?v=20260926-doubts"></script>
+<script src="assets/js/problem_guide.js?v=20260926-doubts"></script>
+<script src="assets/js/question_resolver.js?v=20260926-classic-jopara"></script>
+<script src="assets/js/language_data.js?v=20260926-lesson-jopara"></script>
+<script src="assets/js/language.js?v=20260926-lesson-jopara"></script>
+<script src="assets/js/problem_workshop_data.js?v=20260926-concise-jopara"></script>
+<script src="assets/js/natural_problem.js?v=20260926-concise-jopara"></script>
+<script src="assets/js/workshop_expression.js?v=20260926-adaptive-voice"></script>
+<script src="assets/js/general_problem.js?v=20260926-doubts"></script>
+<script src="assets/js/problem_workshop.js?v=20260926-adaptive-voice"></script>
+<script src="assets/js/trig_questions.js?v=20260926-doubts"></script>
+<script src="assets/js/lesson_engine.js?v=20260926-conversation-intents"></script>
+<script src="assets/js/offline_core.js?v=20260926-tekobot"></script>
+<script src="assets/js/chat.js?v=20260926-lesson-jopara"></script>
+<script src="assets/js/glossary.js?v=20260926-doubts"></script>
+<script src="../../jopamath_i18n.js?v=20260926-shared-language"></script>
+<script src="assets/js/app.js?v=20260926-welcome"></script>
+
+</body>
+</html>

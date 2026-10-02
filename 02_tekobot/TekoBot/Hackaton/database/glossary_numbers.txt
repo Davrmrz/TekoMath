@@ -1,0 +1,54 @@
+Número natural|naturales;numeros naturales|Número para contar u ordenar. Aquí N incluye cero; otros textos comienzan en uno y deben indicar su convención.|0, 1, 2 y 3 son naturales.
+Número entero|enteros;numeros enteros|Número sin parte fraccionaria, positivo, negativo o cero.|−3, 0 y 7 son enteros.
+Número racional|racionales;numeros racionales|Número expresable como a/b con a y b enteros y b distinto de cero.|0,75 = 3/4.
+Número irracional|irracionales;numeros irracionales|Real que no es cociente de enteros: su decimal es infinito no periódico.|√2 y π son irracionales.
+Número real|reales;numeros reales|Número representable en la recta real, racional o irracional.|−2, 1/3 y √2 son reales.
+Opuesto aditivo|numero opuesto;opuesto aditivo|Número que sumado al original da cero.|El opuesto de −4 es 4.
+Inverso multiplicativo|reciproco de un numero;inverso multiplicativo|Para a no nulo, es 1/a; su producto por a vale uno.|El inverso de 2/3 es 3/2; cero no tiene inverso.
+Fracción|fracciones|Expresión a/b de un cociente, con denominador distinto de cero.|3/4 representa tres cuartos de una unidad.
+Numerador||Término superior de una fracción.|En 3/5, el numerador es 3.
+Denominador||Término inferior de una fracción; no puede ser cero.|En 3/5, el denominador es 5.
+Fracciones equivalentes|fraccion equivalente|Fracciones que representan el mismo número.|1/2 = 2/4.
+Fracción propia||Fracción positiva cuyo numerador es menor que el denominador.|3/5 es menor que uno.
+Fracción impropia||Fracción positiva con numerador mayor o igual que el denominador.|7/4 es impropia.
+Número mixto||Escritura que suma una parte entera y una fracción propia.|2 1/3 = 7/3.
+Fracción irreducible|simplificar fracciones|Fracción cuyos términos enteros no tienen divisor común mayor que uno.|6/8 se reduce a 3/4.
+Número decimal|decimales|Representación posicional que usa décimos, centésimos y otras partes de la unidad.|2,35 son dos unidades y treinta y cinco centésimos.
+Decimal periódico||Decimal con cifras que se repiten indefinidamente en un bloque fijo.|0,333… = 1/3.
+Valor posicional||Valor de una cifra según su posición.|En 352, el 5 representa cincuenta.
+Redondeo|redondear|Aproximación a una posición elegida según la cifra siguiente.|3,146 redondeado a centésimos es 3,15.
+Aproximación|valor aproximado|Valor cercano al exacto, que se expresa con ≈ y precisión indicada.|π ≈ 3,14.
+Adición|suma;sumar|Operación que combina cantidades o desplazamientos.|5 + 3 = 8.
+Sustracción|resta;restar|Operación que obtiene una diferencia; restar equivale a sumar el opuesto.|5 − 8 = −3.
+Multiplicación|multiplicar|Operación que combina factores; para naturales puede verse como suma repetida.|3 × 4 = 12.
+División|dividir|Operación que obtiene un cociente; el divisor no puede ser cero.|12 ÷ 3 = 4.
+Dividendo||Número que se divide.|En 17 ÷ 5, el dividendo es 17.
+Divisor|divisores|Número por el que se divide. Un divisor entero de otro lo divide exactamente.|3 divide exactamente a 12.
+Cociente||Resultado de una división.|12/4 tiene cociente 3.
+Resto|residuo|Cantidad restante en una división entera; con divisor positivo está entre cero incluido y el divisor excluido.|17 = 5 × 3 + 2 tiene resto 2.
+Múltiplo|multiplos|Resultado de multiplicar un entero por otro entero.|12 es múltiplo de 3.
+Divisibilidad||Posibilidad de dividir exactamente un entero por otro entero no nulo.|Un entero es divisible por 2 si su última cifra es par.
+Número primo|numeros primos|Entero mayor que uno con exactamente dos divisores positivos.|2 y 3 son primos; 1 no es primo.
+Número compuesto|numeros compuestos|Entero mayor que uno con más de dos divisores positivos.|12 es compuesto.
+Descomposición en factores primos|factorizacion prima|Escritura de un entero mayor que uno como producto de primos.|60 = 2² × 3 × 5.
+Máximo común divisor|mcd|Mayor divisor positivo común de enteros no todos nulos.|MCD(12,18)=6.
+Mínimo común múltiplo|mcm|Menor múltiplo positivo común de enteros no nulos.|MCM(4,6)=12.
+Potencia|potenciacion|Para exponente natural positivo, producto repetido de la base.|2³ = 8.
+Base de una potencia||Número o expresión que se eleva.|En 5², la base es 5.
+Exponente||Número que indica una potencia. Si es negativo, indica un recíproco con base no nula.|2⁻³ = 1/8.
+Raíz cuadrada||Raíz real principal no negativa de un radicando no negativo.|√9 = 3; x²=9 tiene soluciones 3 y −3.
+Radicación|raiz enesima|Operación relacionada con la potencia; las raíces pares reales requieren radicando no negativo.|La raíz cúbica de −8 es −2.
+Radicando||Cantidad dentro de un radical.|En √25, es 25.
+Índice de una raíz|indice del radical|Entero que indica qué potencia corresponde a la raíz.|En ∛8, es 3.
+Jerarquía de operaciones|operaciones combinadas;orden de operaciones|Se resuelven agrupaciones, potencias y raíces, multiplicaciones y divisiones, sumas y restas; mismo nivel de izquierda a derecha.|2 + 3 × 4 = 14.
+Propiedad conmutativa||Cambiar el orden no altera una suma o producto de reales.|2 + 5 = 5 + 2.
+Propiedad asociativa||Cambiar la agrupación no altera una suma o producto de reales.|(2+3)+4 = 2+(3+4).
+Propiedad distributiva||Multiplicar una suma equivale a multiplicar cada sumando y sumar.|3(2+4)=3×2+3×4.
+Porcentaje|porcentajes|Razón expresada por cada cien unidades.|25 % de 80 es 20.
+Razón matemática|razon entre cantidades|Comparación mediante cociente, con denominador no nulo.|La razón entre 6 y 3 es 2.
+Proporción|proporciones|Igualdad de dos razones.|2/3 = 4/6.
+Proporcionalidad directa||Relación y=kx con constante k.|Al mismo precio unitario, duplicar la cantidad duplica el costo.
+Proporcionalidad inversa||Relación en que el producto de dos cantidades permanece constante.|Para igual distancia, duplicar la velocidad reduce el tiempo a la mitad.
+Regla de tres||Procedimiento para hallar un valor en una proporción, previa comprobación de proporcionalidad.|Si tres cuadernos cuestan 12, cinco cuestan 20 al mismo precio unitario.
+Escala||Razón entre medida representada y real en la misma unidad.|1:100 significa que 1 cm representa 100 cm reales.
+Notación científica||Escritura a×10ⁿ con 1≤valor absoluto de a<10 y n entero, para valores no nulos.|32000=3,2×10⁴.

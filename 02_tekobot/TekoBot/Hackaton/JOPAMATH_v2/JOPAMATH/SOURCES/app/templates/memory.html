@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Memoria de Traducción - MateJopara{% endblock %}
+{% block page_title %}Memoria de Traducción (TM){% endblock %}
+
+{% block content %}
+<div class="card" style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+  <div>
+    <p style="font-size: 13px; color: var(--text-muted); margin: 0;">
+      Almacena únicamente traducciones con validación humana formal (<strong>HUMAN_VALIDATED</strong>). Si una frase idéntica vuelve a aparecer, se aplica al instante sin consultar al LLM (<strong>TM_MATCH</strong>).
+    </p>
+  </div>
+  <div style="display: flex; gap: 8px;">
+    <input type="text" id="search-memory" class="form-input" placeholder="Buscar en memoria..." style="width: 240px; padding: 6px 10px;" oninput="filterTable('memory-table', this.value);">
+  </div>
+</div>
+
+<div class="table-wrapper">
+  <table class="data-table" id="memory-table">
+    <thead>
+      <tr>
+        <th style="width: 110px;">Contexto</th>
+        <th>Español (Texto Fuente)</th>
+        <th>Jopara (Traducción Aprobada)</th>
+        <th style="width: 140px;">Validado Por</th>
+        <th style="width: 140px;">Fecha</th>
+        <th style="width: 80px;">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if entries %}
+        {% for e in entries %}
+        <tr>
+          <td><span class="badge" style="background: #E0E7FF; color: #3730A3;">{{ e.context }}</span></td>
+          <td style="font-weight: 500;">{{ e.source_text }}</td>
+          <td>{{ e.target_text }}</td>
+          <td><small>{{ e.approved_by }}</small></td>
+          <td><small>{{ e.created_at.strftime('%Y-%m-%d %H:%M') if e.created_at else '-' }}</small></td>
+          <td>
+            <button class="btn btn-outline btn-sm" onclick="deleteTMEntry('{{ e.id }}');" title="Eliminar de memoria" style="color: var(--status-error);">
+              ✕
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="6" style="text-align: center; padding: 32px; color: var(--text-muted);">
+            No hay entradas en la Memoria de Traducción aún. Las entradas se generan automáticamente al aprobar unidades en el <strong>Estudio de Revisión</strong>.
+          </td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  async function deleteTMEntry(id) {
+    if (!confirm("¿Está seguro de eliminar esta entrada de la Memoria de Traducción?")) return;
+    try {
+      await fetchAPI(`/api/memory/${id}`, { method: "DELETE" });
+      showToast("Entrada eliminada de la memoria.", "success");
+      setTimeout(() => window.location.reload(), 600);
+    } catch (e) {}
+  }
+</script>
+{% endblock %}

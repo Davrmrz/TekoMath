@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Configuración de Proveedores - MateJopara{% endblock %}
+{% block page_title %}Configuración de Motores de Lenguaje (LLM){% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+  <!-- Active Provider Alert / Banner -->
+  <div class="card" style="border-left: 4px solid var(--accent); background-color: #F8FAFC;">
+    <h3 style="font-size: 15px; font-weight: 700; color: var(--bg-dark); margin-bottom: 4px;">Modo de Ejecución Actual</h3>
+    <p style="font-size: 13px; color: var(--text-muted);">
+      Proveedor activo: <strong>{{ active_provider | upper }}</strong>.
+      {% if active_provider == "mock" %}
+        El motor se encuentra en modo <strong>Mock Local</strong>. No consume internet ni API keys y permite verificar todas las protecciones y flujos. 
+        Para conectar un LLM en la nube o local (Ollama/Groq/OpenAI/Gemini), complete los campos a continuación.
+      {% else %}
+        El motor está conectado a <strong>{{ active_provider }}</strong>.
+      {% endif %}
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">Parámetros de Proveedores</h2>
+      <button type="button" id="btn-test-conn" class="btn btn-outline" onclick="testConnection();">
+        <span>🔌</span> Probar Conexión
+      </button>
+    </div>
+
+    <div id="test-result" style="display: none; margin-bottom: 16px;"></div>
+
+    <form action="/api/settings" method="POST">
+      <!-- Provider Selector -->
+      <div class="form-group">
+        <label class="form-label" for="default-provider">Proveedor Principal Activo</label>
+        <select class="form-select" id="default-provider" name="DEFAULT_PROVIDER" onchange="switchProviderTabs(this.value);">
+          <option value="mock" {% if active_provider == "mock" %}selected{% endif %}>MockProvider (Local determinista / Pruebas offline)</option>
+          <option value="gemini" {% if active_provider == "gemini" %}selected{% endif %}>Google Gemini (Oficial)</option>
+          <option value="openai_compatible" {% if active_provider in ("openai", "openai_compatible") %}selected{% endif %}>Compatible con OpenAI (NVIDIA NIM, OpenAI, Groq, Ollama, LM Studio)</option>
+        </select>
+      </div>
+
+      <!-- Google Gemini Settings -->
+      <div id="section-gemini" style="background: #F8FAFC; padding: 16px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 16px;">
+        <h4 style="font-size: 14px; font-weight: 600; color: var(--bg-dark); margin-bottom: 12px;">Configuración de Google Gemini</h4>
+        
+        <div class="form-group">
+          <label class="form-label">GEMINI_API_KEY</label>
+          <input type="password" name="GEMINI_API_KEY" class="form-input" placeholder="{% if gemini_key_masked %}{{ gemini_key_masked }}{% else %}Ingrese su API Key (AI Studio){% endif %}">
+          <small style="color: var(--text-muted); font-size: 11px;">Obtenga su clave en <a href="https://aistudio.google.com/" target="_blank" rel="noreferrer">Google AI Studio</a>. Se guarda de forma local en la base de datos.</small>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label">Modelo Gemini</label>
+          <input type="text" name="GEMINI_MODEL" class="form-input" value="{{ gemini_model or 'gemini-1.5-flash' }}">
+        </div>
+      </div>
+
+      <!-- OpenAI Compatible Settings -->
+      <div id="section-openai" style="background: #F8FAFC; padding: 16px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 16px;">
+        <h4 style="font-size: 14px; font-weight: 600; color: var(--bg-dark); margin-bottom: 12px;">Configuración Compatible OpenAI / NVIDIA NIM / Ollama / Groq</h4>
+
+        <div class="form-group">
+          <label class="form-label">OPENAI_BASE_URL</label>
+          <input type="text" name="OPENAI_BASE_URL" class="form-input" value="{{ openai_url or 'https://api.openai.com/v1' }}" placeholder="https://integrate.api.nvidia.com/v1, https://api.openai.com/v1 o http://localhost:11434/v1">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">OPENAI_API_KEY</label>
+          <input type="password" name="OPENAI_API_KEY" class="form-input" placeholder="{% if openai_key_masked %}{{ openai_key_masked }}{% else %}sk-...{% endif %}">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label">Modelo</label>
+          <input type="text" name="OPENAI_MODEL" class="form-input" value="{{ openai_model or 'gpt-4o-mini' }}" placeholder="gpt-4o-mini, llama3, etc.">
+        </div>
+      </div>
+
+      <!-- Pipeline tuning -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+        <div class="form-group">
+          <label class="form-label">Intentos de Autocorrección (MAX_RETRIES)</label>
+          <input type="number" name="MAX_RETRIES" class="form-input" value="{{ max_retries or '2' }}" min="0" max="5">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Versión del Prompt Interno</label>
+          <input type="text" name="PROMPT_VERSION" class="form-input" value="{{ prompt_version or 'v1.0.0' }}" readonly style="background: #F3F4F6;">
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 12px;">
+        <button type="submit" class="btn btn-primary">
+          <span>💾</span> Guardar Configuración
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  function switchProviderTabs(val) {
+    const geminiBox = document.getElementById("section-gemini");
+    const openaiBox = document.getElementById("section-openai");
+    if (val === "gemini") {
+      geminiBox.style.opacity = "1";
+      openaiBox.style.opacity = "0.5";
+    } else if (val === "openai_compatible") {
+      openaiBox.style.opacity = "1";
+      geminiBox.style.opacity = "0.5";
+    } else {
+      geminiBox.style.opacity = "0.7";
+      openaiBox.style.opacity = "0.7";
+    }
+  }
+  switchProviderTabs(document.getElementById("default-provider").value);
+</script>
+{% endblock %}

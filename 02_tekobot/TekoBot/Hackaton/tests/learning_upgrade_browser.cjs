@@ -1,0 +1,36 @@
+const {chromium}=require('C:/Users/bogad/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const assert=require('node:assert/strict');
+(async()=>{
+ const browser=await chromium.launch({executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true});
+ const page=await browser.newPage({viewport:{width:1365,height:950}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.route('**/*',r=>r.request().url().startsWith('http://127.0.0.1:8127')?r.continue():r.abort());
+ await page.goto('http://127.0.0.1:8127/index.php');
+ await page.locator('#btn-toggle-sidebar').click();
+ await page.locator('.curriculum-unit').first().locator('summary').click();
+ await page.getByRole('button',{name:'Función lineal',exact:true}).click();
+ await page.getByRole('button',{name:'Sí, jahecha',exact:true}).click();
+ await page.getByRole('button',{name:'Jahecha peteĩ ejemplo',exact:true}).waitFor();
+ assert.match(await page.locator('.chat-message.tutor').last().innerText(),/Cómo trabajar paso a paso/);
+ assert.ok((await page.locator('.chat-message.tutor').last().innerText()).length>1200);
+ await page.getByLabel('Forma de la curva',{exact:true}).evaluate(el=>{el.value='-2';el.dispatchEvent(new Event('input'));});
+ assert.match(await page.locator('#mec-view .plot-formula').innerText(),/-2 · x/);
+ assert.match(await page.locator('.lesson-source').getAttribute('href'),/#page=15/);
+ await page.locator('#own-problem').check();await page.locator('#chat-input').fill('Resolver 2x + 6 = 14');await page.locator('#send-btn').click();
+ await page.getByRole('button',{name:'Jajevy a la lección',exact:true}).waitFor();
+ const text=await page.locator('.chat-message.tutor').last().innerText();assert.doesNotMatch(text,/x\s*=\s*4|8\s*\/\s*2|2x\s*=\s*8/);assert.match(text,/Ko’ág̃a nde turno/);
+ assert.equal(await page.locator('#mec-view').isVisible(),true);
+ assert.match(await page.locator('#mec-view .plot-formula').innerText(),/-2 · x/);
+ assert.equal(await page.locator('#own-problem').isChecked(),false);
+ await page.locator('#chat-input').fill('2x = 8');await page.locator('#send-btn').click();await page.getByRole('button',{name:'Jajevy a la lección',exact:true}).waitFor();
+ const state=await page.evaluate(()=>JSON.parse(localStorage.getItem('kyhyjey_state_'+localStorage.getItem('kyhyjey_session'))));assert.equal(state.own_problem.statement,'Resolver 2x + 6 = 14');
+ await page.reload();await page.getByRole('button',{name:'Jajevy a la lección',exact:true}).click();await page.getByRole('button',{name:'Jahecha peteĩ ejemplo',exact:true}).waitFor();
+ await page.locator('#btn-toggle-sidebar').click();
+ await page.locator('.curriculum-unit').nth(1).locator('summary').click();await page.getByRole('button',{name:'Seno inverso · arcsen (sen⁻¹)',exact:true}).click();
+ await page.getByRole('button',{name:'Sí, jahecha',exact:true}).click();await page.locator('#graph-view').waitFor({state:'visible'});
+ assert.match(await page.locator('#graph-view .plot-formula').innerText(),/arcsen/);
+ for(const f of ['tan','acos','atan']) {await page.getByLabel('Función trigonométrica').selectOption(f);assert.ok(await page.locator('#graph-view .plot-formula').innerText());}
+ await page.evaluate(()=>Promise.allSettled(document.getAnimations().map(a=>a.finished)));await page.screenshot({path:'tmp/qa/updated-desktop.png',fullPage:true});
+ await page.setViewportSize({width:390,height:844});await page.evaluate(()=>Promise.allSettled(document.getAnimations().map(a=>a.finished)));await page.screenshot({path:'tmp/qa/updated-mobile.png',fullPage:true});
+ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+ assert.deepEqual(errors,[]);await browser.close();console.log('PASS: shared entry, line controls, source links, custom problem persistence, inverse plots and mobile overflow');
+})().catch(e=>{console.error(e);process.exit(1)});

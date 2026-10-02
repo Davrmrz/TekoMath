@@ -1,0 +1,399 @@
+PAGE 1
+MÓDULO 1.0: FUNCIONES 
+TRIGONOMÉTRICAS
+1.1 FUNDAMENTOS Y RAZONES 
+TRIGONOMÉTRICAS EN EL TRIÁNGULO 
+RECTÁNGULO
+A. Triángulo Rectángulo y Elementos Básicos
+Un triángulo rectángulo tiene un ángulo recto (90∘ o 𝜋/2 rad) y dos ángulos 
+agudos (𝛼, 𝛽). Los lados se definen respecto a un ángulo agudo 𝛼:
+• Hipotenusa (ℎ o 𝑐): El lado opuesto al ángulo recto (el lado más largo).
+• Cateto Opuesto (𝑎): El lado frente al ángulo 𝛼.
+• Cateto Adyacente (𝑏): El lado contiguo al ángulo 𝛼 (que forma el ángulo 
+junto con la hipotenusa).
+B. Razones Trigonométricas Principales e Inversas
+Las razones trigonométricas son relaciones dimensionales entre las longitudes 
+de los lados del triángulo rectángulo.
+1. Razones Principales:
+• Seno (sin 𝛼):
+sin(𝛼) =
+Cateto Opuesto
+Hipotenusa =
+𝑎
+𝑐
+• Coseno (cos 𝛼):
+cos(𝛼) =
+Cateto Adyacente
+Hipotenusa =
+𝑏
+𝑐
+• Tangente (tan 𝛼):
+tan(𝛼) =
+Cateto Opuesto
+Cateto Adyacente =
+𝑎
+𝑏
+=
+sin(𝛼)
+cos(𝛼)
+2. Razones Recíprocas / Inversas:
+• Cosecante (csc 𝛼):
+csc(𝛼) =
+Hipotenusa
+Cateto Opuesto =
+𝑐
+𝑎
+=
+1
+sin(𝛼)
+
+PAGE 2
+• Secante (sec 𝛼):
+sec(𝛼) =
+Hipotenusa
+Cateto Adyacente =
+𝑐
+𝑏
+=
+1
+cos(𝛼)
+• Cotangente (cot 𝛼):
+cot(𝛼) =
+Cateto Adyacente
+Cateto Opuesto =
+𝑏
+𝑎
+=
+1
+tan(𝛼)
+=
+cos(𝛼)
+sin(𝛼)
+C. Teorema de Pitágoras e Identidades Fundamentales
+1. Teorema de Pitágoras:
+En todo triángulo rectángulo, la suma de los cuadrados de los catetos es igual 
+al cuadrado de la hipotenusa:
+𝑎
+2 + 𝑏
+2 = 𝑐
+2
+2. Identidad Trigonométrica Fundamental (Pitagórica):
+Dividiendo el Teorema de Pitágoras (𝑎
+2 + 𝑏
+2 = 𝑐
+2
+) por 𝑐
+2
+:
+(
+𝑎
+𝑐
+)
+2
++ (
+𝑏
+𝑐
+)
+2
+= 1 ⟹ 𝐬𝐢𝐧𝟐
+(𝛂) + 𝐜𝐨𝐬𝟐
+(𝛂) = 𝟏
+3. Identidades Derivadas:
+• Dividiendo por cos2
+(𝛼):
+tan2
+(𝛼) + 1 = sec2
+(𝛼)
+• Dividiendo por sin2
+(𝛼):
+1 + cot2
+(𝛼) = csc2
+(𝛼)
+1.2 EL CIRCUITO TRIGONOMÉTRICO (CÍRCULO 
+UNITARIO Y CUADRANTES)
+A. Definición del Círculo Trigonométrico (Unitario)
+Es un círculo centrado en el origen (0,0) del plano cartesiano cuyo radio es 
+exactamente 𝑅 = 1.
+Cualquier punto 𝑃(𝑥, 𝑦) sobre el círculo unitario corresponde a un ángulo 𝜃
+medido en sentido antihorario desde el eje positivo 𝑋:
+• Coordenada 𝑥: Representa el valor del Coseno: 𝑥 = cos(𝜃)
+• Coordenada 𝑦: Representa el valor del Seno: 𝑦 = sin(𝜃)
+
+PAGE 3
+• Pendiente de la recta 𝑂𝑃: Representa la Tangente: tan(𝜃) =
+𝑦
+𝑥
+=
+sin(𝜃)
+cos(𝜃)
+B. Conversión entre Grados Sexagesimales y Radianes
+• Relación fundamental: 180∘ = 𝜋 radianes
+• De Grados a Radianes: Rad = Grados ×
+𝜋
+180∘
+• De Radianes a Grados: Grados = Rad ×
+180∘
+𝜋
+C. Signos de las Funciones Trigonométricas según el Cuadrante
+Cuadrant
+e
+Rango 
+de 
+Ángulo
+s (θ)
+x=cos(θ
+)
+y=sin(θ
+)
+tan(θ)=y/
+x
+Funcione
+s 
+Positivas
+Cuadrant
+e I
+0
+∘ <
+𝜃 < 90∘
+(0 <
+𝜃 <
+𝜋
+2
+)
++ + + Todas
+Cuadrant
+e II
+90∘ <
+𝜃 <
+180∘
+(
+𝜋
+2
+<
+𝜃 < 𝜋)
+− + −
+Seno y 
+Cosecante
+Cuadrant
+e III
+180∘ <
+𝜃 <
+270∘
+(𝜋 <
+𝜃 <
+3𝜋
+2
+)
+− − +
+Tangente
+y 
+Cotangent
+e
+Cuadrant
+e IV
+270∘ <
+𝜃 <
+360∘
+(
+3𝜋
+2
+<
+𝜃 < 2𝜋)
++ − −
+Coseno y 
+Secante
+Regla nemotécnica: TODAS - SIN - TAN - COS (Todos Sin Tomar Café).
+D. Tabla de Valores de Ángulos Notables y Cuadrantales
+
+PAGE 4
+Ángulo (∘) Radianes sin(θ) cos(θ) tan(θ)
+0
+∘ 0 0 1 0
+30∘
+𝜋
+6
+1
+2
+√3
+2
+√3
+3
+45∘
+𝜋
+4
+√2
+2
+√2
+2
+1
+60∘
+𝜋
+3
+√3
+2
+1
+2
+√3
+90∘
+𝜋
+2
+1 0 Indefinido
+180∘ 𝜋 0 −1 0
+270∘
+3𝜋
+2
+−1 0 Indefinido
+360∘ 2𝜋 0 1 0
+1.3 ANÁLISIS Y GRÁFICAS DE LAS FUNCIONES 
+TRIGONOMÉTRICAS
+A. Función Seno: 𝑦 = 𝐴 ⋅ sin(𝐵 ⋅ 𝑥 + 𝐶) + 𝐷
+1. Definición: Función periódica que modela fenómenos oscilatorios u 
+ondulatorios (sonido, luz, mareas).
+2. Propiedades de la versión básica (𝑦 = sin(𝑥)):
+o Dominio: ℝ (Todos los números reales).
+o Rango: [−1,1].
+o Paridad: Función Impar (sin(−𝑥) = − sin(𝑥)), simétrica respecto 
+al origen.
+o Período Base: 𝑇 = 2𝜋 (360∘
+).
+3. Efecto de los Parámetros (𝑦 = 𝐴 ⋅ sin(𝐵 ⋅ 𝑥)):
+o Amplitud (|𝐴|): Altura máxima desde el eje central. El rango pasa 
+a ser [−|𝐴|, |𝐴|].
+o Período (𝑇): Longitud de una onda completa. Se calcula como:
+𝑇 =
+2𝜋
+|𝐵|
+o Frecuencia (𝑓): Número de ciclos por unidad de ángulo (𝑓 =
+1
+𝑇
+=
+|𝐵|
+2𝜋
+).
+
+PAGE 5
+B. Función Coseno: 𝑦 = 𝐴 ⋅ cos(𝐵 ⋅ 𝑥 + 𝐶) + 𝐷
+1. Definición: Es idéntica en forma a la función seno, pero desfasa 
+horizontalmente por 𝜋/2 (90∘
+).
+2. Propiedades de la versión básica (𝑦 = cos(𝑥)):
+o Dominio: ℝ.
+o Rango: [−1,1].
+o Paridad: Función Par (cos(−𝑥) = cos(𝑥)), simétrica respecto al 
+eje 𝑌.
+o Período Base: 𝑇 = 2𝜋.
+o Punto inicial (𝑥 = 0): Inicia en su valor máximo (𝑦 = 1), a 
+diferencia del seno que inicia en 𝑦 = 0.
+3. Parámetros:
+o Amplitud: |𝐴|.
+o Período: 𝑇 =
+2𝜋
+|𝐵|
+.
+C. Función Tangente: 𝑦 = 𝐴 ⋅ tan(𝐵 ⋅ 𝑥)
+1. Definición: Razón entre el seno y el coseno (𝑦 =
+sin(𝑥)
+cos(𝑥)
+).
+2. Propiedades de la versión básica (𝑦 = tan(𝑥)):
+o Dominio: ℝ ∖ {𝑥 ∈ ℝ ∣ 𝑥 =
+𝜋
+2
++ 𝑘𝜋, 𝑘 ∈ ℤ}. (No existe donde 
+cos(𝑥) = 0).
+o Rango: (−∞, +∞) (Todos los números reales).
+o Asíntotas Verticales: Ocurren en 𝑥 = ±
+𝜋
+2
+, ±
+3𝜋
+2
+, ±
+5𝜋
+2
+, …
+o Período Base: 𝑇 = 𝜋 (180∘
+).
+o Período modificado: 𝑇 =
+𝜋
+|𝐵|
+.
+o Amplitud: No definida (tiende al infinito).
+1.4 BANCO DE EJERCICIOS Y CASOS 
+PRÁCTICOS PARA EL TUTOR / JUEGOS
+Para poblar la plataforma con ejercicios que utilicen el flujo pedagógico 
+(Concepto → Práctica → Retroalimentación → Problema Contextualizado):
+Nivel 1: Razones en el Triángulo Rectángulo
+• Ejercicio: Un triángulo rectángulo tiene cateto opuesto 𝑎 = 3 cm e 
+hipotenusa 𝑐 = 5 cm. Hallar el cateto adyacente 𝑏, cos(𝛼) y tan(𝛼).
+• Solución Paso a Paso:
+1. Aplicar Pitágoras: 𝑏 = √5
+2 − 3
+2 = √25 − 9 = √16 = 4 cm.
+2. cos(𝛼) =
+adyacente
+hipotenusa =
+4
+5
+= 0.8.
+3. tan(𝛼) =
+opuesto
+adyacente =
+3
+4
+= 0.75.
+Nivel 2: Circulo Unitario y Signos
+
+PAGE 6
+• Ejercicio: Determinar el signo de cos(210∘
+) y hallar su valor exacto 
+usando el ángulo de referencia.
+• Solución Paso a Paso:
+1. Identificar cuadrante: 210∘ está en el Cuadrante III (180∘ <
+210∘ < 270∘
+).
+2. Signo del coseno en QIII: Negativo (−).
+3. Ángulo de referencia: 210∘ − 180∘ = 30∘
+.
+4. Valor: cos(210∘
+) = − cos(30∘
+) = −
+√3
+2
+.
+Nivel 3: Gráficas y Ondas
+• Ejercicio: Dada la función de onda 𝑦 = 4 sin(2𝑥), determinar la amplitud 
+y el período.
+• Solución Paso a Paso:
+1. Identificar 𝐴 = 4 y 𝐵 = 2.
+2. Amplitud: |𝐴| = 4.
+3. Período: 𝑇 =
+2𝜋
+𝐵
+=
+2𝜋
+2
+= 𝜋 rad (180∘
+).
+Nivel 4: Problema Contextualizado (Vida Real / Paraguay)
+• Ejercicio: Se quiere construir una rampa de acceso inclusivo en la 
+entrada de una escuela. Si la altura de la entrada es de 1.2 metros y la 
+rampa debe tener un ángulo de elevación de 30∘
+, ¿cuántos metros debe 
+medir la superficie de la rampa (hipotenusa)?
+• Solución Paso a Paso:
+1. Plantear la relación: sin(30∘
+) =
+Altura
+Rampa
+⟹ sin(30∘
+) =
+1.2
+𝑥
+.
+2. Valor de sin(30∘
+) = 0.5.
+3. Despejar 𝑥: 𝑥 =
+1.2
+0.5
+= 2.4 metros.

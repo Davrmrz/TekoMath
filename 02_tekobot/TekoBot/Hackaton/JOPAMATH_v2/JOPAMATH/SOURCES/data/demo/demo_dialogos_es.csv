@@ -1,0 +1,6 @@
+id,personaje,contexto,texto_es
+1,Tutor,DIALOGUE,"Hola, {nombre}. ¡Bienvenido a la clase de geometría!"
+2,Estudiante,DIALOGUE,"Profesor, ¿cuánto vale la hipotenusa de este triángulo?"
+3,Tutor,HINT,"Fijate en el lado opuesto al ángulo recto. Mide exactamente 10 cm."
+4,Tutor,FEEDBACK,"Excelente deducción. Ahora aplicá la fórmula sen(30°) para continuar."
+5,Sistema,UI,"Guardar y continuar"

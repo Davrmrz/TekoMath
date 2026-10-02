@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}MateJopara Localization Tool{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon">MJ</div>
+      <div>
+        <div class="brand-title">MateJopara</div>
+        <div class="brand-subtitle">Localization Engine</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="/" class="nav-link {% if active_page == 'dashboard' %}active{% endif %}">
+        <span>📊</span> Dashboard
+      </a>
+      <a href="/import" class="nav-link {% if active_page == 'import' %}active{% endif %}">
+        <span>📥</span> Importar Archivo
+      </a>
+      <a href="/translations" class="nav-link {% if active_page == 'translations' %}active{% endif %}">
+        <span>🔤</span> Proyectos / Traducciones
+      </a>
+      <a href="/glossary" class="nav-link {% if active_page == 'glossary' %}active{% endif %}">
+        <span>📚</span> Glosario Pedagógico
+      </a>
+      <a href="/memory" class="nav-link {% if active_page == 'memory' %}active{% endif %}">
+        <span>🧠</span> Memoria de Traducción
+      </a>
+      <a href="/sources" class="nav-link {% if active_page == 'sources' %}active{% endif %}">
+        <span>🏛️</span> Fuentes Lingüísticas
+      </a>
+      <a href="/settings" class="nav-link {% if active_page == 'settings' %}active{% endif %}">
+        <span>⚙️</span> Configuración
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div>Motor: <strong>Local v1.0.0</strong></div>
+      <div style="margin-top: 4px; color: var(--accent);">Filosofía: Software verifica, persona valida.</div>
+    </div>
+  </aside>
+
+  <!-- Main Wrapper -->
+  <div class="main-wrapper">
+    <header class="app-header">
+      <h1 class="header-title">{% block page_title %}Panel de Control{% endblock %}</h1>
+      <div class="header-actions">
+        {% block header_actions %}{% endblock %}
+      </div>
+    </header>
+
+    <main class="app-body">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <div id="toast-container"></div>
+  <script src="/static/js/app.js"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

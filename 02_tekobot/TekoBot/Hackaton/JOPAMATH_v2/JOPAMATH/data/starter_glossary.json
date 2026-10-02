@@ -1,0 +1,122 @@
+[
+  {
+    "id": "gloss_001",
+    "source_term": "seno",
+    "preferred_output": "seno",
+    "status": "KEEP_SPANISH",
+    "contexts": ["MATH_CONTENT", "EXPLANATION", "INSTRUCTION"],
+    "sources": ["MEC_STUDENT", "MATEJOPARA_GLOSSARY"],
+    "reason": "Término trigonométrico estándar en currículo MEC Paraguay.",
+    "notes": "Configuración inicial para evitar distorsiones técnicas en trigonometría.",
+    "created_at": "2026-09-25T00:00:00Z",
+    "updated_at": "2026-09-25T00:00:00Z"
+  },
+  {
+    "id": "gloss_002",
+    "source_term": "coseno",
+    "preferred_output": "coseno",
+    "status": "KEEP_SPANISH",
+    "contexts": ["MATH_CONTENT", "EXPLANATION", "INSTRUCTION"],
+    "sources": ["MEC_STUDENT", "MATEJOPARA_GLOSSARY"],
+    "reason": "Término trigonométrico estándar.",
+    "notes": "Preservar en español para mantener correlación curricular y fórmulas.",
+    "created_at": "2026-09-25T00:00:00Z",
+    "updated_at": "2026-09-25T00:00:00Z"
+  },
+  {
+    "id": "gloss_003",
+    "source_term": "tangente",
+    "preferred_output": "tangente",
+    "status": "KEEP_SPANISH",
+    "contexts": ["MATH_CONTENT", "EXPLANATION", "INSTRUCTION"],
+    "sources": ["MEC_STUDENT", "MATEJOPARA_GLOSSARY"],
+    "reason": "Función trigonométrica curricular.",
+    "notes": "Mantener exactamente en español.",
+    "created_at": "2026-09-25T00:00:00Z",
+    "updated_at": "2026-09-25T00:00:00Z"
+  },
+  {
+    "id": "gloss_004",
+    "source_term": "hipotenusa",
+    "preferred_output": "hipotenusa",
+    "status": "KEEP_SPANISH",
+    "contexts": ["MATH_CONTENT", "EXPLANATION", "INSTRUCTION", "HINT"],
+    "sources": ["MEC_STUDENT", "MATEJOPARA_GLOSSARY"],
+    "reason": "Geometría del triángulo rectángulo según manuales MEC.",
+    "notes": "No inventar neologismos forzados.",
+    "created_at": "2026-09-25T00:00:00Z",
+    "updated_at": "2026-09-25T00:00:00Z"
+  },
+  {
+    "id": "gloss_005",
+    "source_term": "cateto opuesto",
+    "preferred_output": "cateto opuesto",
+    "status": "KEEP_SPANISH",
+    "contexts": ["MATH_CONTENT", "EXPLANATION", "INSTRUCTION", "HINT"],
+    "sources": ["MEC_STUDENT", "MATEJOPARA_GLOSSARY"],
+    "reason": "Elemento trigonométrico estándar.",
+    "notes": "Preservar denominación exacta.",
+    "created_at": "2026-09-25T00:00:00Z",
+    "updated_at": "2026-09-25T00:00:00Z"
+  },
+  {
+    "id": "gloss_006",
+    "source_term": "cateto adyacente",
+    "preferred_output": "cateto adyacente",
+    "status": "KEEP_SPANISH",
+    "contexts": ["MATH_CONTENT", "EXPLANATION", "INSTRUCTION", "HINT"],
+    "sources": ["MEC_STUDENT", "MATEJOPARA_GLOSSARY"],
+    "reason": "Elemento trigonométrico estándar.",
+    "notes": "Preservar denominación exacta.",
+    "created_at": "2026-09-25T00:00:00Z",
+    "updated_at": "2026-09-25T00:00:00Z"
+  },
+  {
+    "id": "gloss_007",
+    "source_term": "triángulo",
+    "preferred_output": "triángulo",
+    "status": "PREFERRED",
+    "contexts": ["MATH_CONTENT", "INSTRUCTION"],
+    "sources": ["MEC_STUDENT", "PARAGUAYAN_SPANISH"],
+    "reason": "Uso común en jopara pedagógico escolar.",
+    "notes": "Puede usarse mbohapyasýva en contextos formales guaraní puro, pero en jopara escolar triángulo es natural.",
+    "created_at": "2026-09-25T00:00:00Z",
+    "updated_at": "2026-09-25T00:00:00Z"
+  },
+  {
+    "id": "gloss_008",
+    "source_term": "clic",
+    "preferred_output": "cliquea",
+    "status": "PREFERRED",
+    "contexts": ["UI", "INSTRUCTION"],
+    "sources": ["PARAGUAYAN_SPANISH"],
+    "reason": "Acción directa de interfaz entendida de forma unívoca.",
+    "notes": "Evitar neologismos confusos de informática.",
+    "created_at": "2026-09-25T00:00:00Z",
+    "updated_at": "2026-09-25T00:00:00Z"
+  },
+  {
+    "id": "gloss_009",
+    "source_term": "pista",
+    "preferred_output": "pista",
+    "status": "PREFERRED",
+    "contexts": ["HINT", "UI"],
+    "sources": ["MATEJOPARA_GLOSSARY"],
+    "reason": "Término pedagógico habitual en juegos educativos paraguayos.",
+    "notes": "Ej: 'Eipotápa peteĩ pista?'",
+    "created_at": "2026-09-25T00:00:00Z",
+    "updated_at": "2026-09-25T00:00:00Z"
+  },
+  {
+    "id": "gloss_010",
+    "source_term": "neologismo_inventado_ejemplo",
+    "preferred_output": "tekome'ẽha_arkaiko",
+    "status": "FORBIDDEN",
+    "contexts": ["ALL"],
+    "sources": ["MATEJOPARA_GLOSSARY"],
+    "reason": "Ejemplo de término arcaico o inventado que confunde al estudiante.",
+    "notes": "Demuestra la regla FORBIDDEN en el validador.",
+    "created_at": "2026-09-25T00:00:00Z",
+    "updated_at": "2026-09-25T00:00:00Z"
+  }
+]
