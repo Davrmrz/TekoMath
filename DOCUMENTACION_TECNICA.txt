@@ -1,0 +1,934 @@
+================================================================================
+                    TEKO MATH — DOCUMENTACIÓN TÉCNICA INTEGRAL
+        Plataforma Pedagógica y Gamificada de Aprendizaje Matemático
+                 Alineada al Currículo MEC (Educación Media)
+          Inclusión Lingüística en Guaraní Jopara & Resiliencia Offline
+================================================================================
+Versión del Documento: 1.0.0
+Fecha de Generación: 2026-10-02
+Plataforma Objetivo: PHP 8.x / MySQL / XAMPP / React 19 / TypeScript / Vite
+Entorno de Ejecución: Web Híbrida (Online / Offline Local)
+================================================================================
+
+
+TABLA DE CONTENIDOS
+--------------------------------------------------------------------------------
+1. RESUMEN EJECUTIVO Y VISIÓN DEL PROYECTO
+2. ARQUITECTURA GENERAL DEL SISTEMA
+   2.1. Topología del Ecosistema
+   2.2. Árbol de Directorios y Organización Modular
+   2.3. Pila Tecnológica (Tech Stack)
+3. ESPECIFICACIÓN DETALLADA DE MÓDULOS
+   3.1. Módulo 01: Sistema Principal y Registro Offline
+   3.2. Módulo 02: TekoBot (Tutor Inteligente IA & Dual Coding)
+   3.3. Módulo 03: Teko Arcade (Gamificación & Videojuegos Matemáticos)
+   3.4. Módulo 04: Diagnóstico y Rutas de Aprendizaje (TekoBeta & Misiones)
+   3.5. Módulo 05: JopaMath (Motor Lingüístico y Glosario Pedagógico)
+   3.6. Módulo 06: Teko Live (Arena de Competencia en Vivo / Modo Kahoot)
+   3.7. Módulo 07: Diseño, Gráficos y Visualizador Trigonométrico Dual
+4. MODELO DE DATOS Y ESQUEMA DE BASE DE DATOS
+   4.1. Base de Datos Central (`teko_math`)
+   4.2. Definición Formal de Tablas, Índices y Relaciones
+   4.3. Mecanismo de Migración y Auto-Aprovisionamiento en Runtime
+   4.4. Base de Datos Secundaria de TekoBot (`kyhyjey_db`)
+5. CATÁLOGO DE APIS Y CONTRATOS DE INTEGRACIÓN (REST JSON)
+   5.1. Autenticación y Cuentas
+   5.2. API de Progreso y Quizzes (`api_progreso.php`)
+   5.3. API de Misiones y Tareas (`api_tareas.php`)
+   5.4. API de Materiales Didácticos (`api_materiales.php`)
+   5.5. API de Salas de Clase en Vivo (`api_sala.php`)
+   5.6. APIs REST del Tutor Inteligente TekoBot
+6. TELEMETRÍA PEDAGÓGICA Y ALGORITMOS EDUCATIVOS
+   6.1. Métricas de Dominio Conceptual y Cálculo de Porcentaje
+   6.2. Andamiaje de 5 Niveles de Pistas
+   6.3. Las 5 Etapas de las Misiones de Aprendizaje
+   6.4. Puntuación Dinámica y Rachas en Teko Live
+7. SEGURIDAD, CONTROL DE ACCESO Y RESILIENCIA OFFLINE
+   7.1. Criptografía y Gestión de Credenciales
+   7.2. Control de Acceso Basado en Roles (RBAC)
+   7.3. Protección de Formularios e Inyección SQL
+   7.4. Mecanismo de Tolerancia a Fallos y Modo Sin Conexión
+8. GUÍA DE INSTALACIÓN, CONFIGURACIÓN Y DESPLIEGUE
+   8.1. Requisitos Previos del Servidor
+   8.2. Despliegue en XAMPP / Apache / MariaDB
+   8.3. Configuración de Variables de Entorno y Conectividad
+   8.4. Verificación de Pruebas Unitarias y E2E
+================================================================================
+
+
+1. RESUMEN EJECUTIVO Y VISIÓN DEL PROYECTO
+--------------------------------------------------------------------------------
+TEKO MATH es un ecosistema tecnológico-educativo integral diseñado para la
+enseñanza y aprendizaje de las matemáticas (con énfasis inicial en trigonometría,
+funciones, geometría analítica y cálculo algebraico) en el 1er Curso de la
+Educación Media de Paraguay, bajo los lineamientos pedagógicos del Ministerio de
+Educación y Ciencias (MEC).
+
+El proyecto se fundamenta sobre 4 pilares diferenciales:
+
+1. Inclusión Lingüística y Cultural (Guaraní Jopara):
+   A través del motor JOPAMATH v2, la plataforma traduce y adapta
+   pedagógicamente la interfaz, las instrucciones y las intervenciones del tutor
+   a Guaraní Jopara natural, respetando de manera estricta el Principio de
+   Protección Matemática (las fórmulas, variables, números y símbolos
+   permanecen invariantes mientras el lenguaje afectivo y explicativo se
+   humaniza).
+
+2. Dual Coding (Doble Codificación Cognitiva):
+   Sincroniza en tiempo real expresiones algebraicas renderizadas en KaTeX con
+   construcciones geométricas vivas en HTML5 Canvas (círculo unitario, ondas
+   sinusoidales, vectores y triángulos interactivos).
+
+3. Andamiaje Didáctico No Punitivo:
+   El estudiante recibe 5 niveles progresivos de pistas y retroalimentación
+   diagnóstica ante errores específicos (confusión de signos, cuadrantes,
+   catetos opuestos/adyacentes o fórmulas inversas), promoviendo la
+   autocorrección y metacognición en lugar de entregar la solución directa.
+
+4. Resiliencia y Funcionamiento Offline:
+   Diseñado para operar en instituciones educativas con conectividad intermitente
+   o nula: motor local de IA con árbol de decisiones pedagógico, banco local de
+   ejercicios, mini-juegos compilados en bundles estáticos, fallback a SQLite y
+   persistencia bidireccional mediante `localStorage`.
+
+
+================================================================================
+2. ARQUITECTURA GENERAL DEL SISTEMA
+--------------------------------------------------------------------------------
+
+2.1. Topología del Ecosistema
+El sistema opera como una aplicación web híbrida basada en arquitectura modular.
+El backend está construido sobre PHP 8 con PDO y persistencia relacional en
+MySQL/MariaDB (con aprovisionamiento dinámico de esquemas), mientras que el
+frontend se divide entre vistas reactivas Vanilla JavaScript para alto rendimiento
+y baja sobrecarga, y una suite de videojuegos en React 19 + TypeScript + Vite.
+
+El flujo de interacción se sintetiza en el siguiente diagrama conceptual:
+
++--------------------------------------------------------------------------+
+|                                CLIENTE (NAVEGADOR)                       |
+|                                                                          |
+|   +-------------------+  +--------------------+  +-------------------+   |
+|   |  Dashboard / Lab  |  |   TekoBot (Tutor)  |  |    Teko Arcade    |   |
+|   |  (HTML5/CSS/JS)   |  |   (KaTeX + Canvas) |  | (React 19 + Vite) |   |
+|   +---------+---------+  +---------+----------+  +---------+---------+   |
+|             |                      |                       |             |
+|             |              +-------+-------+               |             |
+|             |              | JOPAMATH v2   |               |             |
+|             |              | Motor i18n GN |               |             |
+|             |              +-------+-------+               |             |
+|             |                      |                       |             |
+|             v                      v                       v             |
+|   +------------------------------------------------------------------+   |
+|   |   Almacenamiento Local Offline: localStorage + Cache de Misiones |   |
+|   +---------------------------------+--------------------------------+   |
++-------------------------------------|------------------------------------+
+                                      | Fetch / XHR / REST JSON
+                                      v
++--------------------------------------------------------------------------+
+|                             SERVIDOR (BACKEND PHP)                       |
+|                                                                          |
+|   +------------------+  +-------------------+  +---------------------+   |
+|   | Auth & Sesiones  |  | APIs de Progreso, |  | Teko Live API       |   |
+|   | (session.php)    |  | Misiones & Tareas |  | (api_sala.php)      |   |
+|   +--------+---------+  +---------+---------+  +----------+----------+   |
+|            |                      |                       |              |
+|            +----------------------+-----------------------+              |
+|                                   |                                      |
+|                                   v                                      |
+|                     +---------------------------+                        |
+|                     | Capa PDO: database.php    |                        |
+|                     | Auto-Setup & Migraciones  |                        |
+|                     +-------------+-------------+                        |
++-----------------------------------|--------------------------------------+
+                                    |
+                                    v
+                     +----------------------------+
+                     | Base de Datos Relacional   |
+                     | MySQL / MariaDB (XAMPP)    |
+                     +----------------------------+
+
+
+2.2. Árbol de Directorios y Organización Modular
+
+c:\xampp\htdocs\TEKO Math\
+│
+├── index.php                             [Enrutador central a Módulo 01]
+├── README.md                             [Ficha de presentación del proyecto]
+├── DOCUMENTACION_TECNICA.txt             [El presente documento maestro]
+│
+├── 01_sistema_principal_y_registro_offline/
+│   ├── config/
+│   │   ├── database.php                  [Conexión PDO, pool y auto-creación de tablas]
+│   │   ├── session.php                   [Gestión de sesiones, RBAC y redirecciones]
+│   │   └── misiones_data.php             [Catálogo maestro de misiones pedagógicas]
+│   ├── sql/
+│   │   └── setup.sql                     [Script DDL estándar para phpMyAdmin/MySQL]
+│   ├── index.php                         [Formulario de acceso / Login unificado]
+│   ├── registro.php                      [Formulario de registro de estudiante/docente]
+│   ├── auth.php                          [Validador de credenciales y apertura de sesión]
+│   ├── registro_process.php              [Procesamiento de creación de usuarios]
+│   ├── logout.php                        [Destrucción de sesión y cookies]
+│   ├── dashboard.php                     [Escritorio principal del estudiante]
+│   ├── docente.php                       [Panel de analítica y control docente]
+│   ├── dashboard.js                      [Controlador frontend del estudiante]
+│   ├── docente.js                        [Controlador frontend del docente]
+│   ├── script.js                         [Validaciones de login y formularios]
+│   ├── api_estudiantes.php               [Consulta JSON de alumnos registrados]
+│   ├── api_progreso.php                  [Persistencia y consulta de quizzes rápidos]
+│   ├── api_tareas.php                    [Proxy/Bridge hacia Módulo 04]
+│   ├── api_materiales.php                [Proxy/Bridge hacia Módulo 04]
+│   └── api_sala.php                      [Proxy/Bridge hacia Módulo 06]
+│
+├── 02_tekobot/
+│   ├── chat.php                          [Vista responsiva integrada de TekoBot]
+│   ├── chat.js                           [Controlador UI del iframe y atajos]
+│   ├── chat.css                          [Estilos de marco, badges y avatar tejuxi]
+│   └── TekoBot/
+│       └── Hackaton/
+│           ├── api/                      [Endpoints REST del motor de IA]
+│           ├── config/                   [Configuración local y DB de TekoBot]
+│           ├── database/                 [curriculum.json, vocabularios y esquemas]
+│           ├── modules/                  [Graficadores Canvas y banco de ejercicios]
+│           ├── prompts/                  [Prompts pedagógicos para Google Gemini]
+│           ├── services/                 [ai_service, pedagogy_service, resolver]
+│           └── index.php                 [Aplicación Split-Screen del tutor]
+│
+├── 03_teko_arcade/
+│   ├── juego.php                         [Contenedor iframe de lanzamiento a pantalla completa]
+│   ├── juego.js                          [Sincronización postMessage y persistencia de XP]
+│   ├── juego.css                         [Estilos y barra de herramientas de Arcade]
+│   └── TEKOARCADE/
+│       └── JUEGOS/
+│           ├── package.json              [Dependencias: React 19, TS, Vite, Tesseract]
+│           ├── vite.config.ts            [Configuración de compilación Vite]
+│           ├── dist/                     [Bundle de producción optimizado para offline]
+│           └── src/
+│               ├── games/                [Código de los 6 videojuegos matemáticos]
+│               ├── engine/               [Evaluador matemático y generador local]
+│               ├── audio/                [Efectos de sonido procedurales y pistas]
+│               └── services/             [Manejo de progreso, OCR y analítica]
+│
+├── 04_diagnostico_y_rutas_de_aprendizaje/
+│   ├── tekobeta.php                      [Laboratorio de Teko Live y Misiones]
+│   ├── misiones.js                       [Motor interactivo de misiones en 5 etapas]
+│   ├── misiones.css                      [Estilos de modal, stepper y desafíos]
+│   ├── quiz.js                           [Lógica del evaluador de quizzes rápidos]
+│   ├── api_tareas.php                    [CRUD de misiones, asignación y telemetría]
+│   ├── api_materiales.php                [Gestión de recursos didácticos complementarios]
+│   ├── Estudiante-Matematica 1- EM- 2016 MEC.pdf [Libro oficial del estudiante]
+│   └── docente-matematica Guia 1_260821_135131.pdf [Guía oficial docente MEC]
+│
+├── 05_jopamath/
+│   └── jopamath_i18n.js                  [Motor de traducción en tiempo real a Guaraní Jopara]
+│
+├── 06_teko_live/
+│   ├── api_sala.php                      [Backend multijugador tipo Kahoot: PIN, rondas, podio]
+│   ├── teko_live.js                      [Controlador cliente con Web Audio API y temporizador]
+│   └── teko_live.css                     [Estilos del juego en vivo, botones geométricos y podio]
+│
+├── 07_diseno_y_graficos/
+│   ├── assets/images/                    [Logotipos oficiales de estudiante, docente y login]
+│   ├── style.css                         [Tokens de diseño, tipografías y patrón papel milimetrado]
+│   ├── dashboard.css                     [Hojas de estilo compartidas de escritorios]
+│   ├── docente.css                       [Hojas de estilo analíticas del panel pedagógico]
+│   ├── visualizer.js                     [Motor Canvas del visualizador trigonométrico dual]
+│   └── visualizer.css                    [Estilos del workbench interactivo y controles]
+│
+└── tests/
+    ├── i18n.cjs                          [Suite automatizada Playwright del motor Jopara]
+    └── tutor-language.cjs                [Pruebas de respuestas pedagógicas del tutor]
+
+
+2.3. Pila Tecnológica (Tech Stack)
+
++-----------------------+------------------------------------------------------+
+| Capa                  | Tecnologías Empleadas                                |
++-----------------------+------------------------------------------------------+
+| Servidor Web          | Apache 2.4 (Entorno XAMPP)                           |
+| Lenguaje Backend      | PHP 8.1+ (PDO, json, session, filter, password_hash) |
+| Base de Datos         | MySQL 8.0 / MariaDB 10.4 (InnoDB, utf8mb4)           |
+| Frontend Base         | HTML5 Semántico, Vanilla JavaScript (ES6+), CSS3     |
+| Frontend Gamificado   | React 19.2, TypeScript 6.0, Vite 8.3, Lucide Icons  |
+| Renderizado Matemático| KaTeX 0.16.x (Fórmulas LaTeX en DOM y Canvas)        |
+| Renderizado Gráfico   | HTML5 Canvas API (Renderizado trigonométrico dual)   |
+| Audio Procedural      | Web Audio API (Sintetizador de ondas para feedback)  |
+| Inteligencia Artificial| Google Gemini API (con motor de contingencia local)  |
+| OCR / Visión          | Tesseract.js 7.0 + modelo de lenguaje español (@spa) |
+| Localización Lingüística| JOPAMATH v2 (Glosario MEC + MutationObserver)      |
+| Testing Automatizado  | Playwright (Edge/Chromium headless), Node.js Test   |
++-----------------------+------------------------------------------------------+
+
+
+================================================================================
+3. ESPECIFICACIÓN DETALLADA DE MÓDULOS
+================================================================================
+
+3.1. Módulo 01: Sistema Principal y Registro Offline
+--------------------------------------------------------------------------------
+Ubicación: `01_sistema_principal_y_registro_offline/`
+Responsabilidades:
+- Autenticación, registro y gestión de ciclo de vida de sesiones.
+- Control de Acceso Basado en Roles (RBAC): perfiles estrictos `estudiante` y `docente`.
+- Persistencia central y aprovisionamiento automático de esquemas MySQL.
+- Resiliencia offline mediante caché en el almacenamiento local del cliente (`localStorage`).
+
+Archivos Clave y Funciones:
+1. `config/database.php`:
+   - Función principal `getDB(): PDO`: Establece conexión persistente singleton
+     utilizando PDO con manejo de excepciones `PDO::ERRMODE_EXCEPTION` y fetch
+     asociativo por defecto.
+   - En su inicialización, verifica la existencia de todas las tablas nucleares
+     (`usuarios`, `tareas`, `materiales`, `progreso_quizzes`, `progreso_misiones`,
+     `salas_clase`, `packs_quiz`). Si no existen, las crea automáticamente
+     e inserta los 4 usuarios semilla con hash Bcrypt.
+   - Incluye migraciones en caliente (ejemplo: alteración automática de la tabla
+     `tareas` para agregar columnas `tipo`, `historia` y `mision_data` si provienen
+     de versiones anteriores).
+
+2. `config/session.php`:
+   - Inicializa sesiones nativas seguras de PHP (`session_start()`).
+   - Funciones de guarda:
+     * `isLoggedIn(): bool`: Comprueba `$_SESSION['user_id']`.
+     * `getUser(): ?array`: Retorna `[id, nombre, email, rol]`.
+     * `requireLogin(): void`: Redirecciona al login si no hay sesión activa.
+       Si detecta petición asíncrona hacia un endpoint (`api_`), emite HTTP 401 JSON.
+     * `requireDocente(): void`: Exige rol `docente`. Si es estudiante, redirige a `dashboard.php`.
+     * `requireEstudiante(): void`: Exige rol `estudiante`. Si es docente, redirige a `docente.php`.
+     * `loginUser(array $user): void`: Fija variables de sesión seguras.
+     * `logoutUser(): void`: Limpia arreglos, invalida la cookie de sesión y destruye la sesión.
+
+3. `auth.php`:
+   - Controlador POST del formulario de acceso.
+   - Valida el ingreso de correo electrónico o nombre de usuario.
+   - Ejecuta consulta preparada mediante PDO contra la tabla `usuarios`.
+   - Verifica la contraseña ingresada mediante `password_verify($password, $user['password'])`.
+   - Establece la sesión y redirige inmediatamente al usuario a su panel correspondiente
+     según el rol registrado en base de datos (inmunidad contra alteración de rol por cliente).
+
+4. `registro_process.php`:
+   - Valida parámetros: nombre completo (mínimo 2 caracteres), formato de email válido,
+     longitud mínima de contraseña (4 caracteres) y coincidencia de confirmación.
+   - Verifica unicidad de correo en la tabla `usuarios`.
+   - Genera hash seguro con `password_hash($password, PASSWORD_BCRYPT)`.
+   - Registra el nuevo usuario e inicia sesión de forma automática.
+
+5. `dashboard.php` & `docente.php`:
+   - `dashboard.php`: Panel para estudiantes que renderiza el visualizador dual,
+     tarjetas de misiones asignadas, accesos directos a TekoBot y TekoArcade,
+     y el módulo de quizzes de práctica rápida.
+   - `docente.php`: Panel avanzado para educadores que incluye estadísticas agregadas
+     de alumnos, visor de notas diagnósticas de misiones, asignador de misiones por
+     plantilla o personalizadas, y creador de salas en vivo Teko Live.
+
+
+3.2. Módulo 02: TekoBot (Tutor Inteligente IA & Dual Coding)
+--------------------------------------------------------------------------------
+Ubicación: `02_tekobot/` y `02_tekobot/TekoBot/Hackaton/`
+Responsabilidades:
+- Tutor pedagógico adaptativo personificado por la mascota "tejuxi".
+- Enfoque pedagógico basado en estados: el tutor explica, muestra ejemplos
+  resueltos paso a paso y evalúa la comprensión antes de solicitar ejercicios.
+- Dual Coding: Vinculación simultánea de fórmulas matemáticas en KaTeX con la
+  circunferencia trigonométrica interactiva en Canvas y ondas sinusoidales.
+- Adaptabilidad lingüística: Respuestas en Guaraní Jopara pedagógico, español
+  paraguayo coloquial o español formal neutro.
+
+Arquitectura Interna del Sub-backend (`TekoBot/Hackaton/`):
+- `services/ai_service.php`:
+  Cliente HTTP para la API de Google Gemini (modelo gemini-1.5-flash / gemini-pro).
+  Si la clave de API (`GEMINI_API_KEY`) no está configurada o no hay conexión a
+  internet, conmuta automáticamente a un motor inteligente local basado en reglas
+  semánticas y plantillas pre-entrenadas en Guaraní Jopara.
+- `services/pedagogy_service.php`:
+  Gestiona la progresión didáctica y el andamiaje. Clasifica las fallas del alumno
+  en una taxonomía precisa: error de cuadrante, error de signo, confusión entre
+  seno y coseno, o error al calcular el ángulo de referencia.
+- `services/question_resolver.php`:
+  Interpreta el lenguaje natural del alumno, reconociendo alias trigonométricos,
+  preguntas combinadas, solicitudes de simplificación ("explicame más fácil") y
+  conservando el concepto activo en memoria conversacional.
+- `services/problem_workshop.php` ("Che ejercicio · Mi problema"):
+  Permite al alumno transcribir problemas de su cuaderno o subir fotos mediante
+  OCR. La política pedagógica estricta de TekoBot prohíbe entregar la solución o
+  el resultado algebraico final; en su lugar, guía la secuencia de operaciones
+  conservando el último paso para el alumno.
+- `database/curriculum.json`:
+  Estructura curricular de 59 subtemas divididos en 4 unidades oficiales del libro
+  MEC 2016 de 1er Año: Funciones, Funciones Trigonométricas, Línea Recta y Análisis
+  Combinatorio.
+
+
+3.3. Módulo 03: Teko Arcade (Gamificación & Videojuegos Matemáticos)
+--------------------------------------------------------------------------------
+Ubicación: `03_teko_arcade/` y `03_teko_arcade/TEKOARCADE/JUEGOS/`
+Responsabilidades:
+- Dimensión gamificada de práctica matemática intensiva.
+- Suite de 6 mini-juegos especializados desarrollados en React 19 + TypeScript + Vite.
+- Integración en la plataforma mediante iframe aislado con comunicación bidireccional
+  vía eventos y sincronización en `localStorage`.
+
+Catálogo de Juegos y Objetivos Pedagógicos:
+1. 🔺 Triangle Forge (Función Seno):
+   Construcción de triángulos rectángulos arrastrando vértices. El alumno calcula
+   la razón entre cateto opuesto e hipotenusa (sen θ = y / r) para estabilizar la
+   estructura.
+2. 〰️ Signal Sync (Función Coseno):
+   Sincronización de ondas de radar modulando amplitud, frecuencia y fase
+   cosenoidal para interceptar señales armónicas.
+3. ↗️ Vector Launch (Función Tangente):
+   Simulador balístico donde la trayectoria y ángulo de disparo dependen de la
+   pendiente m = tan(θ) = y / x.
+4. ◫ Pair Matrix (Función Cosecante - Recíproca de Seno):
+   Juego de memoria y emparejamiento conceptual rápido entre razones trigonométricas
+   directas y sus inversas multiplicativas: csc(θ) = 1 / sen(θ).
+5. ⚡ Ratio Rush (Función Secante - Recíproca de Coseno):
+   Contrarreloj de agilidad de cálculo donde se deducen valores de sec(θ) a partir
+   de los cosenos notables (0°, 30°, 45°, 60°, 90°).
+6. 📈 Graph Lab (Función Cotangente - Recíproca de Tangente):
+   Laboratorio de análisis de asíntotas verticales en múltiplos de π y deducción
+   del comportamiento asintótico de cot(θ) = cos(θ) / sen(θ).
+
+Mecanismos de Gamificación:
+- Puntos de Experiencia (XP), niveles ascendentes y rachas de respuestas correctas.
+- Efectos de sonido procedurales y dinámicos utilizando la Web Audio API.
+- Motor OCR integrado con Tesseract.js para procesar fotos de problemas del estudiante.
+
+
+3.4. Módulo 04: Diagnóstico y Rutas de Aprendizaje (TekoBeta & Misiones)
+--------------------------------------------------------------------------------
+Ubicación: `04_diagnostico_y_rutas_de_aprendizaje/`
+Responsabilidades:
+- Evaluación formativa, diagnóstica y sumativa.
+- TekoBeta (`tekobeta.php`): Entorno de laboratorio donde el alumno accede tanto a
+  las salas en vivo Teko Live como a las Misiones de Aprendizaje.
+- Misiones estructuradas en 5 etapas pedagógicas progresivas:
+  Etapa 1: EXPLORÁ (Interacción libre con simulador/dial de circunferencia unitaria).
+  Etapa 2: DESCUBRÍ (Pregunta conceptual de deducción con pistas).
+  Etapa 3: RESOLVÉ (Resolución guiada paso a paso de un ejercicio formal).
+  Etapa 4: DESAFÍO (Problema de análisis y aplicación conceptual).
+  Etapa 5: DESAFÍO FINAL (Problema integrador de maestría para desbloquear insignia).
+
+Catálogo de Misiones Predefinidas (`misiones_data.php`):
+1. `trig_cuadrantes` — "MISIÓN: El cuadrante perdido":
+   Explora la circunferencia unitaria y signos de sen, cos y tan en los 4 cuadrantes.
+2. `trig_reciprocas` — "MISIÓN: El espejo de las recíprocas":
+   Deducción e identidades de Cosecante, Secante y Cotangente.
+3. `trig_ondas` — "MISIÓN: La órbita de las ondas periódicas":
+   Frecuencia, período, amplitud y desplazamientos de funciones armónicas.
+4. `trig_triangulo` — "MISIÓN: El enigma del triángulo y las 6 razones":
+   Resolución de triángulos rectángulos aplicando las 6 razones trigonométricas.
+
+Telemetría Recopilada en Tiempo Real:
+Porcentaje de dominio (`dominio_pct`), aciertos, errores, intentos, pistas utilizadas,
+autocorrecciones logradas, tiempo total en segundos, y desglose de desempeño por
+concepto matemático individual.
+
+
+3.5. Módulo 05: JopaMath (Motor Lingüístico y Glosario Pedagógico)
+--------------------------------------------------------------------------------
+Ubicación: `05_jopamath/jopamath_i18n.js`
+Responsabilidades:
+- Localización dinámica y pedagógica a Guaraní Jopara oral y natural.
+- Escucha continua de mutaciones en el DOM (`MutationObserver`) para traducir
+  elementos inyectados dinámicamente sin degradar el rendimiento del navegador.
+- Principio de Protección Matemática:
+  Regla estricta que impide la alteración de identificadores de variables, números,
+  símbolos y operadores (`x`, `y`, `\theta`, `\pi`, `sen`, `cos`, `tan`, etc.).
+
+Glosario Técnico-Pedagógico Destacado:
+- Ángulo                     -> Takamby
+- Círculo Unitario           -> Apu'a peteĩva
+- Hipotenusa                 -> Yvyra pukuve
+- Cateto Opuesto             -> Yke rovaigua
+- Cateto Adyacente           -> Yke ykéregua
+- Cuadrante                  -> Irundyha
+- Seno                       -> Seno (Invariante)
+- Coseno                     -> Coseno (Invariante)
+- Tangente                   -> Tangente (Invariante)
+- Misión de Aprendizaje      -> Mba'apo Ñehekombo'e rehegua
+- Correcto                   -> ¡Oĩ porã!
+- Pista                      -> Pista / Pytyvõ
+
+
+3.6. Módulo 06: Teko Live (Arena de Competencia en Vivo / Modo Kahoot)
+--------------------------------------------------------------------------------
+Ubicación: `06_teko_live/`
+Responsabilidades:
+- Plataforma de evaluación sincrónica gamificada en el aula de clases.
+- El docente crea una sala en su proyector/pantalla obteniendo un PIN numérico de
+  6 dígitos generado aleatoriamente.
+- Los estudiantes se conectan desde sus dispositivos móviles o computadoras ingresando
+  el PIN en TekoBeta.
+
+Flujo de la Partida y Máquina de Estados:
+1. `lobby`: Sala abierta a la espera de participantes. Muestra contador de alumnos.
+2. `activa`: El docente inicia la partida. Se despliega una pregunta con temporizador
+   regresivo (típicamente 20 segundos). Los alumnos responden pulsando uno de los 4
+   botones geométricos de color:
+   * 🔺 Triángulo Rojo
+   * 🔷 Rombo Azul
+   * 🟡 Círculo Amarillo
+   * 🟩 Cuadrado Verde
+3. `revelada`: Se agota el tiempo o todos los alumnos han respondido. Se revela la
+   opción correcta, la explicación matemática y el gráfico de distribución de respuestas.
+4. `podio` / `finalizada`: Tabla de líderes acumulada con puntaje, racha de fuego
+   ("On Fire") y podio de honor de los tres primeros puestos con fanfarria acústica.
+
+Sonido Sintetizado con Web Audio API:
+- `correct()`: Acorde armónico ascendente en onda triangular (C5 -> E5 -> G5 -> C6).
+- `wrong()`: Tono disonante en onda diente de sierra (300Hz -> 220Hz).
+- `tick()`: Pulso sinusoidal breve de 880Hz cada segundo.
+- `fanfare()`: Secuencia melódica triunfal para premiar a los ganadores del podio.
+
+
+3.7. Módulo 07: Diseño, Gráficos y Visualizador Trigonométrico Dual
+--------------------------------------------------------------------------------
+Ubicación: `07_diseno_y_graficos/`
+Responsabilidades:
+- Visualizador matemático interactivo dual en HTML5 Canvas (`visualizer.js`).
+- Renderiza lado a lado:
+  a) Círculo Unitario ($r = 1$) con dial angular interactivo en grados y radianes,
+     y proyecciones dinámicas de coordenadas ($x$, $y$).
+  b) Gráfica Cartesiana animada de las 6 razones trigonométricas periódicas
+     (seno, coseno, tangente, cosecante, secante, cotangente).
+- Guías de proyección ("rayos láser") que conectan visualmente el punto móvil sobre la
+  circunferencia con el punto correspondiente sobre la onda cartesiana.
+- Inspector numérico y analítico: cálculo de valores exactos con radicales
+  (ejemplo: $\sqrt{3}/2$), aproximación decimal, cuadrante, período, ceros y asíntotas.
+- Sistema de diseño visual: Fondo con trama de papel milimetrado ("Graph Paper"),
+  paleta de colores armónicos (esmeralda #16a34a, púrpura #9333ea, ámbar #d97706),
+  tipografías modernas y micro-animaciones CSS.
+
+
+================================================================================
+4. MODELO DE DATOS Y ESQUEMA DE BASE DE DATOS
+================================================================================
+
+4.1. Base de Datos Central (`teko_math`)
+El motor de almacenamiento es MySQL/MariaDB con cotejamiento `utf8mb4_unicode_ci`.
+El archivo maestro DDL se encuentra en `01_sistema_principal_y_registro_offline/sql/setup.sql`.
+
+4.2. Definición Formal de Tablas, Índices y Relaciones
+
+TABLA 1: `usuarios`
+Registra a todos los actores del sistema (estudiantes y docentes).
++-------------+------------------------------------+---------------------------+
+| Campo       | Tipo de Dato                       | Descripción / Restricción |
++-------------+------------------------------------+---------------------------+
+| id          | INT AUTO_INCREMENT PRIMARY KEY     | Identificador único       |
+| nombre      | VARCHAR(100) NOT NULL              | Nombre completo           |
+| email       | VARCHAR(150) NOT NULL UNIQUE       | Correo electrónico único  |
+| password    | VARCHAR(255) NOT NULL              | Hash Bcrypt de contraseña |
+| rol         | ENUM('estudiante','docente')       | Perfil de acceso          |
+| created_at  | TIMESTAMP DEFAULT CURRENT_TIMESTAMP| Fecha de registro         |
++-------------+------------------------------------+---------------------------+
+
+TABLA 2: `tareas` (Misiones de Aprendizaje Asignadas)
+Almacena las misiones y actividades creadas o asignadas por los docentes.
++---------------+----------------------------------+---------------------------+
+| Campo         | Tipo de Dato                     | Descripción / Restricción |
++---------------+----------------------------------+---------------------------+
+| id            | INT AUTO_INCREMENT PRIMARY KEY   | Identificador de misión   |
+| docente_id    | INT NOT NULL                     | FK -> usuarios(id)        |
+| titulo        | VARCHAR(200) NOT NULL            | Título descriptivo        |
+| tema          | VARCHAR(100) DEFAULT 'Trigonometría'| Contenido temático     |
+| tipo          | VARCHAR(50) DEFAULT 'mision'     | Tipo de actividad         |
+| historia      | TEXT                             | Narrativa de la misión    |
+| fecha_entrega | DATE NOT NULL                    | Fecha límite              |
+| puntos        | INT DEFAULT 100                  | Puntos/XP asignables      |
+| instrucciones | TEXT                             | Guía o subtítulo          |
+| mision_data   | LONGTEXT                         | Estructura JSON completa  |
+| created_at    | TIMESTAMP DEFAULT CURRENT_TIMESTAMP| Fecha de creación       |
++---------------+----------------------------------+---------------------------+
+Relación: FOREIGN KEY (docente_id) REFERENCES usuarios(id) ON DELETE CASCADE
+
+TABLA 3: `materiales` (Recursos Didácticos Complementarios)
+Repositorio de lecturas, guías y enlaces de soporte compartidos por docentes.
++-------------+------------------------------------+---------------------------+
+| Campo       | Tipo de Dato                       | Descripción / Restricción |
++-------------+------------------------------------+---------------------------+
+| id          | INT AUTO_INCREMENT PRIMARY KEY     | Identificador del recurso |
+| docente_id  | INT NOT NULL                       | FK -> usuarios(id)        |
+| titulo      | VARCHAR(200) NOT NULL              | Título del recurso        |
+| categoria   | VARCHAR(100) DEFAULT 'Trigonometría'| Área de conocimiento     |
+| tipo        | VARCHAR(50) DEFAULT 'Guía Teórica' | Formato del material      |
+| descripcion | TEXT                               | Resumen del contenido     |
+| enlace      | VARCHAR(500) DEFAULT NULL          | URL externa o interna     |
+| created_at  | TIMESTAMP DEFAULT CURRENT_TIMESTAMP| Fecha de publicación      |
++-------------+------------------------------------+---------------------------+
+Relación: FOREIGN KEY (docente_id) REFERENCES usuarios(id) ON DELETE CASCADE
+
+TABLA 4: `progreso_quizzes` (Práctica Rápida del Alumno)
+Historial de cuestionarios breves completados en el dashboard.
++-----------------+--------------------------------+---------------------------+
+| Campo           | Tipo de Dato                   | Descripción / Restricción |
++-----------------+--------------------------------+---------------------------+
+| id              | INT AUTO_INCREMENT PRIMARY KEY | ID del intento            |
+| estudiante_id   | INT NOT NULL                   | FK -> usuarios(id)        |
+| tema            | VARCHAR(100) NOT NULL          | Tema evaluado             |
+| dificultad      | VARCHAR(20) DEFAULT 'facil'    | Nivel de complejidad      |
+| aciertos        | INT NOT NULL DEFAULT 0         | Preguntas acertadas       |
+| total_preguntas | INT NOT NULL DEFAULT 5         | Cantidad de preguntas     |
+| porcentaje      | INT NOT NULL DEFAULT 0         | Calificación (0 - 100%)   |
+| created_at      | TIMESTAMP DEFAULT CURRENT_TIMESTAMP| Fecha de finalización |
++-----------------+--------------------------------+---------------------------+
+Índices: INDEX (estudiante_id), INDEX (created_at)
+
+TABLA 5: `progreso_misiones` (Telemetría de Misiones Interactivas)
+Detalle analítico exhaustivo del rendimiento de un estudiante en una misión.
++--------------------+-----------------------------+---------------------------+
+| Campo              | Tipo de Dato                | Descripción / Restricción |
++--------------------+-----------------------------+---------------------------+
+| id                 | INT AUTO_INCREMENT PRIMARY KEY| ID del registro         |
+| tarea_id           | INT NOT NULL                | FK -> tareas(id)          |
+| estudiante_id      | INT NOT NULL                | FK -> usuarios(id)        |
+| dominio_pct        | INT NOT NULL DEFAULT 0      | % de dominio demostrado   |
+| aciertos           | INT NOT NULL DEFAULT 0      | Respuestas correctas      |
+| errores            | INT NOT NULL DEFAULT 0      | Fallos cometidos          |
+| intentos           | INT NOT NULL DEFAULT 0      | Reintentos totales        |
+| pistas_usadas      | INT NOT NULL DEFAULT 0      | Cantidad de pistas pedidas|
+| autocorrecciones   | INT NOT NULL DEFAULT 0      | Errores corregidos        |
+| tiempo_segundos    | INT NOT NULL DEFAULT 0      | Duración de la sesión (s) |
+| desafios_superados | INT NOT NULL DEFAULT 0      | Desafíos completados      |
+| total_desafios     | INT NOT NULL DEFAULT 5      | Cantidad de etapas/retos  |
+| conceptos_feedback | TEXT                        | JSON resumen por concepto |
+| detalles_json      | LONGTEXT                    | Desglose evento por evento|
+| completado         | TINYINT(1) DEFAULT 1        | Bandera de conclusión     |
+| created_at         | TIMESTAMP DEFAULT CURRENT_TIMESTAMP| Fecha de inicio     |
+| updated_at         | TIMESTAMP ON UPDATE CURRENT_TIMESTAMP| Última actualización|
++--------------------+-----------------------------+---------------------------+
+Relaciones:
+- FOREIGN KEY (tarea_id) REFERENCES tareas(id) ON DELETE CASCADE
+- FOREIGN KEY (estudiante_id) REFERENCES usuarios(id) ON DELETE CASCADE
+Índices: INDEX (tarea_id), INDEX (estudiante_id), INDEX (created_at)
+
+TABLA 6: `salas_clase` (Salas Multijugador Teko Live)
+Gestión de sesiones de evaluación en vivo proyectables en aula.
++-------------------------+------------------------+---------------------------+
+| Campo                   | Tipo de Dato           | Descripción / Restricción |
++-------------------------+------------------------+---------------------------+
+| id                      | INT AUTO_INCREMENT PK  | Identificador de la sala  |
+| codigo_pin              | VARCHAR(10) UNIQUE     | PIN numérico de 6 dígitos |
+| docente_id              | INT NOT NULL           | FK -> usuarios(id)        |
+| titulo                  | VARCHAR(200) NOT NULL  | Nombre del torneo/quiz    |
+| tema                    | VARCHAR(100)           | Contenido pedagógico      |
+| estado                  | VARCHAR(30) DEFAULT 'lobby'| lobby, activa, podio...|
+| pregunta_actual         | INT DEFAULT 0          | Índice de pregunta activa |
+| tiempo_limite           | INT DEFAULT 20         | Segundos por pregunta     |
+| timestamp_inicio_pregunta| BIGINT DEFAULT 0      | Timestamp Unix inicio     |
+| preguntas_json          | LONGTEXT               | Paquete de preguntas      |
+| alumnos_json            | LONGTEXT               | Participantes y puntajes  |
+| created_at              | TIMESTAMP              | Creación de la sala       |
+| updated_at              | TIMESTAMP              | Actualización en runtime  |
++-------------------------+------------------------+---------------------------+
+Índices: INDEX (codigo_pin), INDEX (docente_id), INDEX (estado)
+
+TABLA 7: `packs_quiz` (Bancos Personalizados de Quizzes Teko Live)
+Permite a los profesores componer y guardar sus propios cuestionarios.
++----------------+---------------------------------+---------------------------+
+| Campo          | Tipo de Dato                    | Descripción / Restricción |
++----------------+---------------------------------+---------------------------+
+| id             | INT AUTO_INCREMENT PRIMARY KEY  | Identificador del pack    |
+| docente_id     | INT NOT NULL                    | FK -> usuarios(id)        |
+| titulo         | VARCHAR(200) NOT NULL           | Título del pack           |
+| tema           | VARCHAR(100)                    | Tema curricular           |
+| tiempo_defecto | INT DEFAULT 20                  | Duración sugerida (s)     |
+| preguntas_json | LONGTEXT NOT NULL               | Arreglo de reactivos      |
+| created_at     | TIMESTAMP                       | Fecha de creación         |
+| updated_at     | TIMESTAMP                       | Fecha de modificación     |
++----------------+---------------------------------+---------------------------+
+Índices: INDEX (docente_id)
+
+
+4.3. Mecanismo de Migración y Auto-Aprovisionamiento en Runtime
+A diferencia de sistemas rígidos que fallan si no se ejecuta previamente un script
+SQL manual, TEKO MATH implementa en `config/database.php` un motor de verificación
+activa. Al solicitar cualquier conexión con `getDB()`, el código ejecuta sentencias
+`CREATE TABLE IF NOT EXISTS` para cada una de las tablas mencionadas. Si la tabla de
+usuarios está recién creada, inserta de inmediato los usuarios semilla:
+- Estudiante Demo (`estudiante@teko.com` / clave: `1234`)
+- Docente Demo (`docente@teko.com` / clave: `1234`)
+- María García (`maria@teko.com` / clave: `1234`)
+- Carlos López (`carlos@teko.com` / clave: `1234`)
+
+
+4.4. Base de Datos Secundaria de TekoBot (`kyhyjey_db`)
+Dentro de `02_tekobot/TekoBot/Hackaton/database/schema.sql` existe el esquema
+adicional optimizado para el tutor inteligente individual, el cual incluye tablas
+como `students`, `learning_sessions`, `chat_history`, `exercise_attempts` y
+`diagnostic_results`. Puede operar acoplado a MySQL o de manera aislada mediante
+SQLite local cuando se ejecuta en computadoras escolares desconectadas de la red.
+
+
+================================================================================
+5. CATÁLOGO DE APIS Y CONTRATOS DE INTEGRACIÓN (REST JSON)
+================================================================================
+Todas las APIs responden con cabecera `Content-Type: application/json; charset=utf-8`
+y protegen sus accesos mediante la sesión activa del usuario.
+
+5.1. Autenticación y Cuentas
+- `POST 01_sistema_principal_y_registro_offline/auth.php`
+  Parámetros POST: `email`, `password`, `rol`
+  Respuesta: Redirección 302 a `dashboard.php` o `docente.php` (o de regreso con error).
+- `POST 01_sistema_principal_y_registro_offline/registro_process.php`
+  Parámetros POST: `nombre`, `email`, `password`, `password_confirm`, `rol`
+  Respuesta: Creación de usuario, sesión automática y redirección 302.
+- `GET 01_sistema_principal_y_registro_offline/logout.php`
+  Destruye la sesión activa y retorna a la pantalla de login.
+
+
+5.2. API de Progreso y Quizzes (`api_progreso.php`)
+- `GET 01_sistema_principal_y_registro_offline/api_progreso.php`
+  * Si es estudiante: Retorna sus últimos 20 intentos de quizzes.
+    JSON: `{"success": true, "progresos": [...]}`
+  * Si es docente: Retorna el historial global de todos los estudiantes y
+    una tabla agregada con promedios y cantidad de prácticas realizadas.
+    JSON: `{"success": true, "progresos": [...], "resumen": [...]}`
+
+- `POST 01_sistema_principal_y_registro_offline/api_progreso.php`
+  Registra un quiz de práctica completado.
+  Parámetros POST:
+    `tema` (string), `dificultad` (string), `aciertos` (int), `total_preguntas` (int)
+  Respuesta exitosa:
+    `{"success": true, "message": "Progreso guardado...", "id": 42, "porcentaje": 80}`
+
+
+5.3. API de Misiones y Tareas (`api_tareas.php`)
+Ubicación: `04_diagnostico_y_rutas_de_aprendizaje/api_tareas.php`
+(Disponible también mediante el bridge en `01_sistema_principal_y_registro_offline/api_tareas.php`).
+
+Acciones GET:
+1. `?action=catalogo`
+   Retorna el catálogo completo de plantillas de misiones predefinidas.
+2. `?action=detalle&id={ID}`
+   Retorna la información completa de una misión, su estructura JSON de 5 etapas
+   y el progreso previo del estudiante logueado (si existe).
+3. `?action=reporte_docente` (Exclusivo Docentes)
+   Retorna el listado de reportes analíticos de misiones entregadas por los alumnos.
+4. Consulta por defecto (sin action):
+   Retorna la lista de todas las tareas activas. Si el usuario es estudiante,
+   anexa su estado de completitud y porcentaje de dominio.
+
+Acciones POST:
+1. `action=guardar_progreso_mision` (Exclusivo Estudiantes)
+   Parámetros: `tarea_id`, `dominio_pct`, `aciertos`, `errores`, `intentos`,
+   `pistas_usadas`, `autocorrecciones`, `tiempo_segundos`, `desafios_superados`,
+   `total_desafios`, `conceptos_feedback` (JSON), `detalles_json` (JSON).
+   Inserta o actualiza el registro en `progreso_misiones`.
+2. `action=crear_mision` (Exclusivo Docentes)
+   Parámetros: `titulo`, `tema`, `fecha_entrega`, `puntos`, `historia`,
+   `instrucciones`, `template_key` o `mision_data_json`.
+3. `action=delete` (Exclusivo Docentes)
+   Elimina una misión y sus progresos asociados.
+
+
+5.4. API de Materiales Didácticos (`api_materiales.php`)
+- `GET api_materiales.php`: Retorna arreglo con todos los recursos pedagógicos.
+- `POST api_materiales.php`:
+  * `action=crear` (Docente): Publica un nuevo material (título, categoría, tipo, descripción, enlace).
+  * `action=delete` (Docente): Elimina un material del repositorio.
+
+
+5.5. API de Salas de Clase en Vivo (`api_sala.php`)
+Ubicación: `06_teko_live/api_sala.php`
+(Bridge en `01_sistema_principal_y_registro_offline/api_sala.php`).
+
+Endpoints y Acciones:
++------------------------+---------+-------------------------------------------+
+| Acción (`action`)      | Método  | Descripción de la Operación               |
++------------------------+---------+-------------------------------------------+
+| `packs`                | GET/POST| Obtiene packs predefinidos y del docente. |
+| `crear_pack`           | POST    | Docente almacena nuevo paquete de quiz.   |
+| `eliminar_pack`        | POST    | Docente elimina paquete creado.           |
+| `crear_sala`           | POST    | Docente genera sala con PIN de 6 dígitos. |
+| `unirse_sala`          | POST    | Alumno se incorpora enviando PIN y alias. |
+| `estado`               | GET/POST| Sondeo (polling) de fase, reloj y ranking.|
+| `iniciar_juego`        | POST    | Docente inicia la primera ronda.          |
+| `siguiente_pregunta`   | POST    | Docente avanza al siguiente reactivo.     |
+| `revelar_resultado`    | POST    | Docente destapa la respuesta correcta.    |
+| `responder`            | POST    | Alumno envía opción seleccionada.         |
+| `cerrar_sala`          | POST    | Docente finaliza y desmonta la sala.      |
++------------------------+---------+-------------------------------------------+
+
+
+5.6. APIs REST del Tutor Inteligente TekoBot
+Ubicación: `02_tekobot/TekoBot/Hackaton/api/`
+- `POST /api/chat.php`: Procesa mensajes del alumno, consulta semántica o
+  interacción de IA generativa con Gemini. Retorna texto en Jopara, fórmulas
+  LaTeX KaTeX y comandos de animación para el Canvas (`visual_action_json`).
+- `GET /api/curriculum.php`: Expone el árbol de unidades y subtemas del Plan MEC.
+- `POST /api/diagnostic.php`: Ejecuta y evalúa pruebas diagnósticas (pre-test y post-test).
+
+
+================================================================================
+6. TELEMETRÍA PEDAGÓGICA Y ALGORITMOS EDUCATIVOS
+================================================================================
+
+6.1. Métricas de Dominio Conceptual y Cálculo de Porcentaje
+El motor pedagógico evalúa el desempeño del alumno no como una nota punitiva,
+sino como una estimación de dominio conceptual (`dominio_pct` de 0 a 100%).
+La fórmula algorítmica integra:
+- Aciertos en primera instancia (ponderación máxima: 100%).
+- Factor de penalización atenuado por pistas utilizadas (la pista orienta, no anula el intento).
+- Bonificación por autocorrección (reconocer y corregir un error propio suma valor metacognitivo).
+- Tiempo de resolución comparado contra el intervalo de referencia del desafío.
+
+6.2. Andamiaje de 5 Niveles de Pistas
+Cuando un alumno manifiesta dudas o comete un error, el sistema no muestra la
+solución directa, sino que proporciona andamiaje estructurado:
+- Nivel 1 (Recordatorio Conceptual): Enuncia la definición teórica fundamental.
+- Nivel 2 (Pista Geométrica): Indica qué observar en la gráfica o círculo unitario.
+- Nivel 3 (Ecuación Base): Despliega la relación matemática que vincula los datos.
+- Nivel 4 (Procedimiento Parcial): Realiza el primer paso del cálculo numérico.
+- Nivel 5 (Orientación Final): Explica el razonamiento sin calcular el resultado último.
+
+6.3. Las 5 Etapas de las Misiones de Aprendizaje
+Cada misión sigue la secuencia de aprendizaje del currículo paraguayo:
+1. EXPLORÁ: Manipulación directa de diales y parámetros geométricos en Canvas.
+2. DESCUBRÍ: Pregunta de deducción inmediata sobre lo observado en el simulador.
+3. RESOLVÉ: Ejercicio procedimental guiado paso a paso con retroalimentación inmediata.
+4. DESAFÍO: Pregunta de nivel taxonómico superior (análisis, deducción o signos).
+5. DESAFÍO FINAL: Situación problemática integral; al superarla, el estudiante
+   obtiene la insignia digital de la misión (ej. "🧭 Cartógrafo del Círculo Unitario").
+
+6.4. Puntuación Dinámica y Rachas en Teko Live
+En la arena multijugador Teko Live, el puntaje obtenido por cada respuesta correcta
+depende de la rapidez:
+  Puntos Base: 1000 puntos
+  Factor de Velocidad: Hasta 1000 puntos proporcionales al tiempo restante en el reloj.
+  Multiplicador de Racha ("On Fire"):
+    * 2 aciertos seguidos: +10% de bonificación
+    * 3 aciertos seguidos: +25% de bonificación
+    * 4 o más aciertos seguidos: +50% de bonificación y efecto visual de llamas.
+
+
+================================================================================
+7. SEGURIDAD, CONTROL DE ACCESO Y RESILIENCIA OFFLINE
+================================================================================
+
+7.1. Criptografía y Gestión de Credenciales
+- Las contraseñas nunca se almacenan en texto plano. Se procesan siempre mediante
+  el algoritmo Bcrypt nativo de PHP:
+  `password_hash($password, PASSWORD_BCRYPT)` con salado dinámico aleatorio.
+- La verificación se realiza exclusivamente con `password_verify()`.
+
+7.2. Control de Acceso Basado en Roles (RBAC)
+- Toda vista o API sensible comprueba de inmediato el rol mediante `session.php`.
+- Si un estudiante intenta ingresar manualmente por URL a `docente.php`, es redirigido
+  automáticamente a `dashboard.php`.
+- Si un docente ingresa a `dashboard.php`, es redirigido a `docente.php`.
+- Los endpoints de mutación docente (`crear_mision`, `delete`, `crear_sala`) comprueban
+  que `$_SESSION['user_rol'] === 'docente'`; de lo contrario, abortan con código HTTP 403.
+
+7.3. Protección de Formularios e Inyección SQL
+- El 100% de las consultas a la base de datos se ejecutan a través de Sentencias
+  Preparadas (`PDO::prepare`) con vinculación de parámetros con nombre (`:id`, `:email`).
+  No existe concatenación de variables en sentencias SQL.
+- Los datos renderizados en el DOM se escapan mediante `htmlspecialchars()` para
+  mitigar ataques de Cross-Site Scripting (XSS).
+- Las sesiones utilizan cookies seguras con atributos `HttpOnly` y expiración controlada.
+
+7.4. Mecanismo de Tolerancia a Fallos y Modo Sin Conexión
+- El sistema cuenta con resiliencia en múltiples niveles:
+  1. Base de datos: Auto-migración en `database.php` que crea tablas ausentes sobre la marcha.
+  2. Frontend: Las misiones y quizzes guardan copias de respaldo en `localStorage`. Si
+     se interrumpe la red durante una misión, el alumno puede continuar y el resultado
+     se sincroniza tan pronto regrese la conectividad.
+  3. TekoBot: Si la clave de Google Gemini no está disponible o falla el enlace externo,
+     el sistema conmuta de forma transparente al motor pedagógico local en Guaraní Jopara.
+  4. Teko Arcade: Los 6 juegos están empaquetados en un bundle estático Vite (`dist/index.html`)
+     que funciona de forma completamente autónoma sin requerir internet.
+
+
+================================================================================
+8. GUÍA DE INSTALACIÓN, CONFIGURACIÓN Y DESPLIEGUE
+================================================================================
+
+8.1. Requisitos Previos del Servidor
+- Sistema Operativo: Windows 10/11, Linux (Ubuntu/Debian) o macOS.
+- Servidor Web: Apache 2.4 o Nginx.
+- Entorno de Base de Datos: MySQL 8.0+ o MariaDB 10.4+.
+- Motor PHP: PHP 8.1 o superior, con las extensiones habilitadas:
+  * `pdo_mysql`
+  * `pdo_sqlite` (para respaldo offline)
+  * `json`
+  * `session`
+  * `filter`
+  * `mbstring`
+- Entorno de Desarrollo (Opcional, solo para recompilar Arcade): Node.js 20+ y npm.
+
+8.2. Despliegue en XAMPP / Apache / MariaDB
+Paso 1: Ubicación de los Archivos
+  Copie la carpeta `TEKO Math` dentro del directorio público de Apache:
+  En Windows: `C:\xampp\htdocs\TEKO Math`
+  En Linux: `/var/www/html/teko_math`
+
+Paso 2: Iniciar Servidores
+  Abra el panel de control de XAMPP y presione **Start** en los módulos:
+  - **Apache** (Puertos 80 / 443)
+  - **MySQL** (Puerto 3306)
+
+Paso 3: Creación de la Base de Datos
+  Existen dos modalidades:
+  a) Automática: Simplemente ingrese a la aplicación por el navegador. El sistema
+     creará automáticamente la base de datos `teko_math` y sus tablas al primer uso.
+  b) Manual (Recomendada para producción): Ingrese a phpMyAdmin
+     (http://localhost/phpmyadmin), cree la base de datos `teko_math` con cotejamiento
+     `utf8mb4_unicode_ci` e importe el script:
+     `01_sistema_principal_y_registro_offline/sql/setup.sql`.
+
+Paso 4: Acceso a la Plataforma
+  Abra el navegador en:
+  **http://localhost/TEKO Math/index.php**
+  El enrutador principal redirigirá inmediatamente a la pantalla de acceso.
+
+Cuentas de Prueba Pre-Aprovisionadas:
++-----------------------+-------------------+---------------+
+| Perfil                | Correo            | Contraseña    |
++-----------------------+-------------------+---------------+
+| Estudiante Demo       | estudiante@teko.com | 1234        |
+| Docente Demo          | docente@teko.com    | 1234        |
+| María García (Alumna) | maria@teko.com      | 1234        |
+| Carlos López (Docente)| carlos@teko.com     | 1234        |
++-----------------------+-------------------+---------------+
+
+
+8.3. Configuración de Variables de Entorno y Conectividad
+1. Conexión de Base de Datos (`config/database.php`):
+   ```php
+   define('DB_HOST', 'localhost');
+   define('DB_NAME', 'teko_math');
+   define('DB_USER', 'root');
+   define('DB_PASS', '');        // En XAMPP local no requiere clave por defecto
+   define('DB_CHARSET', 'utf8mb4');
+   ```
+2. API Key de Google Gemini (Opcional para respuestas generativas de TekoBot):
+   En `02_tekobot/TekoBot/Hackaton/.env`:
+   ```env
+   GEMINI_API_KEY="AIzaSy..."
+   ```
+   *(Si no se especifica, el sistema activa automáticamente el motor local Jopara).*
+
+
+8.4. Verificación de Pruebas Unitarias y E2E
+El proyecto cuenta con pruebas automáticas de regresión:
+1. Pruebas de Traducción y Persistencia JOPAMATH:
+   Ejecutar en consola:
+   ```bash
+   node tests/i18n.cjs
+   ```
+   Verifica conmutación instantánea de idiomas, estabilidad de observers del DOM,
+   preservación de fórmulas KaTeX y persistencia en almacenamiento bloqueado.
+
+2. Pruebas del Motor de Juegos Arcade:
+   En `03_teko_arcade/TEKOARCADE/JUEGOS/`:
+   ```bash
+   npm test
+   ```
+   Ejecuta las pruebas unitarias de los evaluadores matemáticos, generadores locales
+   y motores de los 6 videojuegos.
+
+================================================================================
+Fin del Documento Técnico — TEKO MATH © 2026. Todos los derechos reservados.
+================================================================================
